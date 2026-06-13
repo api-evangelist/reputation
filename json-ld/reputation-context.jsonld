@@ -1,0 +1,81 @@
+{
+  "@context": {
+    "@vocab": "https://schema.org/",
+    "rep": "https://api.reputation.com/v3/vocab#",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+
+    "Tenant": "rep:Tenant",
+    "Location": "https://schema.org/LocalBusiness",
+    "Review": "https://schema.org/Review",
+    "Survey": "rep:Survey",
+    "SurveyResult": "rep:SurveyResult",
+    "Ticket": "rep:Ticket",
+    "User": "https://schema.org/Person",
+    "Metric": "rep:Metric",
+    "ListingAudit": "rep:ListingAudit",
+    "Asset": "rep:Asset",
+
+    "tenantID": "rep:tenantID",
+    "locationID": "rep:locationID",
+    "reviewID": "rep:reviewID",
+    "surveyID": "rep:surveyID",
+    "ticketID": "rep:ticketID",
+    "userID": "rep:userID",
+    "reportID": "rep:reportID",
+    "faqId": "rep:faqId",
+
+    "name": "https://schema.org/name",
+    "description": "https://schema.org/description",
+    "email": "https://schema.org/email",
+    "telephone": "https://schema.org/telephone",
+    "url": "https://schema.org/url",
+
+    "address": "https://schema.org/address",
+    "streetAddress": "https://schema.org/streetAddress",
+    "addressLocality": "https://schema.org/addressLocality",
+    "addressRegion": "https://schema.org/addressRegion",
+    "postalCode": "https://schema.org/postalCode",
+    "addressCountry": "https://schema.org/addressCountry",
+
+    "rating": "https://schema.org/ratingValue",
+    "reviewRating": "https://schema.org/reviewRating",
+    "ratingValue": "https://schema.org/ratingValue",
+    "reviewBody": "https://schema.org/reviewBody",
+    "datePublished": {"@id": "https://schema.org/datePublished", "@type": "xsd:dateTime"},
+    "author": "https://schema.org/author",
+
+    "businessHours": "https://schema.org/openingHoursSpecification",
+    "openingHours": "https://schema.org/openingHours",
+
+    "offset": "rep:offset",
+    "limit": "rep:limit",
+    "next": "rep:next",
+    "previous": "rep:previous",
+
+    "sourceID": "rep:sourceID",
+    "locationIDs": "rep:locationIDs",
+    "sourceIDs": "rep:sourceIDs",
+    "locationCodes": "rep:locationCodes",
+
+    "from": {"@id": "rep:fromDate", "@type": "xsd:dateTime"},
+    "to": {"@id": "rep:toDate", "@type": "xsd:dateTime"},
+    "range": "rep:dateRange",
+
+    "score": "rep:score",
+    "sentiment": "rep:sentiment",
+    "status": "rep:status",
+    "role": "rep:role",
+    "timezone": "rep:timezone",
+
+    "queues": "rep:queues",
+    "stages": "rep:stages",
+    "types": "rep:types",
+    "categories": "https://schema.org/category",
+    "tags": "rep:tags",
+
+    "errors": "rep:errors",
+    "field": "rep:errorField",
+    "code": "rep:errorCode",
+    "message": "rep:errorMessage"
+  }
+}

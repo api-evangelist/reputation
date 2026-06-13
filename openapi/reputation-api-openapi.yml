@@ -1,0 +1,4329 @@
+openapi: 3.0.0
+info:
+  title: Reputation API
+  description: REST API for aggregating customer feedback, managing reviews and listings,
+    running surveys, and accessing reputation metrics and insights across locations.
+  version: v3
+  contact:
+    name: Reputation Support
+    url: https://support.reputation.com/
+servers:
+- url: https://api.reputation.com
+  description: US Production
+- url: https://api-eu.reputation.com
+  description: EU Production
+security:
+- ApiKeyAuth: []
+components:
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-API-KEY
+      description: API key for authentication. For agency accounts, also include X-TENANT-ID
+        header.
+  parameters:
+    offset:
+      name: offset
+      in: query
+      description: Offset for pagination
+      schema:
+        type: integer
+        default: 0
+    limit:
+      name: limit
+      in: query
+      description: 'Maximum number of objects to return (default: 20, max: 2000)'
+      schema:
+        type: integer
+        default: 20
+        maximum: 2000
+  schemas:
+    PaginationMeta:
+      type: object
+      properties:
+        offset:
+          type: integer
+        limit:
+          type: integer
+        next:
+          type: string
+          format: uri
+        previous:
+          type: string
+          format: uri
+    Error:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              field:
+                type: string
+              code:
+                type: string
+              message:
+                type: string
+tags:
+- name: Asset Library
+  description: Manage image assets
+- name: Authorize
+  description: Authorization management
+- name: Categories
+  description: Business listing categories
+- name: Credentials
+  description: OAuth credential management
+- name: Listing Audits
+  description: Audit business listings across sources
+- name: Locations
+  description: Manage business locations
+- name: Metrics
+  description: Reputation metrics and insights
+- name: Reports
+  description: Report generation and export
+- name: Requests
+  description: Review request management
+- name: Reviews
+  description: Review management and responses
+- name: Rich Content
+  description: FAQs, menus, and product content
+- name: Summary
+  description: Reputation summary data
+- name: Surveys
+  description: Survey management and results
+- name: Tenants
+  description: Tenant/account management
+- name: Tickets
+  description: Customer service ticket management
+- name: Users
+  description: User management
+paths:
+  /v3/asset-library/upload/image:
+    post:
+      summary: Upload Image Files
+      operationId: post_asset_library_upload_image
+      tags:
+      - Asset Library
+      security:
+      - ApiKeyAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          description: Bad request - invalid or missing parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized - invalid API key
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden - insufficient permissions
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '429':
+          description: Too many requests - rate limit exceeded
+        '500':
+          description: Internal server error
+      description: 'Select any number of files from your computer. Attach tags to
+        each image and send them as formData in the API request. The images will display
+        in your Asset Library (see below).
+
+
+
+        You must request to have the asset library enabled. Please contact your CSM
+        for assistance.
+
+        Note: This endpoint only accepts .jpg, .jpeg, or .png files.
+
+        Sample Requests
+
+
+        Python
+
+        import requests
+
+        file_1 = (''ImageFile_1.png'', open(''path_to_ImageFile_1.png'', ''rb''))
+
+        file_2 = (''ImageFile_2.png'', open(''path_to_ImageFile_2.png'''
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                images:
+                  type: string
+                  format: binary
+                  description: '<p>(Required) Choose one or multiple image files from
+                    your computer. There''s no limit to how many you can upload.</p>
+
+                    '
+                tags:
+                  type: string
+                  description: '<p>Provide a valid JSON string with image file names
+                    as keys and their respective tags as values. For example: {"image1.jpg":
+                    ["tag1", "tag2"], "image2.jpg": ["tag2", "tag3"]}.</p>
+
+                    '
+  /v3/asset-library/upload/image/url:
+    post:
+      summary: Upload Image Using Public Urls
+      operationId: post_asset_library_upload_image_url
+      tags:
+      - Asset Library
+      security:
+      - ApiKeyAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          description: Bad request - invalid or missing parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized - invalid API key
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden - insufficient permissions
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '429':
+          description: Too many requests - rate limit exceeded
+        '500':
+          description: Internal server error
+      description: "Upload images to your asset library using a public URL rather\
+        \ than a direct file upload. The images will display in your Asset Library\
+        \ (see below).\n\n\nYou must request to have the asset library enabled. Please\
+        \ contact your CSM for assistance.\nNote: This endpoint only accepts .jpg,\
+        \ .jpeg, or .png files.\nSample Requests\n\nPython\nimport requests\nimport\
+        \ json\ndata = {\n    \"images\": [\n        {\n            \"url\": \"https://www.testImageUrl.com/image_1.jpg\"\
+        ,\n            \"tags\": [\"test_tag_1\", \"test_tag_2\""
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                images:
+                - url: string
+                  tags:
+                  - string
+  /v3/authorize:
+    post:
+      summary: Authorize
+      operationId: post_authorize
+      tags:
+      - Authorize
+      security:
+      - ApiKeyAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          description: Bad request - invalid or missing parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized - invalid API key
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden - insufficient permissions
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '429':
+          description: Too many requests - rate limit exceeded
+        '500':
+          description: Internal server error
+      description: "Authorize a user on your platform, either granting them access\
+        \ or updating their permissions based on provided personal and role-specific\
+        \ details.\nSample Requests\nPython\nimport requests\nimport json\nurl = 'https://api.reputation.com/v3/authorize'\n\
+        headers = {\n    'x-api-key': 'Your API key',\n    'Content-Type': 'application/json;charset=UTF-8'\n\
+        }\ndata = {\n    \"userId\": \"346345\",\n    \"locationCodes\": \"145, 742,\
+        \ 520\",\n    \"firstName\": \"Jeff\",\n    \"lastName\": \"Goodman\",\n \
+        \   \"email\": \"john@goodman.com\""
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                userId: string
+                locationCodes: string array
+                firstName: string
+                lastName: string
+                email: string
+                role: string
+                timezone: string
+  /v3/categories:
+    get:
+      summary: Get Categories
+      operationId: get_categories
+      tags:
+      - Categories
+      security:
+      - ApiKeyAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          description: Bad request - invalid or missing parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized - invalid API key
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden - insufficient permissions
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '429':
+          description: Too many requests - rate limit exceeded
+        '500':
+          description: Internal server error
+      description: "Provides the Business Listings categories for each profile, detailing\
+        \ each category's associated industries and identifiers.\nSample Requests\n\
+        Python\nimport requests\nurl = 'https://api.reputation.com/v3/categories?offset=0&amp;limit=3'\n\
+        headers = {\n    'x-api-key': 'Your API Key',\n    'Content-Type': 'application/json;charset=UTF-8'\n\
+        }\nresponse = requests.get(url, headers=headers)\nif response.status_code\
+        \ &gt;= 200 and response.status_code &lt; 400:\n    print(response.text)\n\
+        else:\n    print(\"Error: \","
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+  /v3/credentials/oauth:
+    get:
+      summary: Get Oauth Status
+      operationId: get_credentials_oauth
+      tags:
+      - Credentials
+      security:
+      - ApiKeyAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          description: Bad request - invalid or missing parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized - invalid API key
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden - insufficient permissions
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '429':
+          description: Too many requests - rate limit exceeded
+        '500':
+          description: Internal server error
+      description: "This endpoint retrieves the OAuth credentials for various locations,\
+        \ detailing the validity and the last refresh date of connections to different\
+        \ online sources like Facebook, Instagram, LinkedIn and more.\nSample Requests\n\
+        Python\nimport requests\nurl = 'https://api.reputation.com/v3/credentials/oauth'\n\
+        headers = {\n    'Accept': 'application/json',\n    'x-api-key': 'Your API\
+        \ key'\n}\nresponse = requests.get(url, headers=headers)\nif response.status_code\
+        \ == 200:\n    print(response.json())\nelse:\n    prin"
+  /v3/listing-audits:
+    get:
+      summary: Get Listing Audits
+      operationId: get_listing_audits
+      tags:
+      - Listing Audits
+      security:
+      - ApiKeyAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          description: Bad request - invalid or missing parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized - invalid API key
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden - insufficient permissions
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '429':
+          description: Too many requests - rate limit exceeded
+        '500':
+          description: Internal server error
+      description: 'This endpoint facilitates the retrieval of listing audits, allowing
+        you to examine and assess the integrity of listings over specified time frames
+        or for specific locations and sources with the optional query parameters.
+
+        Sample Requests
+
+        JavaScript XHR Request
+
+        var xhr = new XMLHttpRequest();
+
+        xhr.open(''GET'', ''https://api.reputation.com/v3/listing-audits?limit=2'',
+        true);
+
+        xhr.setRequestHeader(''Accept'', ''application/json'');
+
+        xhr.setRequestHeader(''x-api-key'', ''Your API key'');
+
+        xhr.onreadystatechange = f'
+      parameters:
+      - &id001
+        name: offset
+        in: query
+        description: Offset for pagination
+        schema:
+          type: integer
+          default: 0
+      - &id002
+        name: limit
+        in: query
+        description: Maximum number of objects to return
+        schema:
+          type: integer
+          default: 20
+          maximum: 2000
+  /v3/locations:
+    get:
+      summary: Get Locations
+      operationId: get_locations
+      tags:
+      - Locations
+      security:
+      - ApiKeyAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          description: Bad request - invalid or missing parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized - invalid API key
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden - insufficient permissions
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '429':
+          description: Too many requests - rate limit exceeded
+        '500':
+          description: Internal server error
+      description: 'Retrieves detailed location profiles, providing comprehensive
+        data that extends beyond just basic location attributes within the Business
+        Listing Solution. You can use this endpoint to access an array of information
+        about specific profiles.
+
+        Note: The Get Locations and Get Location endpoints are designed to retrieve
+        only cleansed profiles. If you attempt to fetch an unmanaged profile using
+        either endpoint, the response will result in a null value.
+
+        Sample
+
+        JavaScript XHR Request
+
+        var xhr = new XMLHt'
+      parameters:
+      - *id001
+      - *id002
+    post:
+      summary: Save Location
+      operationId: post_locations
+      tags:
+      - Locations
+      security:
+      - ApiKeyAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          description: Bad request - invalid or missing parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized - invalid API key
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden - insufficient permissions
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '429':
+          description: Too many requests - rate limit exceeded
+        '500':
+          description: Internal server error
+      description: 'Let''s you submit a detailed location profile, providing comprehensive
+        data that extends beyond just basic location attributes within the Business
+        Listing Solution. You can also use this endpoint to add our update information
+        about specific profile.
+
+        Please note: Incremental changes are not supported. All profile data must
+        be included in each request to prevent existing data from being overwritten
+        or removed.
+
+        Sample
+
+        JavaScript XHR Request
+
+        var xhr = new XMLHttpRequest();
+
+        xhr.open(''POST'', ''https://a'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                location:
+                  optedOut: boolean
+                  internalName: string
+                  industryID: string
+                  externalName: string
+                  places:
+                  - officeName: string
+                    address:
+                      streetAddress1: string
+                      locality: string
+                      region: string
+                      postalCode: string
+                      country: string
+                    phones:
+                    - number: string
+                      primary: boolean
+                      country: string
+                      phoneType: string
+                    primary: boolean
+                  description: string
+                  categories:
+                  - category:
+                      label: string
+                    primary: boolean
+                  utm: boolean
+                  attributes:
+                  - attributeId: string
+                    boolValue: boolean
+                  - attributeId: string
+                    values:
+                    - boolValue: boolean
+                    - boolValue: boolean
+                  type: string
+                  createdDate: string
+                  updatedDate: string
+  /v3/locations-search:
+    get:
+      summary: Search Locations
+      operationId: get_locations_search
+      tags:
+      - Locations
+      security:
+      - ApiKeyAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          description: Bad request - invalid or missing parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized - invalid API key
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden - insufficient permissions
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '429':
+          description: Too many requests - rate limit exceeded
+        '500':
+          description: Internal server error
+      description: 'Facilitates the searching of profiles based on various parameters
+        like name, location, type, and more. It''s designed to offer a comprehensive
+        search capability for you to filter and retrieve specific profiles from the
+        vast Business Listing Solution database.
+
+        Sample
+
+        JavaScript XHR Request
+
+        var xhr = new XMLHttpRequest();
+
+        xhr.open(''GET'', ''https://api.reputation.com/v3/locations-search?type=Person&amp;primaryProfile=true&amp;sort=ASC&amp;offset=0&amp;limit=20'',
+        true);
+
+        xhr.setRequestHeader(''x-api-key'
+      parameters:
+      - *id001
+      - *id002
+    post:
+      summary: Search Locations
+      operationId: post_locations_search
+      tags:
+      - Locations
+      security:
+      - ApiKeyAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          description: Bad request - invalid or missing parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized - invalid API key
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden - insufficient permissions
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '429':
+          description: Too many requests - rate limit exceeded
+        '500':
+          description: Internal server error
+      description: 'Facilitates detailed searches for location profiles based on a
+        range of specific parameters provided in the request body. It serves as an
+        alternative to the GET version of the endpoint, providing a means to submit
+        search parameters in the body of the request.
+
+        Sample
+
+        JavaScript XHR Request
+
+        var xhr = new XMLHttpRequest();
+
+        var url = "https://api.reputation.com/v3/locations-search";
+
+        xhr.open("POST", url, true);
+
+        xhr.setRequestHeader("Content-Type", "application/json");
+
+        xhr.setRequestHeader("x-api-key'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                firstName: string
+                lastName: string
+                placeID: string
+                parentID: string
+                linkedProfileID: string
+                officeName: string
+                locality: string
+                region: string
+                postalCode: string
+                gender: string
+                phoneType: string
+                websiteType: string
+                type: string
+                profileDefinition: string
+                categoryID:
+                - string
+                categoryName:
+                - string
+                tag:
+                - string
+                utm: boolean
+                insuranceID:
+                - string
+                insuranceName:
+                - string
+                language:
+                - string
+                acceptingNewPatients: string
+                specialtyID:
+                - string
+                primaryProfile: string
+                lat: 0
+                lng: 0
+                radius: 0
+                sorts:
+                - fieldName: string
+                  sortOrder: string
+                offset: integer
+                limit: integer
+                query: string
+                updatedSince: string
+  /v3/locations-faceted-search:
+    get:
+      summary: Search Faceted Locations
+      operationId: get_locations_faceted_search
+      tags:
+      - Locations
+      security:
+      - ApiKeyAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          description: Bad request - invalid or missing parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized - invalid API key
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden - insufficient permissions
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '429':
+          description: Too many requests - rate limit exceeded
+        '500':
+          description: Internal server error
+      description: This endpoint facilitates a faceted profile search of the platform,
+        providing aggregated counts of profiles based on specified criteria. Rather
+        than returning individual profile data, this endpoint groups profiles based
+        on a selected attribute (such as phoneType, gender, etc.) and returns a count
+        of profiles for each distinct value within that attribute. It's an efficient
+        way to understand the distribution of profiles based on varying characteristics
+        without retrieving the details of each profil
+      parameters:
+      - *id001
+      - *id002
+  /v3/locations/{locationID}:
+    get:
+      summary: Get Location
+      operationId: get_locations_locationID
+      tags:
+      - Locations
+      security:
+      - ApiKeyAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          description: Bad request - invalid or missing parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized - invalid API key
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden - insufficient permissions
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '429':
+          description: Too many requests - rate limit exceeded
+        '500':
+          description: Internal server error
+      description: 'This endpoint retrieves detailed information about a specific
+        location profile on the platform based on the provided locationID.
+
+        The response returns detailed attributes of the location profile, including
+        its internal and external names, industry type, state, associated places like
+        office addresses, contact information, and more.
+
+        Note: The Get Locations and Get Location endpoints are designed to retrieve
+        only cleansed profiles. If you attempt to fetch an unmanaged profile using
+        either endpoint, '
+      parameters:
+      - name: locationID
+        in: path
+        required: true
+        schema:
+          type: string
+        description: The locationID identifier
+    delete:
+      summary: Delete Location
+      operationId: delete_locations_locationID
+      tags:
+      - Locations
+      security:
+      - ApiKeyAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          description: Bad request - invalid or missing parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized - invalid API key
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden - insufficient permissions
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '429':
+          description: Too many requests - rate limit exceeded
+        '500':
+          description: Internal server error
+      description: "This endpoint lets you delete a specific location profile from\
+        \ the system, identified by its locationID. If you wish to only mark the location\
+        \ as inactive rather than fully deleting it, you can utilize the optional\
+        \ preserveLocation query parameter.\nSample\nJavaScript XHR Request\nvar xhr\
+        \ = new XMLHttpRequest();\nxhr.open('DELETE', 'https://api.reputation.com/v3/locations/BP?preserveLocation=true',\
+        \ true);\nxhr.setRequestHeader('x-api-key', 'Your API key');\nxhr.onreadystatechange\
+        \ = function() {\n    if"
+      parameters:
+      - name: locationID
+        in: path
+        required: true
+        schema:
+          type: string
+        description: The locationID identifier
+  /v3/locations/{locationID}/opt-out:
+    put:
+      summary: Opt Out Of Audit
+      operationId: put_locations_locationID_opt_out
+      tags:
+      - Locations
+      security:
+      - ApiKeyAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          description: Bad request - invalid or missing parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized - invalid API key
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden - insufficient permissions
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '429':
+          description: Too many requests - rate limit exceeded
+        '500':
+          description: Internal server error
+      description: "Opt-out specific sources from location profiles. If no specific\
+        \ sourceIDs are provided, the profile will be opted out from all eligible\
+        \ sources.\nSample\nJavaScript XHR Request\nvar xhr = new XMLHttpRequest();\n\
+        xhr.open(\"PUT\", \"https://api.reputation.com/v3/locations/SA/opt-out?sourceIDs=FACEBOOK\"\
+        , true);\nxhr.setRequestHeader(\"x-api-key\", \"Your API key\");\nxhr.onreadystatechange\
+        \ = function() {\n  if (xhr.readyState == 4 &amp;&amp; xhr.status == 200)\
+        \ {\n    var response = JSON.parse(xhr.responseText);\n "
+      parameters:
+      - name: locationID
+        in: path
+        required: true
+        schema:
+          type: string
+        description: The locationID identifier
+  /v3/locations/{locationID}/opt-in:
+    put:
+      summary: Opt In To Audit
+      operationId: put_locations_locationID_opt_in
+      tags:
+      - Locations
+      security:
+      - ApiKeyAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          description: Bad request - invalid or missing parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized - invalid API key
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden - insufficient permissions
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '429':
+          description: Too many requests - rate limit exceeded
+        '500':
+          description: Internal server error
+      description: "Opt-in specific sources from location profiles. If no specific\
+        \ sourceIDs are provided, the profile will be opted in to all eligible sources.\n\
+        Sample\nJavaScript XHR Request\nvar xhr = new XMLHttpRequest();\nxhr.open(\"\
+        PUT\", \"https://api.reputation.com/v3/locations/SA/opt-in?sourceIDs=FACEBOOK\"\
+        , true);\nxhr.setRequestHeader(\"x-api-key\", \"Your API key\");\nxhr.onreadystatechange\
+        \ = function() {\n  if (xhr.readyState == 4 &amp;&amp; xhr.status == 200)\
+        \ {\n    var response = JSON.parse(xhr.responseText);\n    co"
+      parameters:
+      - name: locationID
+        in: path
+        required: true
+        schema:
+          type: string
+        description: The locationID identifier
+  /v3/locations/{locationID}/addPage:
+    post:
+      summary: Add Page
+      operationId: post_locations_locationID_addPage
+      tags:
+      - Locations
+      security:
+      - ApiKeyAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          description: Bad request - invalid or missing parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized - invalid API key
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden - insufficient permissions
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '429':
+          description: Too many requests - rate limit exceeded
+        '500':
+          description: Internal server error
+      description: 'Use this endpoint to associate a new external page (such as a
+        social media profile or a source page) with a specific location profile in
+        the Reputation platform. It''s important to ensure that the provided URL and
+        page ID are unclaimed.
+
+        For assistance in determining available source URLs, you can utilize the Autofind
+        Results feature in the platform to identify potential matches for your location.
+
+        Sample
+
+        JavaScript XHR Request
+
+        var xhr = new XMLHttpRequest();
+
+        xhr.open("POST", "https://api.reputatio'
+      parameters:
+      - name: locationID
+        in: path
+        required: true
+        schema:
+          type: string
+        description: The locationID identifier
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                source: string
+                url: string
+                pageID: string
+  /v3/location-attribute-definitions:
+    get:
+      summary: Get Attribute Definitions
+      operationId: get_location_attribute_definitions
+      tags:
+      - Locations
+      security:
+      - ApiKeyAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          description: Bad request - invalid or missing parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized - invalid API key
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden - insufficient permissions
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '429':
+          description: Too many requests - rate limit exceeded
+        '500':
+          description: Internal server error
+      description: "An array of category IDs for which the attribute definitions are\
+        \ fetched. The provided IDs help in narrowing down the list of attribute definitions\
+        \ specific to the given profile categories.\nSample\nJavaScript XHR Request\n\
+        var xhr = new XMLHttpRequest();\nxhr.open('GET', 'https://api.reputation.com/v3/location-attribute-definitions?categoryIds=RESTAURANTS_,ARTS_&amp;_ENTERTAINMENT_ARTIST',\
+        \ true);\nxhr.setRequestHeader('x-api-key', 'Your API Key');\nxhr.onreadystatechange\
+        \ = function() {\n    if (xhr.rea"
+  /v3/locations-duplicate:
+    get:
+      summary: Get Duplicate Locations
+      operationId: get_locations_duplicate
+      tags:
+      - Locations
+      security:
+      - ApiKeyAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          description: Bad request - invalid or missing parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized - invalid API key
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden - insufficient permissions
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '429':
+          description: Too many requests - rate limit exceeded
+        '500':
+          description: Internal server error
+      description: 'Retrieves location profiles from the Reputation platform that
+        are identified as potential duplicates based on specific criteria. By using
+        this endpoint, you can identify and manage locations that may have been inadvertently
+        entered multiple times or those that appear similar across different sources.
+
+        Sample
+
+        JavaScript XHR Request
+
+        var xhr = new XMLHttpRequest();
+
+        xhr.open("GET", "https://api.reputation.com/v3/locations-duplicate", true);
+
+        xhr.setRequestHeader("x-api-key", "Your API key");
+
+        xhr.onrea'
+      parameters:
+      - *id001
+      - *id002
+  /v3/metrics:
+    get:
+      summary: Get Metrics (Deprecated)
+      operationId: get_metrics
+      tags:
+      - Metrics
+      security:
+      - ApiKeyAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          description: Bad request - invalid or missing parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized - invalid API key
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden - insufficient permissions
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '429':
+          description: Too many requests - rate limit exceeded
+        '500':
+          description: Internal server error
+      description: 'Retrieve a variety of metrics based on specific criteria. These
+        metrics can provide insights into trends, user behavior, and more, over different
+        time intervals and for different sources or locations.
+
+        Note: This endpoint is now deprecated and might be removed in future versions.
+        Ensure you check for alternative endpoints or methods to fetch the required
+        data.
+
+        Sample
+
+        JavaScript XHR Request
+
+        var xhr = new XMLHttpRequest();
+
+        xhr.open(''GET'', ''https://api.reputation.com/v3/metrics'', true);
+
+        xhr.setReque'
+      deprecated: true
+      parameters:
+      - *id001
+      - *id002
+  /v3/page-metrics:
+    get:
+      summary: Get Page Metrics
+      operationId: get_page_metrics
+      tags:
+      - Metrics
+      security:
+      - ApiKeyAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          description: Bad request - invalid or missing parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized - invalid API key
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden - insufficient permissions
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '429':
+          description: Too many requests - rate limit exceeded
+        '500':
+          description: Internal server error
+      description: "This endpoint allows for the retrieval of page-specific metrics\
+        \ from the Reputation API. By specifying various query parameters, you can\
+        \ filter and customize the data being fetched, enabling a more detailed and\
+        \ targeted insights analysis.\nSample\nJavaScript XHR Request\nvar xhr = new\
+        \ XMLHttpRequest();\nxhr.open('GET', 'https://api.reputation.com/v3/page-metrics?limit=2',\
+        \ true);\nxhr.setRequestHeader('x-api-key', 'Your API key');\nxhr.onreadystatechange\
+        \ = function() {\n    if (xhr.readyState == 4 &amp;"
+      parameters:
+      - *id001
+      - *id002
+  /v3/post-metrics:
+    get:
+      summary: Get Post Metrics
+      operationId: get_post_metrics
+      tags:
+      - Metrics
+      security:
+      - ApiKeyAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          description: Bad request - invalid or missing parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized - invalid API key
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden - insufficient permissions
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '429':
+          description: Too many requests - rate limit exceeded
+        '500':
+          description: Internal server error
+      description: "This endpoint retrieves post metrics from the Reputation platform.\
+        \ It provides detailed insights based on various filtering criteria such as\
+        \ date range, source, location, type, and interval.\nSample\nJavaScript XHR\n\
+        var xhr = new XMLHttpRequest();\nxhr.open('GET', 'https://api.reputation.com/v3/post-metrics?limit=2&amp;sourceIDs=FACEBOOK',\
+        \ true);\nxhr.onreadystatechange = function() {\n    if (xhr.readyState ==\
+        \ 4 &amp;&amp; xhr.status == 200) {\n        var response = JSON.parse(xhr.responseText);\n\
+        \    "
+      parameters:
+      - *id001
+      - *id002
+  /v3/aggregate-page-metrics:
+    get:
+      summary: Get Aggregate Page Metrics
+      operationId: get_aggregate_page_metrics
+      tags:
+      - Metrics
+      security:
+      - ApiKeyAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          description: Bad request - invalid or missing parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized - invalid API key
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden - insufficient permissions
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '429':
+          description: Too many requests - rate limit exceeded
+        '500':
+          description: Internal server error
+      description: 'This endpoint retrieves aggregate metrics related to pages on
+        various platforms. The metrics offer insights on page reach, views, clicks,
+        and more, providing a comprehensive understanding of a page''s performance
+        over different sources and time frames.
+
+        For example:
+
+
+        If you want to know the total number of page views from all sources for a
+        specific location over the past month, the endpoint would "aggregate" or sum
+        up all the individual views from each source to provide a total count.
+
+        If you choos'
+      parameters:
+      - *id001
+      - *id002
+  /v3/aggregate-post-metrics:
+    get:
+      summary: Get Aggregate Post Metrics
+      operationId: get_aggregate_post_metrics
+      tags:
+      - Metrics
+      security:
+      - ApiKeyAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          description: Bad request - invalid or missing parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized - invalid API key
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden - insufficient permissions
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '429':
+          description: Too many requests - rate limit exceeded
+        '500':
+          description: Internal server error
+      description: "This endpoint retrieves aggregate metrics pertaining to posts\
+        \ from various sources. These metrics provide insights on aspects like post\
+        \ impressions, organic reach, and other related dimensions for a given period\
+        \ and set of filtering criteria.\nSample\nJavaScript XHR Sample\nvar xhr =\
+        \ new XMLHttpRequest();\nxhr.open('GET', 'https://api.reputation.com/v3/aggregate-post-metrics?locationIDs=SA&amp;sourceIDs=FACEBOOK',\
+        \ true);\nxhr.onreadystatechange = function() {\n    if (xhr.readyState ==\
+        \ 4 &amp;&amp; xh"
+      parameters:
+      - *id001
+      - *id002
+  /v3/reports/{reportID}/export:
+    put:
+      summary: Run Report
+      operationId: put_reports_reportID_export
+      tags:
+      - Reports
+      security:
+      - ApiKeyAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          description: Bad request - invalid or missing parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized - invalid API key
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden - insufficient permissions
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '429':
+          description: Too many requests - rate limit exceeded
+        '500':
+          description: Internal server error
+      description: 'Execute a specific report within the Reputation platform. By sending
+        a PUT request to this endpoint, you can define how and when the report is
+        exported, with the capability to override its configurations, specify the
+        locale, and select a user context. This ensures that the generated report
+        caters to the precise analytical needs for a given scenario.
+
+        Finding the Report ID
+
+        See this article to learn how to find the report ID for the report you wish
+        to export.
+
+        Sample
+
+        JavaScript XHR Request
+
+        var xhr ='
+      parameters:
+      - name: reportID
+        in: path
+        required: true
+        schema:
+          type: string
+        description: The reportID identifier
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                configuration:
+                  runAsLocale: string
+                  runDate: integer
+                  overrideConfigurations:
+                    __report_config__:
+                      filters: []
+                      parameters:
+                        period: string
+  /v3/request-urls:
+    get:
+      summary: Get Request URLs (Deprecated)
+      operationId: get_request_urls
+      tags:
+      - Requests
+      security:
+      - ApiKeyAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          description: Bad request - invalid or missing parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized - invalid API key
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden - insufficient permissions
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '429':
+          description: Too many requests - rate limit exceeded
+        '500':
+          description: Internal server error
+      description: 'Retrieve specific request URLs associated with given parameters.
+        This endpoint allows users to fetch URLs based on specified location IDs,
+        source IDs and optional template names, and source IDs.
+
+        A "request URL" refers to a specific web address (or URL) associated with
+        a certain platform, source, or service where reviews, feedback, or other user-generated
+        content related to a business or entity can be found or requested.
+
+        Note: This endpoint is now deprecated, and support for it has been discontin'
+      deprecated: true
+  /v3/requests/metrics:
+    get:
+      summary: Get Metrics
+      operationId: get_requests_metrics
+      tags:
+      - Requests
+      security:
+      - ApiKeyAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          description: Bad request - invalid or missing parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized - invalid API key
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden - insufficient permissions
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '429':
+          description: Too many requests - rate limit exceeded
+        '500':
+          description: Internal server error
+      description: 'Retrieve key metrics related to the request processes within the
+        Reputation platform. This endpoint offers insight into request analytics segmented
+        by various criteria such as mode, location, or requester role. It''s tailored
+        to provide a comprehensive view of request-related activities, ensuring users
+        have the data needed to optimize their strategies and ensure effective engagement.
+
+        Sample
+
+        JavaScript XHR Request
+
+        var xhr = new XMLHttpRequest();
+
+        xhr.open(''GET'', ''https://api.reputation.com/v3/reque'
+      parameters:
+      - *id001
+      - *id002
+  /v3/requests/request-urls:
+    get:
+      summary: Get Request Urls
+      operationId: get_requests_request_urls
+      tags:
+      - Requests
+      security:
+      - ApiKeyAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          description: Bad request - invalid or missing parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized - invalid API key
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden - insufficient permissions
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '429':
+          description: Too many requests - rate limit exceeded
+        '500':
+          description: Internal server error
+      description: 'Retrieve specific request URLs associated with given parameters.
+        This endpoint allows users to fetch URLs based on specified location IDs,
+        optional template names, and source ID
+
+        A Request URL refers to a specific web address (or URL) associated with a
+        certain platform, source, or service where reviews, feedback, or other user-generated
+        content related to a business or entity can be found or requested.
+
+        Sample
+
+        JavaScript XHR Request
+
+        var xhr = new XMLHttpRequest();
+
+        xhr.open(''GET'', ''https://api.repu'
+      parameters:
+      - *id001
+      - *id002
+  /v3/requests/send-email:
+    post:
+      summary: Send Email
+      operationId: post_requests_send_email
+      tags:
+      - Requests
+      security:
+      - ApiKeyAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          description: Bad request - invalid or missing parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized - invalid API key
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden - insufficient permissions
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '429':
+          description: Too many requests - rate limit exceeded
+        '500':
+          description: Internal server error
+      description: "Facilitates the sending of email requests, leveraging customizable\
+        \ templates and personalization through variables. The emails can be tailored\
+        \ based on location, sources, and other criteria.\nSample\nJavaScript XHR\
+        \ Request\nvar xhr = new XMLHttpRequest();\nxhr.open('POST', 'https://api.reputation.com/v3/requests/send-email',\
+        \ true);\nxhr.setRequestHeader('Content-Type', 'application/json');\nxhr.setRequestHeader('x-api-key',\
+        \ 'Your API key');\nxhr.onreadystatechange = function() {\n    if (xhr.readyState "
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                id: String
+                templateName: String
+                from:
+                  name: String
+                  email: String
+                to:
+                  name: String
+                  email: String
+                  phone: String
+                bcc:
+                  name: String
+                  email: String
+                  phone: String
+                subject: String
+                sourceSelection: String
+                sourceIDs:
+                - String Array
+                excludedSourceIDs:
+                - String Array
+                locationID: String
+                variables:
+                - name: String
+                  value: String
+  /v3/requests/send-sms:
+    post:
+      summary: Send SMS
+      operationId: post_requests_send_sms
+      tags:
+      - Requests
+      security:
+      - ApiKeyAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          description: Bad request - invalid or missing parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized - invalid API key
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden - insufficient permissions
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '429':
+          description: Too many requests - rate limit exceeded
+        '500':
+          description: Internal server error
+      description: "Send an SMS request to a client. By using specific templates and\
+        \ defining the recipient, you can send tailored SMS messages to your desired\
+        \ audience.\nSample\nJavaScript XHR Request\nvar xhr = new XMLHttpRequest();\n\
+        xhr.open('POST', 'https://api.reputation.com/v3/requests/send-sms', true);\n\
+        xhr.setRequestHeader('x-api-key', 'Your API key');\nxhr.setRequestHeader('Content-Type',\
+        \ 'application/json');\nxhr.onreadystatechange = function() {\n  if (xhr.readyState\
+        \ == 4 &amp;&amp; xhr.status == 200) {\n    var "
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                id: String
+                templateName: String
+                to:
+                  name: String
+                  email: String
+                  phone: String
+                sourceSelection: String
+                sourceIDs:
+                - String Array
+                excludedSourceIDs:
+                - String Array
+                locationID: String
+                variables:
+                - name: String
+                  value: String
+  /v3/requests/unsubscribe-email:
+    post:
+      summary: Unsubscribe Email
+      operationId: post_requests_unsubscribe_email
+      tags:
+      - Requests
+      security:
+      - ApiKeyAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          description: Bad request - invalid or missing parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized - invalid API key
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden - insufficient permissions
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '429':
+          description: Too many requests - rate limit exceeded
+        '500':
+          description: Internal server error
+      description: "Unsubscribe a client's email from your marketing. Once requested\
+        \ the email address will no longer recieve emails.\nSample\nJavaScript XHR\
+        \ Request\nvar xhr = new XMLHttpRequest();\nxhr.open(\"POST\", \"https://api.reputation.com/v3/requests/unsubscribe-email\"\
+        , true);\nxhr.setRequestHeader(\"Content-Type\", \"application/json;charset=UTF-8\"\
+        );\nxhr.setRequestHeader(\"x-api-key\", \"Your API key\");\nxhr.onreadystatechange\
+        \ = function() {\n  if (xhr.readyState == 4 &amp;&amp; xhr.status == 200)\
+        \ {\n    console.log(xhr.r"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                email: String
+  /v3/requests/unsubscribe-phone:
+    post:
+      summary: Unsubscribe Phone
+      operationId: post_requests_unsubscribe_phone
+      tags:
+      - Requests
+      security:
+      - ApiKeyAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          description: Bad request - invalid or missing parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized - invalid API key
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden - insufficient permissions
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '429':
+          description: Too many requests - rate limit exceeded
+        '500':
+          description: Internal server error
+      description: "Unsubscribe a client's phone number from your marketing. Once\
+        \ requested the phone number will no longer recieve SMSs.\nSample\nJavaScript\
+        \ XHR Request\nvar xhr = new XMLHttpRequest();\nxhr.open(\"POST\", \"https://api.reputation.com/v3/requests/unsubscribe-phone\"\
+        , true);\nxhr.setRequestHeader(\"Content-Type\", \"application/json;charset=UTF-8\"\
+        );\nxhr.setRequestHeader(\"x-api-key\", \"Your API key\");\nxhr.onreadystatechange\
+        \ = function() {\n  if (xhr.readyState == 4 &amp;&amp; xhr.status == 200)\
+        \ {\n    console.log(x"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                phone: String
+  /v3/requests/unsubscribes:
+    get:
+      summary: Get Unsubscribes
+      operationId: get_requests_unsubscribes
+      tags:
+      - Requests
+      security:
+      - ApiKeyAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          description: Bad request - invalid or missing parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized - invalid API key
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden - insufficient permissions
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '429':
+          description: Too many requests - rate limit exceeded
+        '500':
+          description: Internal server error
+      description: "Retrieve a list of unsubscribes based on a specified date range\
+        \ and pagination constraints. This endpoint is useful for monitoring customers\
+        \ who have opted out of communications, whether via email or phone.\nSample\n\
+        JavaScript XHR Request\nvar xhr = new XMLHttpRequest();\nxhr.open('GET', 'https://api.reputation.com/v3/requests/unsubscribes?offset=0&amp;limit=20',\
+        \ true);\nxhr.setRequestHeader('x-api-key', 'Your API key');\nxhr.onreadystatechange\
+        \ = function() {\n    if (xhr.readyState == 4 &amp;&amp; xhr"
+      parameters:
+      - *id001
+      - *id002
+  /v3/requests/templates:
+    get:
+      summary: Get Request Templates
+      operationId: get_requests_templates
+      tags:
+      - Requests
+      security:
+      - ApiKeyAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          description: Bad request - invalid or missing parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized - invalid API key
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden - insufficient permissions
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '429':
+          description: Too many requests - rate limit exceeded
+        '500':
+          description: Internal server error
+      description: 'This endpoint allows you to retrieve a list of available request
+        templates based on the specified template type. The request templates define
+        preset formats and structures for various types of requests such as Kiosk,
+        Request Review, or SMS. By passing the appropriate templateType parameter,
+        you can filter out the templates that match the desired type.
+
+        Sample
+
+        JavaScript XHR Request
+
+        var xhr = new XMLHttpRequest();
+
+
+        xhr.open(''GET'', ''https://api.reputation.com/v3/requests/templates?templateType=3'', '
+      parameters:
+      - *id001
+      - *id002
+  /v3/reviews:
+    get:
+      summary: Get Reviews
+      operationId: get_reviews
+      tags:
+      - Reviews
+      security:
+      - ApiKeyAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          description: Bad request - invalid or missing parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized - invalid API key
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden - insufficient permissions
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '429':
+          description: Too many requests - rate limit exceeded
+        '500':
+          description: Internal server error
+      description: 'Retrieves a list of reviews based on various filter criteria.
+        This endpoint allows for a wide range of parameters to narrow down and organize
+        the list of reviews, providing flexibility to retrieve reviews from different
+        time periods, sources, locations, and more.
+
+        Sample
+
+        JavaScript XHR Request
+
+        var xhr = new XMLHttpRequest();
+
+        xhr.open(''GET'', ''https://api.reputation.com/v3/reviews?range=PreviousWeek&amp;offset=0&amp;limit=3'',
+        true);
+
+        xhr.setRequestHeader(''x-api-key'', ''Your API key'');
+
+        xhr.onreadystat'
+      parameters:
+      - *id001
+      - *id002
+  /v3/reviews/{reviewID}/responses:
+    get:
+      summary: Get Review Responses
+      operationId: get_reviews_reviewID_responses
+      tags:
+      - Reviews
+      security:
+      - ApiKeyAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          description: Bad request - invalid or missing parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized - invalid API key
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden - insufficient permissions
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '429':
+          description: Too many requests - rate limit exceeded
+        '500':
+          description: Internal server error
+      description: 'This endpoint retrieves responses associated with a specific review
+        from the Reputation.com API. Each review in the system has a unique identifier
+        known as a reviewID. By providing this ID in the endpoint, you can fetch the
+        associated responses given to that review, whether they are public comments
+        or private messages. The data returned includes the name of the responder,
+        their comment, the type of response (public or private), and the date of the
+        response.
+
+        Sample
+
+        JavaScript XHR Request
+
+        var xhr '
+      parameters:
+      - name: reviewID
+        in: path
+        required: true
+        schema:
+          type: string
+        description: The reviewID identifier
+  /v3/reviews/{reviewID}/respond:
+    post:
+      summary: Respond To Review
+      operationId: post_reviews_reviewID_respond
+      tags:
+      - Reviews
+      security:
+      - ApiKeyAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          description: Bad request - invalid or missing parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized - invalid API key
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden - insufficient permissions
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '429':
+          description: Too many requests - rate limit exceeded
+        '500':
+          description: Internal server error
+      description: 'This endpoint allows you to respond to a specific review on the
+        Reputation platform. By specifying the review''s unique identifier reviewID
+        in the path parameter, you can craft and send a response directly to that
+        review. This is particularly useful for businesses looking to engage with
+        their customers by addressing their reviews, whether they''re positive, negative,
+        or neutral.
+
+        Sample
+
+        JavaScript XHR Request
+
+        var xhr = new XMLHttpRequest();
+
+        xhr.open(''POST'', ''https://api.reputation.com/v3/reviews/DE'
+      parameters:
+      - name: reviewID
+        in: path
+        required: true
+        schema:
+          type: string
+        description: The reviewID identifier
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                name: string
+                comment: string
+                privateMsg: boolean
+  /v3/reviews3:
+    get:
+      summary: Get Reviews3
+      operationId: get_reviews3
+      tags:
+      - Reviews
+      security:
+      - ApiKeyAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          description: Bad request - invalid or missing parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized - invalid API key
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden - insufficient permissions
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '429':
+          description: Too many requests - rate limit exceeded
+        '500':
+          description: Internal server error
+      description: 'Retrieves a list of reviews based on various filter criteria.
+        This endpoint allows for a wide range of parameters to narrow down and organize
+        the list of reviews, providing flexibility to retrieve reviews from different
+        time periods, sources, locations, and more.
+
+        Sample
+
+        JavaScript XHR Request
+
+        var xhr = new XMLHttpRequest();
+
+        xhr.open(''GET'', ''https://api.reputation.com/v3/reviews3?range=PreviousWeek&amp;offset=0&amp;limit=3'',
+        true);
+
+        xhr.setRequestHeader(''x-api-key'', ''Your API key'');
+
+        xhr.onreadysta'
+      parameters:
+      - *id001
+      - *id002
+  /v3/reviews3/{reviewID}/responses:
+    get:
+      summary: Get Reviews3 Responses
+      operationId: get_reviews3_reviewID_responses
+      tags:
+      - Reviews
+      security:
+      - ApiKeyAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          description: Bad request - invalid or missing parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized - invalid API key
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden - insufficient permissions
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '429':
+          description: Too many requests - rate limit exceeded
+        '500':
+          description: Internal server error
+      description: 'This endpoint retrieves responses associated with a specific review
+        from the Reputation.com API. Each review in the system has a unique identifier
+        known as a reviewID. By providing this ID in the endpoint, you can fetch the
+        associated responses given to that review, whether they are public comments
+        or private messages. The data returned includes the name of the responder,
+        their comment, the type of response (public or private), and the date of the
+        response.
+
+        Sample
+
+        JavaScript XHR Request
+
+        var xhr '
+      parameters:
+      - name: reviewID
+        in: path
+        required: true
+        schema:
+          type: string
+        description: The reviewID identifier
+  /v3/reviews3/{reviewID}/respond:
+    post:
+      summary: Respond to Review
+      operationId: post_reviews3_reviewID_respond
+      tags:
+      - Reviews
+      security:
+      - ApiKeyAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          description: Bad request - invalid or missing parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized - invalid API key
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden - insufficient permissions
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '429':
+          description: Too many requests - rate limit exceeded
+        '500':
+          description: Internal server error
+      description: 'This endpoint allows you to respond to a specific review on the
+        Reputation platform. By specifying the review''s unique identifier reviewID
+        in the path parameter, you can craft and send a response directly to that
+        review. This is particularly useful for businesses looking to engage with
+        their customers by addressing their reviews, whether they''re positive, negative,
+        or neutral.
+
+        Sample
+
+        JavaScript XHR Request
+
+        var xhr = new XMLHttpRequest();
+
+        xhr.open(''POST'', ''https://api.reputation.com/v3/reviews3/D'
+      parameters:
+      - name: reviewID
+        in: path
+        required: true
+        schema:
+          type: string
+        description: The reviewID identifier
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                name: string
+                comment: string
+  /v3/rich-content/faqs:
+    get:
+      summary: Get FAQs
+      operationId: get_rich_content_faqs
+      tags:
+      - Rich Content
+      security:
+      - ApiKeyAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          description: Bad request - invalid or missing parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized - invalid API key
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden - insufficient permissions
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '429':
+          description: Too many requests - rate limit exceeded
+        '500':
+          description: Internal server error
+      description: 'This endpoint retrieves a list of FAQs (Frequently Asked Questions)
+        associated with specific locations. The FAQ content can be filtered based
+        on location IDs and/or source IDs. The returned data provides comprehensive
+        details about each FAQ, including the FAQ''s unique identifier, display name,
+        associated business location, publishing source, and detailed FAQ content
+        organized into sections.
+
+        Sample Use Case:
+
+        If you have an organization with multiple business locations, you can use
+        this endpoint t'
+  /v3/rich-content/faqs/{faqId}:
+    get:
+      summary: Get FAQ
+      operationId: get_rich_content_faqs_faqId
+      tags:
+      - Rich Content
+      security:
+      - ApiKeyAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          description: Bad request - invalid or missing parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized - invalid API key
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden - insufficient permissions
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '429':
+          description: Too many requests - rate limit exceeded
+        '500':
+          description: Internal server error
+      description: 'Access the detailed information of a specific FAQ using its unique
+        identifier with this endpoint. It provides comprehensive data about the FAQ,
+        including multiple sections which themselves may contain multiple items, allowing
+        businesses to understand and manage their FAQs in depth.
+
+        Sample
+
+        JavaScript XHR Request
+
+        var xhr = new XMLHttpRequest();
+
+
+        xhr.open(''GET'', ''https://api.reputation.com/v3/rich-content/faqs/60261049d043f800069d13e7_GOOGLE_PLACES_737489'',
+        true);
+
+        xhr.setRequestHeader(''x-api-key'', '
+      parameters:
+      - name: faqId
+        in: path
+        required: true
+        schema:
+          type: string
+        description: The faqId identifier
+  /v3/rich-content/menus:
+    get:
+      summary: Get Menus
+      operationId: get_rich_content_menus
+      tags:
+      - Rich Content
+      security:
+      - ApiKeyAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          description: Bad request - invalid or missing parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized - invalid API key
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden - insufficient permissions
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '429':
+          description: Too many requests - rate limit exceeded
+        '500':
+          description: Internal server error
+      description: "Retrieves the list of food menus associated with one or several\
+        \ business locations. The response can range from an empty array to an array\
+        \ with multiple menus, depending on the available menus for the specified\
+        \ locations.\nSample\nJavaScript XHR Request\nvar xhr = new XMLHttpRequest();\n\
+        xhr.open(\"GET\", \"https://api.reputation.com/v3/rich-content/menus?locationIDs=REST_5678,REST_8901\"\
+        , true);\nxhr.setRequestHeader(\"x-api-key\", \"Your API key\");\n\nxhr.onreadystatechange\
+        \ = function() {\n  if (xhr.readyStat"
+  /v3/rich-content/products:
+    get:
+      summary: Get Products
+      operationId: get_rich_content_products
+      tags:
+      - Rich Content
+      security:
+      - ApiKeyAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          description: Bad request - invalid or missing parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized - invalid API key
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden - insufficient permissions
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '429':
+          description: Too many requests - rate limit exceeded
+        '500':
+          description: Internal server error
+      description: 'This endpoint allows users to retrieve a list of products associated
+        with business locations. While it''s optional, users can provide one or multiple
+        location IDs to narrow down the results, fetching an array of products that
+        may range from none to several entries.
+
+        Sample
+
+        JavaScript XHR Request
+
+        var xhr = new XMLHttpRequest();
+
+        xhr.open(''GET'', ''https://api.reputation.com/v3/rich-content/products?locationIDs=STORE_1209,STORE_5812'',
+        true);
+
+        xhr.setRequestHeader(''x-api-key'', ''Your API key'');
+
+        xhr.onread'
+  /v3/summary:
+    get:
+      summary: Get Summary
+      operationId: get_summary
+      tags:
+      - Summary
+      security:
+      - ApiKeyAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          description: Bad request - invalid or missing parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized - invalid API key
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden - insufficient permissions
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '429':
+          description: Too many requests - rate limit exceeded
+        '500':
+          description: Internal server error
+      description: 'This endpoint provides a comprehensive summary of reviews and
+        associated metrics for your business. You can filter results by specific date
+        ranges, locations, and group the summary by overall metrics, location, or
+        source. The provided metrics include review count by sentiment, average ratings,
+        reputation score, and various score signals detailing aspects like review
+        recency, review distribution across platforms, and social engagement, and
+        more.
+
+        Samples
+
+        JavaScript XHR Request
+
+        var xhr = new XMLHtt'
+      parameters:
+      - *id001
+      - *id002
+  /v3/survey-results:
+    get:
+      summary: Get Survey Results
+      operationId: get_survey_results
+      tags:
+      - Surveys
+      security:
+      - ApiKeyAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          description: Bad request - invalid or missing parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized - invalid API key
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden - insufficient permissions
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '429':
+          description: Too many requests - rate limit exceeded
+        '500':
+          description: Internal server error
+      description: "The Get Survey Results endpoint allows you to fetch the results\
+        \ of surveys submitted by customers or respondents, providing a comprehensive\
+        \ insight into their feedback and perceptions regarding your services or products.\
+        \ This endpoint is instrumental for businesses aiming to evaluate and enhance\
+        \ customer satisfaction, and make data-driven decisions to improve overall\
+        \ customer experience.\nSample\nJavaScript XHR Request\nvar xhr = new XMLHttpRequest();\n\
+        xhr.onreadystatechange = function () {\n    if ("
+    post:
+      summary: Save Survey Result
+      operationId: post_survey_results
+      tags:
+      - Surveys
+      security:
+      - ApiKeyAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          description: Bad request - invalid or missing parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized - invalid API key
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden - insufficient permissions
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '429':
+          description: Too many requests - rate limit exceeded
+        '500':
+          description: Internal server error
+      description: Use this endpoint to submit and save your survey responses directly
+        into the system. You need to provide essential details including the location
+        ID, survey template ID, date, answers, locale, and the current status of the
+        survey. Upon successful submission, the system will process your input, save
+        the survey result, and return a unique identifier for your record, along with
+        any additional pertinent information. This functionality is vital for gathering
+        and analyzing customer feedback, ultimatel
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                locationID: string
+                surveyTemplateID: string
+                date: string (YYYY-MM-DDTHH:MM:SS)
+                answers:
+                - question:
+                    id: string
+                    text: string
+                    type: string
+                  answerValues:
+                  - id: string
+                    text: string
+                locale: string (language tag, e.g., 'en_US')
+                status: string
+                flags:
+                - 'string array (optional, valid values: ''READ'', ''PUBLISHED'',
+                  ''FLAGGED'', ''RESPONDED'')'
+  /v3/survey-results/{surveyID}:
+    get:
+      summary: Get Survey Result
+      operationId: get_survey_results_surveyID
+      tags:
+      - Surveys
+      security:
+      - ApiKeyAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          description: Bad request - invalid or missing parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized - invalid API key
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden - insufficient permissions
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '429':
+          description: Too many requests - rate limit exceeded
+        '500':
+          description: Internal server error
+      description: "This endpoint retrieves detailed information about a specific\
+        \ survey result. The result is identified by a unique surveyID and belongs\
+        \ to a particular survey template, identified by the surveyTemplateID.\nSample\n\
+        JavaScript XHR Result\nvar xhr = new XMLHttpRequest();\nxhr.open(\"GET\",\
+        \ \"https://api.reputation.com/v3/survey-results?surveyTemplateID=5e8d12a42a401b62ff1234a\"\
+        , true);\nxhr.setRequestHeader(\"x-api-key\", \"Your API key\");\n\nxhr.onreadystatechange\
+        \ = function () {\n  if (xhr.readyState == 4 &amp;&"
+      parameters:
+      - name: surveyID
+        in: path
+        required: true
+        schema:
+          type: string
+        description: The surveyID identifier
+  /v3/surveys3-templates:
+    get:
+      summary: Get Survey Templates
+      operationId: get_surveys3_templates
+      tags:
+      - Surveys
+      security:
+      - ApiKeyAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          description: Bad request - invalid or missing parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized - invalid API key
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden - insufficient permissions
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '429':
+          description: Too many requests - rate limit exceeded
+        '500':
+          description: Internal server error
+      description: "This endpoint retrieves a list of survey templates based on specified\
+        \ criteria. You can filter the survey templates you need to retrieve by providing\
+        \ the status and type of the templates as query parameters.\nSample\nJavaScript\
+        \ XHR Request\nvar xhr = new XMLHttpRequest();\nxhr.open(\"GET\", \"https://api.reputation.com/v3/surveys3-templates?templateType=Conversational\"\
+        , true);\nxhr.setRequestHeader(\"x-api-key\", \"Your API key\");\nxhr.onreadystatechange\
+        \ = function () {\n    if (xhr.readyState === 4) {\n     "
+      parameters:
+      - *id001
+      - *id002
+  /v3/surveys-link:
+    post:
+      summary: Get Survey URL
+      operationId: post_surveys_link
+      tags:
+      - Surveys
+      security:
+      - ApiKeyAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          description: Bad request - invalid or missing parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized - invalid API key
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden - insufficient permissions
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '429':
+          description: Too many requests - rate limit exceeded
+        '500':
+          description: Internal server error
+      description: "This POST request generates a unique survey link. This is particularly\
+        \ useful when you want to send a personalized survey to a specific customer,\
+        \ ensuring that the survey content is relevant to their experience and the\
+        \ information you have about them.\nSample\nJavaScript XHR Request\nvar xhr\
+        \ = new XMLHttpRequest();\nxhr.onreadystatechange = function() {\n    if (this.readyState\
+        \ == 4 &amp;&amp; this.status == 200) {\n       // Handle the response here\n\
+        \       console.log(this.responseText);\n    }\n};\nxhr"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                templateID: string
+                locationCode: string
+                overSurveyProtection: boolean
+                locale: string
+                templateVariables:
+                  Company: string
+                  StoreLocation: string
+                  VisitDate: string
+                  EmployeeName: string
+                templateAnswers:
+                  sq1: string
+                  sq2: string
+                  sq3: string
+                  sq4: string
+                  sq5: string
+                customer:
+                  emailID: string
+                  customerID: string
+                  name: string
+  /v3/surveys2-results:
+    get:
+      summary: Get Result (Deprecated)
+      operationId: get_surveys2_results
+      tags:
+      - Surveys
+      security:
+      - ApiKeyAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          description: Bad request - invalid or missing parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized - invalid API key
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden - insufficient permissions
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '429':
+          description: Too many requests - rate limit exceeded
+        '500':
+          description: Internal server error
+      description: Retrieves a survey result
+      deprecated: true
+      parameters:
+      - *id001
+      - *id002
+    post:
+      summary: Save Result (Deprecated)
+      operationId: post_surveys2_results
+      tags:
+      - Surveys
+      security:
+      - ApiKeyAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          description: Bad request - invalid or missing parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized - invalid API key
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden - insufficient permissions
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '429':
+          description: Too many requests - rate limit exceeded
+        '500':
+          description: Internal server error
+      description: Saves a survey result
+      deprecated: true
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                id: string
+                createdDate: 0
+                surveyTemplateID: string
+                locationID: string
+                surveyTaker:
+                  name: string
+                  email: string
+                  phone: string
+                answers:
+                  property1:
+                  - string
+                  property2:
+                  - string
+                properties:
+                  property1: string
+                  property2: string
+                locale: en_US
+                externalID: string
+                status: Started
+                flags:
+                - READ
+  /v3/surveys2-results/create-url-from-encrypted:
+    post:
+      summary: Create URL From Encrypted (Deprecated)
+      operationId: post_surveys2_results_create_url_from_encrypted
+      tags:
+      - Surveys
+      security:
+      - ApiKeyAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          description: Bad request - invalid or missing parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized - invalid API key
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden - insufficient permissions
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '429':
+          description: Too many requests - rate limit exceeded
+        '500':
+          description: Internal server error
+      description: Creates a URL that can be used to resume a survey using an encrypted
+        set of information.
+      deprecated: true
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                properties:
+                  some-property-name: some-property-value
+                answers:
+                  some-question-id:
+                  - some-question-value
+                  - some-other-question-value
+  /v3/surveys3-results/{surveyID}:
+    get:
+      summary: Retrieve Survey Result (Deprecated)
+      operationId: get_surveys3_results_surveyID
+      tags:
+      - Surveys
+      security:
+      - ApiKeyAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          description: Bad request - invalid or missing parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized - invalid API key
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden - insufficient permissions
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '429':
+          description: Too many requests - rate limit exceeded
+        '500':
+          description: Internal server error
+      description: Retrieves a survey result
+      deprecated: true
+      parameters:
+      - name: surveyID
+        in: path
+        required: true
+        schema:
+          type: string
+        description: The surveyID identifier
+  /v3/surveys3-results:
+    post:
+      summary: Save Survey Result (Deprecated)
+      operationId: post_surveys3_results
+      tags:
+      - Surveys
+      security:
+      - ApiKeyAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          description: Bad request - invalid or missing parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized - invalid API key
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden - insufficient permissions
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '429':
+          description: Too many requests - rate limit exceeded
+        '500':
+          description: Internal server error
+      description: Saves a survey result
+      deprecated: true
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                id: string
+                updatedDate: 0
+                tenantID: string
+                locationName: string
+                locationID: string
+                surveyTemplateID: string
+                surveyTakenDate: 0
+                answers:
+                - answerID: string
+                  answerValues:
+                  - string
+                  shownOptions:
+                  - string
+                properties:
+                  property1: string
+                  property2: string
+                locale: en_US
+                externalID: string
+                resultStatus: Started
+                templateStatus: Active
+                flags:
+                - READ
+  /v3/tenants:
+    get:
+      summary: Get Tenants
+      operationId: get_tenants
+      tags:
+      - Tenants
+      security:
+      - ApiKeyAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          description: Bad request - invalid or missing parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized - invalid API key
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden - insufficient permissions
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '429':
+          description: Too many requests - rate limit exceeded
+        '500':
+          description: Internal server error
+      description: 'Retrieve a list of tenants in the Reputation platform. This endpoint
+        is ideal for quickly accessing details about various tenants, including their
+        names, contact information, industry IDs, and the modules they are using.
+        This endpoint is particularly useful for managing and understanding the scope
+        of tenants under your purview, ensuring efficient oversight and analysis of
+        multiple accounts.
+
+        NOTE: This API is intended for only for Agency customers who manage multiple
+        tenant accounts on Reputation'
+      parameters:
+      - *id001
+      - *id002
+    post:
+      summary: Save Tenant
+      operationId: post_tenants
+      tags:
+      - Tenants
+      security:
+      - ApiKeyAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          description: Bad request - invalid or missing parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized - invalid API key
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden - insufficient permissions
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '429':
+          description: Too many requests - rate limit exceeded
+        '500':
+          description: Internal server error
+      description: "Create or save tenant information within the system. This endpoint\
+        \ is crucial for managing tenant data, which includes details about names,\
+        \ contacts, and the specific services or modules each tenant utilizes.\nNOTE:\
+        \ This API is intended for only for Agency customers who manage multiple tenant\
+        \ accounts on Reputation platform.\nSample\nJavaScript XHR Request\nvar data\
+        \ = JSON.stringify({\n  \"tenant\": [\n    {\n      \"id\": \"5a7b73ee12345\"\
+        ,\n      \"agencyID\": \"Dental\",\n      \"name\": \"Downtown Dental Care\"\
+        ,\n "
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                tenant:
+                - id: string
+                  agencyID: string
+                  name: string
+                  contactName: string
+                  contactEmail: string
+                  skuIDs:
+                  - string
+                  moduleIDs:
+                  - string
+                  moduleSources:
+                    listing-auditing:
+                    - string
+                    listing-correcting:
+                    - string
+                  encrypted: boolean
+                  industryID: string
+                  logo: string
+                  tags:
+                  - string
+                  active: boolean
+                  state: string
+  /v3/tenants/{tenantID}:
+    get:
+      summary: Get Tenant
+      operationId: get_tenants_tenantID
+      tags:
+      - Tenants
+      security:
+      - ApiKeyAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          description: Bad request - invalid or missing parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized - invalid API key
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden - insufficient permissions
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '429':
+          description: Too many requests - rate limit exceeded
+        '500':
+          description: Internal server error
+      description: 'This endpoint allows you to retrieve detailed information about
+        a specific tenant by using their unique tenant ID. By providing the tenant
+        ID in the URL, you can access comprehensive data related to that particular
+        tenant, including their name, contact information, active status, associated
+        modules, and other relevant details. This is particularly useful for managing
+        and understanding individual tenant profiles within your system.
+
+        NOTE: This API is intended for only for Agency customers who mana'
+      parameters:
+      - name: tenantID
+        in: path
+        required: true
+        schema:
+          type: string
+        description: The tenantID identifier
+  /v3/tenants/{tenantID}/pause:
+    put:
+      summary: Pause Tenant
+      operationId: put_tenants_tenantID_pause
+      tags:
+      - Tenants
+      security:
+      - ApiKeyAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          description: Bad request - invalid or missing parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized - invalid API key
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden - insufficient permissions
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '429':
+          description: Too many requests - rate limit exceeded
+        '500':
+          description: Internal server error
+      description: 'Inactivate a tenant in the system. By specifying the unique tenantID
+        in the URL, you can change the status of the identified tenant to Paused.
+        This action is particularly useful for temporarily disabling a tenant''s access
+        or services without permanently deleting their data or settings.
+
+        NOTE: This API is intended for only for Agency customers who manage multiple
+        tenant accounts on Reputation platform.
+
+        Sample
+
+        JavaScript XHR Request
+
+        var xhr = new XMLHttpRequest();
+
+        xhr.open("PUT", "https://api.reput'
+      parameters:
+      - name: tenantID
+        in: path
+        required: true
+        schema:
+          type: string
+        description: The tenantID identifier
+  /v3/tenants/{tenantID}/unpause:
+    put:
+      summary: Unpause Tenant
+      operationId: put_tenants_tenantID_unpause
+      tags:
+      - Tenants
+      security:
+      - ApiKeyAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          description: Bad request - invalid or missing parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized - invalid API key
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden - insufficient permissions
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '429':
+          description: Too many requests - rate limit exceeded
+        '500':
+          description: Internal server error
+      description: 'Used to reactivate a tenant within the system. By specifying the
+        tenant''s unique identifier in the URL, this endpoint enables you to change
+        the status of a previously inactivated or paused tenant back to active. This
+        action effectively resumes all operations and functionalities associated with
+        that specific tenant, reinstating access to services and features within the
+        Reputation platform.
+
+        NOTE: This API is intended for only for Agency customers who manage multiple
+        tenant accounts on Reputation '
+      parameters:
+      - name: tenantID
+        in: path
+        required: true
+        schema:
+          type: string
+        description: The tenantID identifier
+  /v3/tickets:
+    get:
+      summary: Get Tickets
+      operationId: get_tickets
+      tags:
+      - Tickets
+      security:
+      - ApiKeyAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          description: Bad request - invalid or missing parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized - invalid API key
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden - insufficient permissions
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '429':
+          description: Too many requests - rate limit exceeded
+        '500':
+          description: Internal server error
+      description: 'Retrieves a list of tickets from the Reputation platform. You
+        can specify various filters and sorting options to obtain a refined list of
+        tickets based on requirements such as Queue IDs, Stage IDs, and location IDs.
+        Additionally, you can specify date ranges for ticket creation and update dates
+        to narrow down the results.
+
+        Note: This API refers to tickets that have been created from customer feedback
+        andallows your teams to track the resolution timeline for taking action on
+        the feedback.
+
+        Sample
+
+        Ja'
+      parameters:
+      - *id001
+      - *id002
+    post:
+      summary: Save Ticket
+      operationId: post_tickets
+      tags:
+      - Tickets
+      security:
+      - ApiKeyAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          description: Bad request - invalid or missing parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized - invalid API key
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden - insufficient permissions
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '429':
+          description: Too many requests - rate limit exceeded
+        '500':
+          description: Internal server error
+      description: 'You can use this endpoint to create a new ticket in the system.
+        By submitting relevant details such as the issue, location, and contact information,
+        you can efficiently log and track customer issues, feedback, or inquiries.
+        This tool is essential for managing customer interactions and ensuring timely
+        responses to their needs.
+
+        Updating Existing Tickets
+
+        This endpoint also allows for the updating of existing tickets, provided they
+        are not in a Closed stage. When making your request:
+
+
+        Always include'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                ticket:
+                  reporterName: String
+                  comment: String
+                  userDefined:
+                    sentiment: String
+                    source: String
+                  fullComment: String
+                  stageID: String
+                  queueID: String
+                  originalDueDate: Datetime ISO 8601
+                  dueDate: Datetime ISO 8601
+                  ticketType: String
+                  stageName: String
+                  queueName: String
+                  locationID: String
+                  customFields:
+                    ticketDefinitionID: String
+                    fieldValues:
+                    - fieldMetaId: String
+                      fieldMetaName: String
+                      values:
+                      - String
+                    - fieldMetaId: String
+                      fieldMetaName: String
+                      values:
+                      - String
+  /v3/ticket-queues:
+    get:
+      summary: Get Queues
+      operationId: get_ticket_queues
+      tags:
+      - Tickets
+      security:
+      - ApiKeyAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          description: Bad request - invalid or missing parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized - invalid API key
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden - insufficient permissions
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '429':
+          description: Too many requests - rate limit exceeded
+        '500':
+          description: Internal server error
+      description: 'You can use this endpoint to retrieve a comprehensive list of
+        all ticket queues within the system. This functionality allows you to view
+        and understand the different categories or departments where tickets are organized
+        and managed. Each queue is uniquely identified by an ID and has a specific
+        name that describes its purpose or area of focus.
+
+        Sample
+
+        JavaScript XHR Request
+
+        var xhr = new XMLHttpRequest();
+
+        xhr.open("GET", "https://api.reputation.com/v3/ticket-queues", true);
+
+        xhr.setRequestHeader("x'
+  /v3/ticket-stages:
+    get:
+      summary: Get Stages
+      operationId: get_ticket_stages
+      tags:
+      - Tickets
+      security:
+      - ApiKeyAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          description: Bad request - invalid or missing parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized - invalid API key
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden - insufficient permissions
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '429':
+          description: Too many requests - rate limit exceeded
+        '500':
+          description: Internal server error
+      description: 'You can use this endpoint to retrieve all ticket stages. This
+        endpoint provides you with comprehensive information about each stage, including
+        their IDs, names, and specific properties such as whether they are system-defined
+        or custom, their order in the process flow, and whether they are marked as
+        ''on hold''. This information helps you understand and manage the different
+        stages that a ticket might go through in your workflow.
+
+        Sample
+
+        JavaScript XHR Request
+
+        var xhr = new XMLHttpRequest();
+
+        xhr.open'
+  /v3/ticket-types:
+    get:
+      summary: Get Ticket Definitions
+      operationId: get_ticket_types
+      tags:
+      - Tickets
+      security:
+      - ApiKeyAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          description: Bad request - invalid or missing parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized - invalid API key
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden - insufficient permissions
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '429':
+          description: Too many requests - rate limit exceeded
+        '500':
+          description: Internal server error
+      description: 'You can use this endpoint to retrieve all available ticket types
+        in your system. Each ticket type contains unique identifiers, labels, and
+        associated field groups that define the structure and information required
+        for each ticket type. The field groups within a ticket type include their
+        own identifiers, labels, and specific metadata fields.
+
+        Sample
+
+        JavaScript XHR Request
+
+        var xhr = new XMLHttpRequest();
+
+        xhr.open("GET", "https://api.reputation.com/v3/ticket-types", true);
+
+        xhr.setRequestHeader("x-ap'
+  /v3/users:
+    get:
+      summary: Get Users
+      operationId: get_users
+      tags:
+      - Users
+      security:
+      - ApiKeyAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          description: Bad request - invalid or missing parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized - invalid API key
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden - insufficient permissions
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '429':
+          description: Too many requests - rate limit exceeded
+        '500':
+          description: Internal server error
+      description: "Retrieve a list of users within your system, providing crucial\
+        \ details about each user. It's an essential tool for administrators to oversee\
+        \ user accounts, roles, and access levels.\nSample\nJavaScript XHR Request\n\
+        var data = null;\nvar xhr = new XMLHttpRequest();\nxhr.withCredentials = true;\n\
+        xhr.addEventListener(\"readystatechange\", function () {\n    if (this.readyState\
+        \ === this.DONE) {\n        console.log(this.responseText);\n    }\n});\n\
+        xhr.open(\"GET\", \"https://api.reputation.com/v3/users?offset=0&amp"
+      parameters:
+      - *id001
+      - *id002
+    post:
+      summary: Save User
+      operationId: post_users
+      tags:
+      - Users
+      security:
+      - ApiKeyAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          description: Bad request - invalid or missing parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized - invalid API key
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden - insufficient permissions
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '429':
+          description: Too many requests - rate limit exceeded
+        '500':
+          description: Internal server error
+      description: 'You can use this endpoint to create or update a user profile in
+        your system. This is particularly useful for managing access and roles within
+        your organization. When making a request, you''ll need to provide essential
+        details such as the user''s unique ID, first name, last name, email, and role.
+        Additional details like phone number, display name, and specific user scopes
+        can also be specified to further customize the user''s profile.
+
+        Sample
+
+        JavaScript XHR Request
+
+        var xhr = new XMLHttpRequest();
+
+        xhr'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                id: string
+                tenantID: null
+                firstName: string
+                lastName: string
+                displayName: string
+                email: string
+                phone: null
+                role: string
+                scopes: null
+                active: boolean
+                locale: string
+                singleSignOn: boolean
+  /v3/users/{userID}:
+    get:
+      summary: Get User
+      operationId: get_users_userID
+      tags:
+      - Users
+      security:
+      - ApiKeyAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          description: Bad request - invalid or missing parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized - invalid API key
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden - insufficient permissions
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '429':
+          description: Too many requests - rate limit exceeded
+        '500':
+          description: Internal server error
+      description: "Retrieve detailed information about a specific user within your\
+        \ organization. By specifying the unique userID, you can obtain comprehensive\
+        \ data about that individual user, including their role, contact details,\
+        \ and associated scopes.\nSample\nJavaScript XHR Request\nvar xhr = new XMLHttpRequest();\n\
+        xhr.open(\"GET\", \"https://api.reputation.com/v3/users/41807627\", true);\n\
+        xhr.setRequestHeader(\"x-api-key\", \"Your API key\");\n\nxhr.onreadystatechange\
+        \ = function () {\n    if (xhr.readyState === 4) {\n        c"
+      parameters:
+      - name: userID
+        in: path
+        required: true
+        schema:
+          type: string
+        description: The userID identifier

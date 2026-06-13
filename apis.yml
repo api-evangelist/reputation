@@ -33,6 +33,18 @@ apis:
         url: https://apidocs.reputation.com/
       - type: Documentation
         url: https://apidocs-eu.reputation.com/
+      - type: OpenAPI
+        url: openapi/reputation-api-openapi.yml
+      - type: JSONSchema
+        url: json-schema/reputation-location.json
+      - type: JSONSchema
+        url: json-schema/reputation-review.json
+      - type: JSONSchema
+        url: json-schema/reputation-survey.json
+      - type: JSONSchema
+        url: json-schema/reputation-ticket.json
+      - type: JSONSchema
+        url: json-schema/reputation-metric.json
     contact:
       - FN: Reputation Support
         url: https://support.reputation.com/
@@ -53,6 +65,12 @@ common:
     url: https://status.reputation.com
   - type: X
     url: https://twitter.com/Reputation_Com
+  - type: Vocabulary
+    url: vocabulary/reputation-vocabulary.yml
+  - type: JSONLDContext
+    url: json-ld/reputation-context.jsonld
+  - type: Blog
+    url: blogs/blogs.json
   - type: Plans
     url: plans/reputation-plans-pricing.yml
   - type: RateLimits

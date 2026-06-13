@@ -1,0 +1,69 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://api.reputation.com/v3/schemas/survey",
+  "title": "SurveyResult",
+  "description": "A completed customer survey result on the Reputation platform.",
+  "type": "object",
+  "properties": {
+    "surveyID": {
+      "type": "string",
+      "description": "Unique identifier for the survey result"
+    },
+    "surveyTemplateID": {
+      "type": "string",
+      "description": "ID of the survey template used"
+    },
+    "locationID": {
+      "type": "string",
+      "description": "ID of the location associated with this survey"
+    },
+    "respondent": {
+      "type": "object",
+      "description": "Information about the survey respondent",
+      "properties": {
+        "name": {"type": "string"},
+        "email": {"type": "string", "format": "email"},
+        "phone": {"type": "string"}
+      }
+    },
+    "responses": {
+      "type": "array",
+      "description": "Individual question responses",
+      "items": {
+        "type": "object",
+        "properties": {
+          "questionID": {"type": "string"},
+          "question": {"type": "string"},
+          "answer": {},
+          "score": {"type": "number"}
+        }
+      }
+    },
+    "overallScore": {
+      "type": "number",
+      "description": "Aggregate score for the survey"
+    },
+    "npsScore": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 10,
+      "description": "Net Promoter Score response"
+    },
+    "dateCompleted": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Date and time the survey was completed"
+    },
+    "status": {
+      "type": "string",
+      "enum": ["complete", "partial", "abandoned"],
+      "description": "Completion status of the survey"
+    },
+    "channel": {
+      "type": "string",
+      "enum": ["email", "sms", "web", "kiosk"],
+      "description": "Channel through which the survey was delivered"
+    }
+  },
+  "required": ["surveyID", "surveyTemplateID", "locationID"]
+}

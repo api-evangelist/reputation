@@ -1,0 +1,32 @@
+{
+  "description": "Example request for POST /v3/requests/send-email (send a review request via email)",
+  "request": {
+    "method": "POST",
+    "url": "https://api.reputation.com/v3/requests/send-email",
+    "headers": {
+      "X-API-KEY": "your_api_key_here",
+      "Content-Type": "application/json"
+    },
+    "body": {
+      "locationID": "loc_123",
+      "templateID": "tmpl_001",
+      "recipient": {
+        "name": "Jane Smith",
+        "email": "jane.smith@example.com"
+      },
+      "customFields": {
+        "firstName": "Jane",
+        "visitDate": "2026-06-12"
+      }
+    }
+  },
+  "response": {
+    "status": 200,
+    "body": {
+      "requestID": "req_xyz789",
+      "status": "sent",
+      "recipient": "jane.smith@example.com",
+      "sentAt": "2026-06-13T10:00:00Z"
+    }
+  }
+}

@@ -1,0 +1,255 @@
+vocabulary:
+  name: Reputation API Vocabulary
+  description: Domain vocabulary for the Reputation platform REST API covering reviews, listings, surveys, metrics, and business intelligence.
+  url: https://api.reputation.com/v3/vocab
+  version: v3
+
+terms:
+
+  # Core Entities
+  - term: Tenant
+    type: entity
+    description: A unique client or account on the Reputation platform. Agency API keys must specify a tenant via X-TENANT-ID header.
+    properties:
+      - tenantID
+      - name
+      - status
+
+  - term: Location
+    type: entity
+    description: A physical or virtual business location managed within the Reputation platform.
+    properties:
+      - locationID
+      - name
+      - address
+      - businessHours
+      - phone
+      - website
+      - categories
+      - socialProfiles
+
+  - term: Review
+    type: entity
+    description: A customer review aggregated from various online sources for a business location.
+    properties:
+      - reviewID
+      - locationID
+      - sourceID
+      - rating
+      - reviewBody
+      - datePublished
+      - author
+      - status
+
+  - term: SurveyResult
+    type: entity
+    description: A completed customer survey response associated with a location.
+    properties:
+      - surveyID
+      - surveyTemplateID
+      - locationID
+      - responses
+      - dateCompleted
+
+  - term: SurveyTemplate
+    type: entity
+    description: A template defining the structure and questions of a survey.
+    properties:
+      - templateID
+      - name
+      - questions
+
+  - term: Ticket
+    type: entity
+    description: A customer service ticket created in response to a review or feedback item.
+    properties:
+      - ticketID
+      - locationID
+      - reviewID
+      - status
+      - queue
+      - stage
+      - type
+
+  - term: User
+    type: entity
+    description: A user account on the Reputation platform with role-based access.
+    properties:
+      - userID
+      - firstName
+      - lastName
+      - email
+      - role
+      - locationCodes
+      - timezone
+
+  - term: ListingAudit
+    type: entity
+    description: An audit record verifying the accuracy of a business listing across sources like Google, Yelp, etc.
+    properties:
+      - locationID
+      - sourceID
+      - name
+      - address
+      - hours
+      - phone
+      - website
+      - matchStatus
+
+  - term: Asset
+    type: entity
+    description: A media asset (image) stored in the Reputation asset library.
+    properties:
+      - assetID
+      - url
+      - tags
+      - format
+
+  - term: Metric
+    type: entity
+    description: A computed reputation performance metric for a location or group of locations.
+    properties:
+      - locationID
+      - metricType
+      - value
+      - range
+      - from
+      - to
+
+  - term: RequestTemplate
+    type: entity
+    description: A template for review request communications sent via email or SMS.
+    properties:
+      - templateID
+      - name
+      - channel
+      - subject
+      - body
+
+  # Authentication & Authorization
+  - term: ApiKey
+    type: security
+    description: API key passed in the X-API-KEY request header for authentication.
+
+  - term: TenantHeader
+    type: security
+    description: The X-TENANT-ID header used by agency API keys to scope requests to a specific tenant.
+
+  - term: AgencyApiKey
+    type: security
+    description: A special API key issued to agencies allowing management of resources across multiple tenants.
+
+  # Operations / Actions
+  - term: RespondToReview
+    type: action
+    description: Post a response to a customer review on behalf of the business.
+    endpoint: POST /v3/reviews/{reviewID}/respond
+
+  - term: SendReviewRequest
+    type: action
+    description: Send a review request to a customer via email or SMS.
+    endpoints:
+      - POST /v3/requests/send-email
+      - POST /v3/requests/send-sms
+
+  - term: UnsubscribeContact
+    type: action
+    description: Unsubscribe a customer from review request communications.
+    endpoints:
+      - POST /v3/requests/unsubscribe-email
+      - POST /v3/requests/unsubscribe-phone
+
+  - term: OptOutAudit
+    type: action
+    description: Opt a location out of listing audit monitoring.
+    endpoint: PUT /v3/locations/{locationID}/opt-out
+
+  - term: OptInAudit
+    type: action
+    description: Opt a location back in to listing audit monitoring.
+    endpoint: PUT /v3/locations/{locationID}/opt-in
+
+  - term: RunReport
+    type: action
+    description: Execute and export a configured report.
+    endpoint: PUT /v3/reports/{reportID}/export
+
+  - term: PauseTenant
+    type: action
+    description: Pause all activity for a tenant account.
+    endpoint: PUT /v3/tenants/{tenantID}/pause
+
+  - term: UnpauseTenant
+    type: action
+    description: Resume activity for a paused tenant account.
+    endpoint: PUT /v3/tenants/{tenantID}/unpause
+
+  # Pagination
+  - term: Pagination
+    type: pattern
+    description: All list endpoints support offset/limit pagination with a default of 20 results and maximum of 2000.
+    properties:
+      - offset
+      - limit
+      - next
+      - previous
+
+  # Date Range
+  - term: DateRange
+    type: pattern
+    description: Filter parameters for date-ranged endpoints. Supports ISO 8601 custom dates or preset range values.
+    properties:
+      - from
+      - to
+      - range
+    presetRanges:
+      - Today
+      - Yesterday
+      - ThisWeek
+      - Last7Days
+      - Last30Days
+      - ThisMonth
+      - LastMonth
+      - ThisQuarter
+      - LastQuarter
+      - ThisYear
+      - LastYear
+
+  # Content Categories
+  - term: RichContent
+    type: category
+    description: Structured content associated with a location, including FAQs, menus, and product listings.
+    subtypes:
+      - FAQ
+      - Menu
+      - Product
+
+  - term: Summary
+    type: entity
+    description: Aggregated reputation summary data across metrics, reviews, and listing health.
+
+  - term: Category
+    type: entity
+    description: A business category used for listing classification (e.g., Google Business Profile categories).
+    properties:
+      - categoryID
+      - name
+      - industry
+
+  # Error Model
+  - term: Error
+    type: schema
+    description: Validation error structure returned on 400/403/404 responses.
+    properties:
+      - errors (array)
+      - field
+      - code
+      - message
+
+  # Source / Platform
+  - term: Source
+    type: entity
+    description: An external platform or directory from which reviews or listings are aggregated (e.g., Google, Yelp, Facebook).
+    properties:
+      - sourceID
+      - name

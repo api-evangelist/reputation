@@ -1,0 +1,84 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://api.reputation.com/v3/schemas/ticket",
+  "title": "Ticket",
+  "description": "A customer service ticket on the Reputation platform.",
+  "type": "object",
+  "properties": {
+    "ticketID": {
+      "type": "string",
+      "description": "Unique identifier for the ticket"
+    },
+    "locationID": {
+      "type": "string",
+      "description": "ID of the associated business location"
+    },
+    "reviewID": {
+      "type": "string",
+      "description": "ID of the review that triggered this ticket (if applicable)"
+    },
+    "subject": {
+      "type": "string",
+      "description": "Ticket subject line"
+    },
+    "description": {
+      "type": "string",
+      "description": "Detailed description of the issue"
+    },
+    "status": {
+      "type": "string",
+      "description": "Current ticket status"
+    },
+    "queue": {
+      "type": "object",
+      "description": "Ticket queue assignment",
+      "properties": {
+        "queueID": {"type": "string"},
+        "name": {"type": "string"}
+      }
+    },
+    "stage": {
+      "type": "object",
+      "description": "Current workflow stage",
+      "properties": {
+        "stageID": {"type": "string"},
+        "name": {"type": "string"}
+      }
+    },
+    "type": {
+      "type": "object",
+      "description": "Ticket type definition",
+      "properties": {
+        "typeID": {"type": "string"},
+        "name": {"type": "string"}
+      }
+    },
+    "assignee": {
+      "type": "object",
+      "description": "User assigned to the ticket",
+      "properties": {
+        "userID": {"type": "string"},
+        "name": {"type": "string"},
+        "email": {"type": "string", "format": "email"}
+      }
+    },
+    "priority": {
+      "type": "string",
+      "enum": ["low", "medium", "high", "urgent"],
+      "description": "Ticket priority level"
+    },
+    "dateCreated": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "dateUpdated": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "dateClosed": {
+      "type": "string",
+      "format": "date-time"
+    }
+  },
+  "required": ["ticketID", "locationID"]
+}

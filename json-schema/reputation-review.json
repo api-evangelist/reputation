@@ -1,0 +1,93 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://api.reputation.com/v3/schemas/review",
+  "title": "Review",
+  "description": "A customer review aggregated from an external source for a business location.",
+  "type": "object",
+  "properties": {
+    "reviewID": {
+      "type": "string",
+      "description": "Unique identifier for the review"
+    },
+    "locationID": {
+      "type": "string",
+      "description": "ID of the location this review is for"
+    },
+    "sourceID": {
+      "type": "string",
+      "description": "ID of the source platform (e.g., Google, Yelp)"
+    },
+    "sourceName": {
+      "type": "string",
+      "description": "Name of the source platform"
+    },
+    "rating": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 5,
+      "description": "Star rating (0-5)"
+    },
+    "reviewBody": {
+      "type": "string",
+      "description": "Text content of the review"
+    },
+    "title": {
+      "type": "string",
+      "description": "Review title if available"
+    },
+    "author": {
+      "type": "object",
+      "properties": {
+        "name": {"type": "string"},
+        "profileURL": {"type": "string", "format": "uri"}
+      }
+    },
+    "datePublished": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Date and time the review was published on the source platform"
+    },
+    "dateIngested": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Date and time the review was ingested into the Reputation platform"
+    },
+    "status": {
+      "type": "string",
+      "enum": ["active", "removed", "pending"],
+      "description": "Current status of the review"
+    },
+    "responses": {
+      "type": "array",
+      "description": "Owner responses to the review",
+      "items": {"$ref": "#/definitions/ReviewResponse"}
+    },
+    "sentiment": {
+      "type": "string",
+      "enum": ["positive", "neutral", "negative"],
+      "description": "Sentiment analysis result"
+    },
+    "tags": {
+      "type": "array",
+      "items": {"type": "string"},
+      "description": "Tags applied to the review"
+    },
+    "ticketID": {
+      "type": "string",
+      "description": "ID of associated service ticket if one was created"
+    }
+  },
+  "required": ["reviewID", "locationID", "sourceID", "rating", "datePublished"],
+  "definitions": {
+    "ReviewResponse": {
+      "type": "object",
+      "properties": {
+        "responseID": {"type": "string"},
+        "body": {"type": "string"},
+        "datePosted": {"type": "string", "format": "date-time"},
+        "author": {"type": "string"},
+        "status": {"type": "string", "enum": ["published", "pending", "rejected"]}
+      }
+    }
+  }
+}

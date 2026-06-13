@@ -1,0 +1,69 @@
+{
+  "description": "Example response for GET /v3/reviews",
+  "request": {
+    "method": "GET",
+    "url": "https://api.reputation.com/v3/reviews?offset=0&limit=5&locationIDs=loc_123",
+    "headers": {
+      "X-API-KEY": "your_api_key_here",
+      "Accept": "application/json"
+    }
+  },
+  "response": {
+    "pagination": {
+      "offset": 0,
+      "limit": 5,
+      "next": "https://api.reputation.com/v3/reviews?offset=5&limit=5&locationIDs=loc_123",
+      "previous": null
+    },
+    "reviews": [
+      {
+        "reviewID": "rev_abc123",
+        "locationID": "loc_123",
+        "sourceID": "google",
+        "sourceName": "Google",
+        "rating": 5,
+        "reviewBody": "Outstanding service! The staff was incredibly helpful and the facility was spotless. Highly recommend!",
+        "title": null,
+        "author": {
+          "name": "Jane D.",
+          "profileURL": "https://g.co/maps/jane_d"
+        },
+        "datePublished": "2026-06-10T14:32:00Z",
+        "dateIngested": "2026-06-10T15:01:00Z",
+        "status": "active",
+        "sentiment": "positive",
+        "responses": [],
+        "tags": ["service", "staff"],
+        "ticketID": null
+      },
+      {
+        "reviewID": "rev_def456",
+        "locationID": "loc_123",
+        "sourceID": "yelp",
+        "sourceName": "Yelp",
+        "rating": 3,
+        "reviewBody": "Decent experience overall. Wait time was longer than expected but the quality was good.",
+        "title": "Average wait, good quality",
+        "author": {
+          "name": "Mike S.",
+          "profileURL": null
+        },
+        "datePublished": "2026-06-08T10:15:00Z",
+        "dateIngested": "2026-06-08T11:00:00Z",
+        "status": "active",
+        "sentiment": "neutral",
+        "responses": [
+          {
+            "responseID": "resp_789",
+            "body": "Thank you for the feedback, Mike! We're working on reducing wait times.",
+            "datePosted": "2026-06-09T09:00:00Z",
+            "author": "Business Owner",
+            "status": "published"
+          }
+        ],
+        "tags": [],
+        "ticketID": "tkt_111"
+      }
+    ]
+  }
+}

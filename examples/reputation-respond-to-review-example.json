@@ -1,0 +1,24 @@
+{
+  "description": "Example request for POST /v3/reviews/{reviewID}/respond",
+  "request": {
+    "method": "POST",
+    "url": "https://api.reputation.com/v3/reviews/rev_abc123/respond",
+    "headers": {
+      "X-API-KEY": "your_api_key_here",
+      "Content-Type": "application/json"
+    },
+    "body": {
+      "response": "Thank you so much for your kind review! We're thrilled you had a great experience and look forward to seeing you again."
+    }
+  },
+  "response": {
+    "status": 200,
+    "body": {
+      "responseID": "resp_new999",
+      "reviewID": "rev_abc123",
+      "body": "Thank you so much for your kind review! We're thrilled you had a great experience and look forward to seeing you again.",
+      "status": "published",
+      "datePosted": "2026-06-13T10:30:00Z"
+    }
+  }
+}
