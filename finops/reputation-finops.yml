@@ -1,0 +1,41 @@
+name: Reputation FinOps
+description: Financial operations guidance for managing costs when using the Reputation platform and API.
+url: https://reputation.com/pricing
+
+cost_drivers:
+  - name: Location Count
+    description: Pricing is billed per location per month. The primary cost driver is the number of business locations managed on the platform.
+    notes: Audit active locations regularly and remove unused ones to reduce costs.
+
+  - name: Plan Tier
+    description: Three core tiers — Rep Core ($80), Rep Core + Pulse ($115), Rep Core + Surveys ($150) — are available per location.
+    notes: Select the lowest tier that satisfies your review and survey requirements per location cluster.
+
+  - name: Add-On Modules
+    description: Competitive Insights, Actions and Ticketing, Social Suite, Premium Sources, Premium Integrations, and Managed Services are billed separately.
+    notes: Enable add-ons only for locations where they deliver measurable ROI.
+
+  - name: Professional Services
+    description: Implementation packages (Fundamentals up to 10 locations, Basic up to 50, Advanced up to 200) and API consultancy add one-time or recurring service fees.
+    notes: Use the self-serve API documentation at apidocs.reputation.com before purchasing API consultancy.
+
+  - name: Contract Length
+    description: Pricing varies based on contract length; longer commitments typically yield lower per-location rates.
+    notes: Negotiate multi-year contracts when location count is stable to reduce unit costs.
+
+optimization_strategies:
+  - Audit location roster quarterly; deactivate churned or closed locations.
+  - Start new locations on Rep Core and upgrade to Pulse or Surveys only after validating survey engagement.
+  - Consolidate reporting dashboards to avoid redundant user seats.
+  - Leverage the public REST API (apidocs.reputation.com) for bulk data pulls rather than manual UI exports to reduce managed services fees.
+  - Use webhook-style integrations or FTP for large data transfers to avoid API rate limit overages.
+
+budget_guidance:
+  minimum_entry: 80 USD per location per month (Rep Core, single location)
+  typical_smb: 3000 to 5000 USD per month (multi-location, enterprise contract)
+  enterprise: 10000+ USD per month for large multi-location brands with add-ons and managed services
+
+notes:
+  - Reputation does not publish public API-specific usage-based pricing.
+  - All pricing is custom-quoted for enterprise accounts; contact sales for a formal quote.
+  - Source: https://reputation.com/pricing and https://reputation.com/legal-information/standard_pro_services_packages/

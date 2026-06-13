@@ -1,0 +1,73 @@
+name: Reputation Plans and Pricing
+description: Pricing plans and tiers for the Reputation platform, billed per location per month.
+url: https://reputation.com/pricing
+plans:
+  - name: Rep Core
+    price: 80
+    unit: location/month
+    description: Core reputation management including reviews across 250+ sites, listings management, Reputation Score benchmarking, and unlimited dashboards.
+    features:
+      - Reviews monitoring and management across 250+ review sites
+      - Brand-approved replies
+      - Email review request automation
+      - Listings management across 250+ sites
+      - Reputation Score benchmarking
+      - Conversational AI for instant answers
+      - Unlimited dashboards and reports
+    api_access: contact sales
+
+  - name: Rep Core + Pulse
+    price: 115
+    unit: location/month
+    description: Rep Core features plus one custom survey with targeted outreach campaigns.
+    features:
+      - All Rep Core features
+      - One custom survey
+      - Targeted survey outreach campaigns
+    api_access: contact sales
+
+  - name: Rep Core + Surveys
+    price: 150
+    unit: location/month
+    description: Rep Core features plus six custom surveys with targeted outreach campaigns.
+    features:
+      - All Rep Core features
+      - Six custom surveys
+      - Targeted survey outreach campaigns
+    api_access: contact sales
+
+add_ons:
+  - name: Competitive Insights
+    description: Local benchmarking and market analysis against competitors.
+    price: contact sales
+
+  - name: Actions and Ticketing
+    description: Automated ticket creation and assignment from customer feedback.
+    price: contact sales
+
+  - name: Social Suite
+    description: Multi-location social media listening, publishing, and engagement.
+    price: contact sales
+
+  - name: Premium Sources
+    description: Access to Yelp, TripAdvisor, Vitals, and Apartment Ratings review sources.
+    price: contact sales
+
+  - name: Premium Integrations
+    description: CRM and EHR connectivity for workflow automation.
+    price: contact sales
+
+  - name: Managed Services
+    description: Fully managed review responses, listings, and social media management.
+    price: contact sales
+
+  - name: API Consultancy
+    sku: PROSERV-API-CONSULT
+    description: API consultancy via email or phone for public REST endpoints including design best practices guidance.
+    price: contact sales
+    notes: Requires purchase of the respective platform solution.
+
+notes:
+  - Pricing is per location per month.
+  - Enterprise and multi-location contracts are custom-quoted.
+  - API access requires contacting your customer success manager for an API key.

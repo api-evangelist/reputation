@@ -1,0 +1,64 @@
+aid: reputation
+name: Reputation
+description: Reputation is an AI-powered reputation performance platform providing a REST API for managing online reviews, social listening, business listings, surveys, and competitive intelligence across multiple locations.
+image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+url: https://raw.githubusercontent.com/api-evangelist/reputation/refs/heads/main/apis.yml
+created: '2026-06-13'
+modified: '2026-06-13'
+specificationVersion: '0.19'
+type: Index
+tags:
+  - Reputation Management
+  - Online Reviews
+  - Business Listings
+  - Surveys
+  - Social Listening
+  - Competitive Intelligence
+  - Customer Experience
+  - Local SEO
+apis:
+  - name: Reputation API
+    description: REST API for aggregating customer feedback, managing reviews and listings, running surveys, and accessing reputation metrics and insights across locations.
+    image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+    humanURL: https://apidocs.reputation.com/
+    baseURL: https://reputation-api.com
+    tags:
+      - Reviews
+      - Listings
+      - Surveys
+      - Metrics
+      - Locations
+    properties:
+      - type: Documentation
+        url: https://apidocs.reputation.com/
+      - type: Documentation
+        url: https://apidocs-eu.reputation.com/
+    contact:
+      - FN: Reputation Support
+        url: https://support.reputation.com/
+common:
+  - type: Website
+    url: https://reputation.com
+  - type: Documentation
+    url: https://apidocs.reputation.com/
+  - type: GitHubOrg
+    url: https://github.com/reputation
+  - type: LinkedIn
+    url: https://www.linkedin.com/company/reputation-com
+  - type: Blog
+    url: https://reputation.com/resources/articles/
+  - type: Pricing
+    url: https://reputation.com/pricing
+  - type: StatusPage
+    url: https://status.reputation.com
+  - type: X
+    url: https://twitter.com/Reputation_Com
+  - type: Plans
+    url: plans/reputation-plans-pricing.yml
+  - type: RateLimits
+    url: rate-limits/reputation-rate-limits.yml
+  - type: FinOps
+    url: finops/reputation-finops.yml
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com

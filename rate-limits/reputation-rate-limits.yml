@@ -1,0 +1,34 @@
+name: Reputation API Rate Limits
+description: Rate limiting policies for the Reputation REST API. Specific numeric limits are not publicly documented; contact your customer success manager for contractual details.
+url: https://apidocs.reputation.com/
+enforcement:
+  - type: API Key
+    description: All requests must include a valid API key in the request headers obtained from your customer success manager.
+    header: Authorization
+    format: Bearer token or API key header (confirm with Reputation support)
+
+headers:
+  - name: X-RateLimit-Limit
+    description: Total number of requests allowed in the current window.
+  - name: X-RateLimit-Remaining
+    description: Number of requests remaining in the current window.
+  - name: X-RateLimit-Reset
+    description: Unix timestamp when the current rate limit window resets.
+
+response_codes:
+  - code: 429
+    description: Too Many Requests — rate limit exceeded. Back off and retry after the window resets.
+
+regions:
+  - name: US
+    base_url: https://reputation-api.com
+    docs_url: https://apidocs.reputation.com/
+  - name: EU
+    base_url: https://reputation-api.eu
+    docs_url: https://apidocs-eu.reputation.com/
+
+notes:
+  - Reputation does not publish specific rate limit thresholds publicly.
+  - Rate limits are negotiated as part of enterprise contracts.
+  - Contact your customer success manager for contractual rate limit details.
+  - API consultancy (PROSERV-API-CONSULT) is available for guidance on API best practices.
