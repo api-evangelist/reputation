@@ -1,5 +1,17 @@
 {
   "url": "https://reputation.com/resources/articles/",
   "lastFetched": "2026-06-13",
-  "posts": []
+  "posts": [],
+  "repo": "reputation",
+  "feeds": [
+    {
+      "source": "https://www.linkedin.com/company/reputation-com",
+      "feed_url": "https://www.linkedin.com/company/reputation-com",
+      "title": "",
+      "saved": 0,
+      "method": "none"
+    }
+  ],
+  "post_count": 0,
+  "fetched": "2026-06-14T20:42:17Z"
 }
