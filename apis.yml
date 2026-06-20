@@ -1,7 +1,7 @@
 aid: reputation
 name: Reputation
 description: Reputation is an AI-powered reputation performance platform providing a REST API for managing online reviews, social listening, business listings, surveys, and competitive intelligence across multiple locations.
-image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
 url: https://raw.githubusercontent.com/api-evangelist/reputation/refs/heads/main/apis.yml
 created: '2026-06-13'
 modified: '2026-06-13'
@@ -19,7 +19,7 @@ tags:
 apis:
   - name: Reputation API
     description: REST API for aggregating customer feedback, managing reviews and listings, running surveys, and accessing reputation metrics and insights across locations.
-    image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+    image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
     humanURL: https://apidocs.reputation.com/
     baseURL: https://reputation-api.com
     tags:
