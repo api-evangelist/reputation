@@ -49,6 +49,10 @@ apis:
       - FN: Reputation Support
         url: https://support.reputation.com/
 common:
+  - type: DomainSecurity
+    url: security/reputation-domain-security.yml
+  - type: Authentication
+    url: authentication/reputation-authentication.yml
   - type: Website
     url: https://reputation.com
   - type: Documentation
