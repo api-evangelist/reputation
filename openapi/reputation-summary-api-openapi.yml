@@ -1,0 +1,105 @@
+openapi: 3.0.0
+info:
+  title: Reputation Asset Library Summary API
+  description: REST API for aggregating customer feedback, managing reviews and listings, running surveys, and accessing reputation metrics and insights across locations.
+  version: v3
+  contact:
+    name: Reputation Support
+    url: https://support.reputation.com/
+servers:
+- url: https://api.reputation.com
+  description: US Production
+- url: https://api-eu.reputation.com
+  description: EU Production
+security:
+- ApiKeyAuth: []
+tags:
+- name: Summary
+  description: Reputation summary data
+paths:
+  /v3/summary:
+    get:
+      summary: Get Summary
+      operationId: get_summary
+      tags:
+      - Summary
+      security:
+      - ApiKeyAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          description: Bad request - invalid or missing parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized - invalid API key
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden - insufficient permissions
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '429':
+          description: Too many requests - rate limit exceeded
+        '500':
+          description: Internal server error
+      description: 'This endpoint provides a comprehensive summary of reviews and associated metrics for your business. You can filter results by specific date ranges, locations, and group the summary by overall metrics, location, or source. The provided metrics include review count by sentiment, average ratings, reputation score, and various score signals detailing aspects like review recency, review distribution across platforms, and social engagement, and more.
+
+        Samples
+
+        JavaScript XHR Request
+
+        var xhr = new XMLHtt'
+      parameters:
+      - name: offset
+        in: query
+        description: Offset for pagination
+        schema:
+          type: integer
+          default: 0
+      - name: limit
+        in: query
+        description: Maximum number of objects to return
+        schema:
+          type: integer
+          default: 20
+          maximum: 2000
+components:
+  schemas:
+    Error:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              field:
+                type: string
+              code:
+                type: string
+              message:
+                type: string
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-API-KEY
+      description: API key for authentication. For agency accounts, also include X-TENANT-ID header.

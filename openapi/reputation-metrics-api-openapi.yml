@@ -1,0 +1,351 @@
+openapi: 3.0.0
+info:
+  title: Reputation Asset Library Metrics API
+  description: REST API for aggregating customer feedback, managing reviews and listings, running surveys, and accessing reputation metrics and insights across locations.
+  version: v3
+  contact:
+    name: Reputation Support
+    url: https://support.reputation.com/
+servers:
+- url: https://api.reputation.com
+  description: US Production
+- url: https://api-eu.reputation.com
+  description: EU Production
+security:
+- ApiKeyAuth: []
+tags:
+- name: Metrics
+  description: Reputation metrics and insights
+paths:
+  /v3/metrics:
+    get:
+      summary: Get Metrics (Deprecated)
+      operationId: get_metrics
+      tags:
+      - Metrics
+      security:
+      - ApiKeyAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          description: Bad request - invalid or missing parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized - invalid API key
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden - insufficient permissions
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '429':
+          description: Too many requests - rate limit exceeded
+        '500':
+          description: Internal server error
+      description: 'Retrieve a variety of metrics based on specific criteria. These metrics can provide insights into trends, user behavior, and more, over different time intervals and for different sources or locations.
+
+        Note: This endpoint is now deprecated and might be removed in future versions. Ensure you check for alternative endpoints or methods to fetch the required data.
+
+        Sample
+
+        JavaScript XHR Request
+
+        var xhr = new XMLHttpRequest();
+
+        xhr.open(''GET'', ''https://api.reputation.com/v3/metrics'', true);
+
+        xhr.setReque'
+      deprecated: true
+      parameters:
+      - name: offset
+        in: query
+        description: Offset for pagination
+        schema:
+          type: integer
+          default: 0
+      - name: limit
+        in: query
+        description: Maximum number of objects to return
+        schema:
+          type: integer
+          default: 20
+          maximum: 2000
+  /v3/page-metrics:
+    get:
+      summary: Get Page Metrics
+      operationId: get_page_metrics
+      tags:
+      - Metrics
+      security:
+      - ApiKeyAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          description: Bad request - invalid or missing parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized - invalid API key
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden - insufficient permissions
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '429':
+          description: Too many requests - rate limit exceeded
+        '500':
+          description: Internal server error
+      description: "This endpoint allows for the retrieval of page-specific metrics from the Reputation API. By specifying various query parameters, you can filter and customize the data being fetched, enabling a more detailed and targeted insights analysis.\nSample\nJavaScript XHR Request\nvar xhr = new XMLHttpRequest();\nxhr.open('GET', 'https://api.reputation.com/v3/page-metrics?limit=2', true);\nxhr.setRequestHeader('x-api-key', 'Your API key');\nxhr.onreadystatechange = function() {\n    if (xhr.readyState == 4 &amp;"
+      parameters:
+      - name: offset
+        in: query
+        description: Offset for pagination
+        schema:
+          type: integer
+          default: 0
+      - name: limit
+        in: query
+        description: Maximum number of objects to return
+        schema:
+          type: integer
+          default: 20
+          maximum: 2000
+  /v3/post-metrics:
+    get:
+      summary: Get Post Metrics
+      operationId: get_post_metrics
+      tags:
+      - Metrics
+      security:
+      - ApiKeyAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          description: Bad request - invalid or missing parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized - invalid API key
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden - insufficient permissions
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '429':
+          description: Too many requests - rate limit exceeded
+        '500':
+          description: Internal server error
+      description: "This endpoint retrieves post metrics from the Reputation platform. It provides detailed insights based on various filtering criteria such as date range, source, location, type, and interval.\nSample\nJavaScript XHR\nvar xhr = new XMLHttpRequest();\nxhr.open('GET', 'https://api.reputation.com/v3/post-metrics?limit=2&amp;sourceIDs=FACEBOOK', true);\nxhr.onreadystatechange = function() {\n    if (xhr.readyState == 4 &amp;&amp; xhr.status == 200) {\n        var response = JSON.parse(xhr.responseText);\n    "
+      parameters:
+      - name: offset
+        in: query
+        description: Offset for pagination
+        schema:
+          type: integer
+          default: 0
+      - name: limit
+        in: query
+        description: Maximum number of objects to return
+        schema:
+          type: integer
+          default: 20
+          maximum: 2000
+  /v3/aggregate-page-metrics:
+    get:
+      summary: Get Aggregate Page Metrics
+      operationId: get_aggregate_page_metrics
+      tags:
+      - Metrics
+      security:
+      - ApiKeyAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          description: Bad request - invalid or missing parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized - invalid API key
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden - insufficient permissions
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '429':
+          description: Too many requests - rate limit exceeded
+        '500':
+          description: Internal server error
+      description: 'This endpoint retrieves aggregate metrics related to pages on various platforms. The metrics offer insights on page reach, views, clicks, and more, providing a comprehensive understanding of a page''s performance over different sources and time frames.
+
+        For example:
+
+
+        If you want to know the total number of page views from all sources for a specific location over the past month, the endpoint would "aggregate" or sum up all the individual views from each source to provide a total count.
+
+        If you choos'
+      parameters:
+      - name: offset
+        in: query
+        description: Offset for pagination
+        schema:
+          type: integer
+          default: 0
+      - name: limit
+        in: query
+        description: Maximum number of objects to return
+        schema:
+          type: integer
+          default: 20
+          maximum: 2000
+  /v3/aggregate-post-metrics:
+    get:
+      summary: Get Aggregate Post Metrics
+      operationId: get_aggregate_post_metrics
+      tags:
+      - Metrics
+      security:
+      - ApiKeyAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          description: Bad request - invalid or missing parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized - invalid API key
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden - insufficient permissions
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '429':
+          description: Too many requests - rate limit exceeded
+        '500':
+          description: Internal server error
+      description: "This endpoint retrieves aggregate metrics pertaining to posts from various sources. These metrics provide insights on aspects like post impressions, organic reach, and other related dimensions for a given period and set of filtering criteria.\nSample\nJavaScript XHR Sample\nvar xhr = new XMLHttpRequest();\nxhr.open('GET', 'https://api.reputation.com/v3/aggregate-post-metrics?locationIDs=SA&amp;sourceIDs=FACEBOOK', true);\nxhr.onreadystatechange = function() {\n    if (xhr.readyState == 4 &amp;&amp; xh"
+      parameters:
+      - name: offset
+        in: query
+        description: Offset for pagination
+        schema:
+          type: integer
+          default: 0
+      - name: limit
+        in: query
+        description: Maximum number of objects to return
+        schema:
+          type: integer
+          default: 20
+          maximum: 2000
+components:
+  schemas:
+    Error:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              field:
+                type: string
+              code:
+                type: string
+              message:
+                type: string
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-API-KEY
+      description: API key for authentication. For agency accounts, also include X-TENANT-ID header.

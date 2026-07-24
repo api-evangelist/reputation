@@ -1,0 +1,113 @@
+openapi: 3.0.0
+info:
+  title: Reputation Asset Library Listing Audits API
+  description: REST API for aggregating customer feedback, managing reviews and listings, running surveys, and accessing reputation metrics and insights across locations.
+  version: v3
+  contact:
+    name: Reputation Support
+    url: https://support.reputation.com/
+servers:
+- url: https://api.reputation.com
+  description: US Production
+- url: https://api-eu.reputation.com
+  description: EU Production
+security:
+- ApiKeyAuth: []
+tags:
+- name: Listing Audits
+  description: Audit business listings across sources
+paths:
+  /v3/listing-audits:
+    get:
+      summary: Get Listing Audits
+      operationId: get_listing_audits
+      tags:
+      - Listing Audits
+      security:
+      - ApiKeyAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          description: Bad request - invalid or missing parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized - invalid API key
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden - insufficient permissions
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '429':
+          description: Too many requests - rate limit exceeded
+        '500':
+          description: Internal server error
+      description: 'This endpoint facilitates the retrieval of listing audits, allowing you to examine and assess the integrity of listings over specified time frames or for specific locations and sources with the optional query parameters.
+
+        Sample Requests
+
+        JavaScript XHR Request
+
+        var xhr = new XMLHttpRequest();
+
+        xhr.open(''GET'', ''https://api.reputation.com/v3/listing-audits?limit=2'', true);
+
+        xhr.setRequestHeader(''Accept'', ''application/json'');
+
+        xhr.setRequestHeader(''x-api-key'', ''Your API key'');
+
+        xhr.onreadystatechange = f'
+      parameters:
+      - name: offset
+        in: query
+        description: Offset for pagination
+        schema:
+          type: integer
+          default: 0
+      - name: limit
+        in: query
+        description: Maximum number of objects to return
+        schema:
+          type: integer
+          default: 20
+          maximum: 2000
+components:
+  schemas:
+    Error:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              field:
+                type: string
+              code:
+                type: string
+              message:
+                type: string
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-API-KEY
+      description: API key for authentication. For agency accounts, also include X-TENANT-ID header.

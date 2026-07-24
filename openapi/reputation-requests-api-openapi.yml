@@ -1,0 +1,593 @@
+openapi: 3.0.0
+info:
+  title: Reputation Asset Library Requests API
+  description: REST API for aggregating customer feedback, managing reviews and listings, running surveys, and accessing reputation metrics and insights across locations.
+  version: v3
+  contact:
+    name: Reputation Support
+    url: https://support.reputation.com/
+servers:
+- url: https://api.reputation.com
+  description: US Production
+- url: https://api-eu.reputation.com
+  description: EU Production
+security:
+- ApiKeyAuth: []
+tags:
+- name: Requests
+  description: Review request management
+paths:
+  /v3/request-urls:
+    get:
+      summary: Get Request URLs (Deprecated)
+      operationId: get_request_urls
+      tags:
+      - Requests
+      security:
+      - ApiKeyAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          description: Bad request - invalid or missing parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized - invalid API key
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden - insufficient permissions
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '429':
+          description: Too many requests - rate limit exceeded
+        '500':
+          description: Internal server error
+      description: 'Retrieve specific request URLs associated with given parameters. This endpoint allows users to fetch URLs based on specified location IDs, source IDs and optional template names, and source IDs.
+
+        A "request URL" refers to a specific web address (or URL) associated with a certain platform, source, or service where reviews, feedback, or other user-generated content related to a business or entity can be found or requested.
+
+        Note: This endpoint is now deprecated, and support for it has been discontin'
+      deprecated: true
+  /v3/requests/metrics:
+    get:
+      summary: Get Metrics
+      operationId: get_requests_metrics
+      tags:
+      - Requests
+      security:
+      - ApiKeyAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          description: Bad request - invalid or missing parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized - invalid API key
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden - insufficient permissions
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '429':
+          description: Too many requests - rate limit exceeded
+        '500':
+          description: Internal server error
+      description: 'Retrieve key metrics related to the request processes within the Reputation platform. This endpoint offers insight into request analytics segmented by various criteria such as mode, location, or requester role. It''s tailored to provide a comprehensive view of request-related activities, ensuring users have the data needed to optimize their strategies and ensure effective engagement.
+
+        Sample
+
+        JavaScript XHR Request
+
+        var xhr = new XMLHttpRequest();
+
+        xhr.open(''GET'', ''https://api.reputation.com/v3/reque'
+      parameters:
+      - name: offset
+        in: query
+        description: Offset for pagination
+        schema:
+          type: integer
+          default: 0
+      - name: limit
+        in: query
+        description: Maximum number of objects to return
+        schema:
+          type: integer
+          default: 20
+          maximum: 2000
+  /v3/requests/request-urls:
+    get:
+      summary: Get Request Urls
+      operationId: get_requests_request_urls
+      tags:
+      - Requests
+      security:
+      - ApiKeyAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          description: Bad request - invalid or missing parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized - invalid API key
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden - insufficient permissions
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '429':
+          description: Too many requests - rate limit exceeded
+        '500':
+          description: Internal server error
+      description: 'Retrieve specific request URLs associated with given parameters. This endpoint allows users to fetch URLs based on specified location IDs, optional template names, and source ID
+
+        A Request URL refers to a specific web address (or URL) associated with a certain platform, source, or service where reviews, feedback, or other user-generated content related to a business or entity can be found or requested.
+
+        Sample
+
+        JavaScript XHR Request
+
+        var xhr = new XMLHttpRequest();
+
+        xhr.open(''GET'', ''https://api.repu'
+      parameters:
+      - name: offset
+        in: query
+        description: Offset for pagination
+        schema:
+          type: integer
+          default: 0
+      - name: limit
+        in: query
+        description: Maximum number of objects to return
+        schema:
+          type: integer
+          default: 20
+          maximum: 2000
+  /v3/requests/send-email:
+    post:
+      summary: Send Email
+      operationId: post_requests_send_email
+      tags:
+      - Requests
+      security:
+      - ApiKeyAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          description: Bad request - invalid or missing parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized - invalid API key
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden - insufficient permissions
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '429':
+          description: Too many requests - rate limit exceeded
+        '500':
+          description: Internal server error
+      description: "Facilitates the sending of email requests, leveraging customizable templates and personalization through variables. The emails can be tailored based on location, sources, and other criteria.\nSample\nJavaScript XHR Request\nvar xhr = new XMLHttpRequest();\nxhr.open('POST', 'https://api.reputation.com/v3/requests/send-email', true);\nxhr.setRequestHeader('Content-Type', 'application/json');\nxhr.setRequestHeader('x-api-key', 'Your API key');\nxhr.onreadystatechange = function() {\n    if (xhr.readyState "
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                id: String
+                templateName: String
+                from:
+                  name: String
+                  email: String
+                to:
+                  name: String
+                  email: String
+                  phone: String
+                bcc:
+                  name: String
+                  email: String
+                  phone: String
+                subject: String
+                sourceSelection: String
+                sourceIDs:
+                - String Array
+                excludedSourceIDs:
+                - String Array
+                locationID: String
+                variables:
+                - name: String
+                  value: String
+  /v3/requests/send-sms:
+    post:
+      summary: Send SMS
+      operationId: post_requests_send_sms
+      tags:
+      - Requests
+      security:
+      - ApiKeyAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          description: Bad request - invalid or missing parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized - invalid API key
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden - insufficient permissions
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '429':
+          description: Too many requests - rate limit exceeded
+        '500':
+          description: Internal server error
+      description: "Send an SMS request to a client. By using specific templates and defining the recipient, you can send tailored SMS messages to your desired audience.\nSample\nJavaScript XHR Request\nvar xhr = new XMLHttpRequest();\nxhr.open('POST', 'https://api.reputation.com/v3/requests/send-sms', true);\nxhr.setRequestHeader('x-api-key', 'Your API key');\nxhr.setRequestHeader('Content-Type', 'application/json');\nxhr.onreadystatechange = function() {\n  if (xhr.readyState == 4 &amp;&amp; xhr.status == 200) {\n    var "
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                id: String
+                templateName: String
+                to:
+                  name: String
+                  email: String
+                  phone: String
+                sourceSelection: String
+                sourceIDs:
+                - String Array
+                excludedSourceIDs:
+                - String Array
+                locationID: String
+                variables:
+                - name: String
+                  value: String
+  /v3/requests/unsubscribe-email:
+    post:
+      summary: Unsubscribe Email
+      operationId: post_requests_unsubscribe_email
+      tags:
+      - Requests
+      security:
+      - ApiKeyAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          description: Bad request - invalid or missing parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized - invalid API key
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden - insufficient permissions
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '429':
+          description: Too many requests - rate limit exceeded
+        '500':
+          description: Internal server error
+      description: "Unsubscribe a client's email from your marketing. Once requested the email address will no longer recieve emails.\nSample\nJavaScript XHR Request\nvar xhr = new XMLHttpRequest();\nxhr.open(\"POST\", \"https://api.reputation.com/v3/requests/unsubscribe-email\", true);\nxhr.setRequestHeader(\"Content-Type\", \"application/json;charset=UTF-8\");\nxhr.setRequestHeader(\"x-api-key\", \"Your API key\");\nxhr.onreadystatechange = function() {\n  if (xhr.readyState == 4 &amp;&amp; xhr.status == 200) {\n    console.log(xhr.r"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                email: String
+  /v3/requests/unsubscribe-phone:
+    post:
+      summary: Unsubscribe Phone
+      operationId: post_requests_unsubscribe_phone
+      tags:
+      - Requests
+      security:
+      - ApiKeyAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          description: Bad request - invalid or missing parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized - invalid API key
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden - insufficient permissions
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '429':
+          description: Too many requests - rate limit exceeded
+        '500':
+          description: Internal server error
+      description: "Unsubscribe a client's phone number from your marketing. Once requested the phone number will no longer recieve SMSs.\nSample\nJavaScript XHR Request\nvar xhr = new XMLHttpRequest();\nxhr.open(\"POST\", \"https://api.reputation.com/v3/requests/unsubscribe-phone\", true);\nxhr.setRequestHeader(\"Content-Type\", \"application/json;charset=UTF-8\");\nxhr.setRequestHeader(\"x-api-key\", \"Your API key\");\nxhr.onreadystatechange = function() {\n  if (xhr.readyState == 4 &amp;&amp; xhr.status == 200) {\n    console.log(x"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                phone: String
+  /v3/requests/unsubscribes:
+    get:
+      summary: Get Unsubscribes
+      operationId: get_requests_unsubscribes
+      tags:
+      - Requests
+      security:
+      - ApiKeyAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          description: Bad request - invalid or missing parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized - invalid API key
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden - insufficient permissions
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '429':
+          description: Too many requests - rate limit exceeded
+        '500':
+          description: Internal server error
+      description: "Retrieve a list of unsubscribes based on a specified date range and pagination constraints. This endpoint is useful for monitoring customers who have opted out of communications, whether via email or phone.\nSample\nJavaScript XHR Request\nvar xhr = new XMLHttpRequest();\nxhr.open('GET', 'https://api.reputation.com/v3/requests/unsubscribes?offset=0&amp;limit=20', true);\nxhr.setRequestHeader('x-api-key', 'Your API key');\nxhr.onreadystatechange = function() {\n    if (xhr.readyState == 4 &amp;&amp; xhr"
+      parameters:
+      - name: offset
+        in: query
+        description: Offset for pagination
+        schema:
+          type: integer
+          default: 0
+      - name: limit
+        in: query
+        description: Maximum number of objects to return
+        schema:
+          type: integer
+          default: 20
+          maximum: 2000
+  /v3/requests/templates:
+    get:
+      summary: Get Request Templates
+      operationId: get_requests_templates
+      tags:
+      - Requests
+      security:
+      - ApiKeyAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          description: Bad request - invalid or missing parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized - invalid API key
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden - insufficient permissions
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '429':
+          description: Too many requests - rate limit exceeded
+        '500':
+          description: Internal server error
+      description: 'This endpoint allows you to retrieve a list of available request templates based on the specified template type. The request templates define preset formats and structures for various types of requests such as Kiosk, Request Review, or SMS. By passing the appropriate templateType parameter, you can filter out the templates that match the desired type.
+
+        Sample
+
+        JavaScript XHR Request
+
+        var xhr = new XMLHttpRequest();
+
+
+        xhr.open(''GET'', ''https://api.reputation.com/v3/requests/templates?templateType=3'', '
+      parameters:
+      - name: offset
+        in: query
+        description: Offset for pagination
+        schema:
+          type: integer
+          default: 0
+      - name: limit
+        in: query
+        description: Maximum number of objects to return
+        schema:
+          type: integer
+          default: 20
+          maximum: 2000
+components:
+  schemas:
+    Error:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              field:
+                type: string
+              code:
+                type: string
+              message:
+                type: string
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-API-KEY
+      description: API key for authentication. For agency accounts, also include X-TENANT-ID header.

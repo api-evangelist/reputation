@@ -1,0 +1,251 @@
+openapi: 3.0.0
+info:
+  title: Reputation Asset Library Rich Content API
+  description: REST API for aggregating customer feedback, managing reviews and listings, running surveys, and accessing reputation metrics and insights across locations.
+  version: v3
+  contact:
+    name: Reputation Support
+    url: https://support.reputation.com/
+servers:
+- url: https://api.reputation.com
+  description: US Production
+- url: https://api-eu.reputation.com
+  description: EU Production
+security:
+- ApiKeyAuth: []
+tags:
+- name: Rich Content
+  description: FAQs, menus, and product content
+paths:
+  /v3/rich-content/faqs:
+    get:
+      summary: Get FAQs
+      operationId: get_rich_content_faqs
+      tags:
+      - Rich Content
+      security:
+      - ApiKeyAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          description: Bad request - invalid or missing parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized - invalid API key
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden - insufficient permissions
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '429':
+          description: Too many requests - rate limit exceeded
+        '500':
+          description: Internal server error
+      description: 'This endpoint retrieves a list of FAQs (Frequently Asked Questions) associated with specific locations. The FAQ content can be filtered based on location IDs and/or source IDs. The returned data provides comprehensive details about each FAQ, including the FAQ''s unique identifier, display name, associated business location, publishing source, and detailed FAQ content organized into sections.
+
+        Sample Use Case:
+
+        If you have an organization with multiple business locations, you can use this endpoint t'
+  /v3/rich-content/faqs/{faqId}:
+    get:
+      summary: Get FAQ
+      operationId: get_rich_content_faqs_faqId
+      tags:
+      - Rich Content
+      security:
+      - ApiKeyAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          description: Bad request - invalid or missing parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized - invalid API key
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden - insufficient permissions
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '429':
+          description: Too many requests - rate limit exceeded
+        '500':
+          description: Internal server error
+      description: 'Access the detailed information of a specific FAQ using its unique identifier with this endpoint. It provides comprehensive data about the FAQ, including multiple sections which themselves may contain multiple items, allowing businesses to understand and manage their FAQs in depth.
+
+        Sample
+
+        JavaScript XHR Request
+
+        var xhr = new XMLHttpRequest();
+
+
+        xhr.open(''GET'', ''https://api.reputation.com/v3/rich-content/faqs/60261049d043f800069d13e7_GOOGLE_PLACES_737489'', true);
+
+        xhr.setRequestHeader(''x-api-key'', '
+      parameters:
+      - name: faqId
+        in: path
+        required: true
+        schema:
+          type: string
+        description: The faqId identifier
+  /v3/rich-content/menus:
+    get:
+      summary: Get Menus
+      operationId: get_rich_content_menus
+      tags:
+      - Rich Content
+      security:
+      - ApiKeyAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          description: Bad request - invalid or missing parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized - invalid API key
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden - insufficient permissions
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '429':
+          description: Too many requests - rate limit exceeded
+        '500':
+          description: Internal server error
+      description: "Retrieves the list of food menus associated with one or several business locations. The response can range from an empty array to an array with multiple menus, depending on the available menus for the specified locations.\nSample\nJavaScript XHR Request\nvar xhr = new XMLHttpRequest();\nxhr.open(\"GET\", \"https://api.reputation.com/v3/rich-content/menus?locationIDs=REST_5678,REST_8901\", true);\nxhr.setRequestHeader(\"x-api-key\", \"Your API key\");\n\nxhr.onreadystatechange = function() {\n  if (xhr.readyStat"
+  /v3/rich-content/products:
+    get:
+      summary: Get Products
+      operationId: get_rich_content_products
+      tags:
+      - Rich Content
+      security:
+      - ApiKeyAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          description: Bad request - invalid or missing parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized - invalid API key
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden - insufficient permissions
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '429':
+          description: Too many requests - rate limit exceeded
+        '500':
+          description: Internal server error
+      description: 'This endpoint allows users to retrieve a list of products associated with business locations. While it''s optional, users can provide one or multiple location IDs to narrow down the results, fetching an array of products that may range from none to several entries.
+
+        Sample
+
+        JavaScript XHR Request
+
+        var xhr = new XMLHttpRequest();
+
+        xhr.open(''GET'', ''https://api.reputation.com/v3/rich-content/products?locationIDs=STORE_1209,STORE_5812'', true);
+
+        xhr.setRequestHeader(''x-api-key'', ''Your API key'');
+
+        xhr.onread'
+components:
+  schemas:
+    Error:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              field:
+                type: string
+              code:
+                type: string
+              message:
+                type: string
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-API-KEY
+      description: API key for authentication. For agency accounts, also include X-TENANT-ID header.

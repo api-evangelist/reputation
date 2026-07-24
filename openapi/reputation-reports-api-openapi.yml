@@ -1,0 +1,117 @@
+openapi: 3.0.0
+info:
+  title: Reputation Asset Library Reports API
+  description: REST API for aggregating customer feedback, managing reviews and listings, running surveys, and accessing reputation metrics and insights across locations.
+  version: v3
+  contact:
+    name: Reputation Support
+    url: https://support.reputation.com/
+servers:
+- url: https://api.reputation.com
+  description: US Production
+- url: https://api-eu.reputation.com
+  description: EU Production
+security:
+- ApiKeyAuth: []
+tags:
+- name: Reports
+  description: Report generation and export
+paths:
+  /v3/reports/{reportID}/export:
+    put:
+      summary: Run Report
+      operationId: put_reports_reportID_export
+      tags:
+      - Reports
+      security:
+      - ApiKeyAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          description: Bad request - invalid or missing parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized - invalid API key
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden - insufficient permissions
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '429':
+          description: Too many requests - rate limit exceeded
+        '500':
+          description: Internal server error
+      description: 'Execute a specific report within the Reputation platform. By sending a PUT request to this endpoint, you can define how and when the report is exported, with the capability to override its configurations, specify the locale, and select a user context. This ensures that the generated report caters to the precise analytical needs for a given scenario.
+
+        Finding the Report ID
+
+        See this article to learn how to find the report ID for the report you wish to export.
+
+        Sample
+
+        JavaScript XHR Request
+
+        var xhr ='
+      parameters:
+      - name: reportID
+        in: path
+        required: true
+        schema:
+          type: string
+        description: The reportID identifier
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                configuration:
+                  runAsLocale: string
+                  runDate: integer
+                  overrideConfigurations:
+                    __report_config__:
+                      filters: []
+                      parameters:
+                        period: string
+components:
+  schemas:
+    Error:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              field:
+                type: string
+              code:
+                type: string
+              message:
+                type: string
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-API-KEY
+      description: API key for authentication. For agency accounts, also include X-TENANT-ID header.

@@ -1,0 +1,220 @@
+openapi: 3.0.0
+info:
+  title: Reputation Asset Library Users API
+  description: REST API for aggregating customer feedback, managing reviews and listings, running surveys, and accessing reputation metrics and insights across locations.
+  version: v3
+  contact:
+    name: Reputation Support
+    url: https://support.reputation.com/
+servers:
+- url: https://api.reputation.com
+  description: US Production
+- url: https://api-eu.reputation.com
+  description: EU Production
+security:
+- ApiKeyAuth: []
+tags:
+- name: Users
+  description: User management
+paths:
+  /v3/users:
+    get:
+      summary: Get Users
+      operationId: get_users
+      tags:
+      - Users
+      security:
+      - ApiKeyAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          description: Bad request - invalid or missing parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized - invalid API key
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden - insufficient permissions
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '429':
+          description: Too many requests - rate limit exceeded
+        '500':
+          description: Internal server error
+      description: "Retrieve a list of users within your system, providing crucial details about each user. It's an essential tool for administrators to oversee user accounts, roles, and access levels.\nSample\nJavaScript XHR Request\nvar data = null;\nvar xhr = new XMLHttpRequest();\nxhr.withCredentials = true;\nxhr.addEventListener(\"readystatechange\", function () {\n    if (this.readyState === this.DONE) {\n        console.log(this.responseText);\n    }\n});\nxhr.open(\"GET\", \"https://api.reputation.com/v3/users?offset=0&amp"
+      parameters:
+      - name: offset
+        in: query
+        description: Offset for pagination
+        schema:
+          type: integer
+          default: 0
+      - name: limit
+        in: query
+        description: Maximum number of objects to return
+        schema:
+          type: integer
+          default: 20
+          maximum: 2000
+    post:
+      summary: Save User
+      operationId: post_users
+      tags:
+      - Users
+      security:
+      - ApiKeyAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          description: Bad request - invalid or missing parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized - invalid API key
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden - insufficient permissions
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '429':
+          description: Too many requests - rate limit exceeded
+        '500':
+          description: Internal server error
+      description: 'You can use this endpoint to create or update a user profile in your system. This is particularly useful for managing access and roles within your organization. When making a request, you''ll need to provide essential details such as the user''s unique ID, first name, last name, email, and role. Additional details like phone number, display name, and specific user scopes can also be specified to further customize the user''s profile.
+
+        Sample
+
+        JavaScript XHR Request
+
+        var xhr = new XMLHttpRequest();
+
+        xhr'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                id: string
+                tenantID: null
+                firstName: string
+                lastName: string
+                displayName: string
+                email: string
+                phone: null
+                role: string
+                scopes: null
+                active: boolean
+                locale: string
+                singleSignOn: boolean
+  /v3/users/{userID}:
+    get:
+      summary: Get User
+      operationId: get_users_userID
+      tags:
+      - Users
+      security:
+      - ApiKeyAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          description: Bad request - invalid or missing parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized - invalid API key
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden - insufficient permissions
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '429':
+          description: Too many requests - rate limit exceeded
+        '500':
+          description: Internal server error
+      description: "Retrieve detailed information about a specific user within your organization. By specifying the unique userID, you can obtain comprehensive data about that individual user, including their role, contact details, and associated scopes.\nSample\nJavaScript XHR Request\nvar xhr = new XMLHttpRequest();\nxhr.open(\"GET\", \"https://api.reputation.com/v3/users/41807627\", true);\nxhr.setRequestHeader(\"x-api-key\", \"Your API key\");\n\nxhr.onreadystatechange = function () {\n    if (xhr.readyState === 4) {\n        c"
+      parameters:
+      - name: userID
+        in: path
+        required: true
+        schema:
+          type: string
+        description: The userID identifier
+components:
+  schemas:
+    Error:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              field:
+                type: string
+              code:
+                type: string
+              message:
+                type: string
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-API-KEY
+      description: API key for authentication. For agency accounts, also include X-TENANT-ID header.

@@ -1,0 +1,825 @@
+openapi: 3.0.0
+info:
+  title: Reputation Asset Library Locations API
+  description: REST API for aggregating customer feedback, managing reviews and listings, running surveys, and accessing reputation metrics and insights across locations.
+  version: v3
+  contact:
+    name: Reputation Support
+    url: https://support.reputation.com/
+servers:
+- url: https://api.reputation.com
+  description: US Production
+- url: https://api-eu.reputation.com
+  description: EU Production
+security:
+- ApiKeyAuth: []
+tags:
+- name: Locations
+  description: Manage business locations
+paths:
+  /v3/locations:
+    get:
+      summary: Get Locations
+      operationId: get_locations
+      tags:
+      - Locations
+      security:
+      - ApiKeyAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          description: Bad request - invalid or missing parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized - invalid API key
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden - insufficient permissions
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '429':
+          description: Too many requests - rate limit exceeded
+        '500':
+          description: Internal server error
+      description: 'Retrieves detailed location profiles, providing comprehensive data that extends beyond just basic location attributes within the Business Listing Solution. You can use this endpoint to access an array of information about specific profiles.
+
+        Note: The Get Locations and Get Location endpoints are designed to retrieve only cleansed profiles. If you attempt to fetch an unmanaged profile using either endpoint, the response will result in a null value.
+
+        Sample
+
+        JavaScript XHR Request
+
+        var xhr = new XMLHt'
+      parameters:
+      - name: offset
+        in: query
+        description: Offset for pagination
+        schema:
+          type: integer
+          default: 0
+      - name: limit
+        in: query
+        description: Maximum number of objects to return
+        schema:
+          type: integer
+          default: 20
+          maximum: 2000
+    post:
+      summary: Save Location
+      operationId: post_locations
+      tags:
+      - Locations
+      security:
+      - ApiKeyAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          description: Bad request - invalid or missing parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized - invalid API key
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden - insufficient permissions
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '429':
+          description: Too many requests - rate limit exceeded
+        '500':
+          description: Internal server error
+      description: 'Let''s you submit a detailed location profile, providing comprehensive data that extends beyond just basic location attributes within the Business Listing Solution. You can also use this endpoint to add our update information about specific profile.
+
+        Please note: Incremental changes are not supported. All profile data must be included in each request to prevent existing data from being overwritten or removed.
+
+        Sample
+
+        JavaScript XHR Request
+
+        var xhr = new XMLHttpRequest();
+
+        xhr.open(''POST'', ''https://a'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                location:
+                  optedOut: boolean
+                  internalName: string
+                  industryID: string
+                  externalName: string
+                  places:
+                  - officeName: string
+                    address:
+                      streetAddress1: string
+                      locality: string
+                      region: string
+                      postalCode: string
+                      country: string
+                    phones:
+                    - number: string
+                      primary: boolean
+                      country: string
+                      phoneType: string
+                    primary: boolean
+                  description: string
+                  categories:
+                  - category:
+                      label: string
+                    primary: boolean
+                  utm: boolean
+                  attributes:
+                  - attributeId: string
+                    boolValue: boolean
+                  - attributeId: string
+                    values:
+                    - boolValue: boolean
+                    - boolValue: boolean
+                  type: string
+                  createdDate: string
+                  updatedDate: string
+  /v3/locations-search:
+    get:
+      summary: Search Locations
+      operationId: get_locations_search
+      tags:
+      - Locations
+      security:
+      - ApiKeyAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          description: Bad request - invalid or missing parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized - invalid API key
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden - insufficient permissions
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '429':
+          description: Too many requests - rate limit exceeded
+        '500':
+          description: Internal server error
+      description: 'Facilitates the searching of profiles based on various parameters like name, location, type, and more. It''s designed to offer a comprehensive search capability for you to filter and retrieve specific profiles from the vast Business Listing Solution database.
+
+        Sample
+
+        JavaScript XHR Request
+
+        var xhr = new XMLHttpRequest();
+
+        xhr.open(''GET'', ''https://api.reputation.com/v3/locations-search?type=Person&amp;primaryProfile=true&amp;sort=ASC&amp;offset=0&amp;limit=20'', true);
+
+        xhr.setRequestHeader(''x-api-key'
+      parameters:
+      - name: offset
+        in: query
+        description: Offset for pagination
+        schema:
+          type: integer
+          default: 0
+      - name: limit
+        in: query
+        description: Maximum number of objects to return
+        schema:
+          type: integer
+          default: 20
+          maximum: 2000
+    post:
+      summary: Search Locations
+      operationId: post_locations_search
+      tags:
+      - Locations
+      security:
+      - ApiKeyAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          description: Bad request - invalid or missing parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized - invalid API key
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden - insufficient permissions
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '429':
+          description: Too many requests - rate limit exceeded
+        '500':
+          description: Internal server error
+      description: 'Facilitates detailed searches for location profiles based on a range of specific parameters provided in the request body. It serves as an alternative to the GET version of the endpoint, providing a means to submit search parameters in the body of the request.
+
+        Sample
+
+        JavaScript XHR Request
+
+        var xhr = new XMLHttpRequest();
+
+        var url = "https://api.reputation.com/v3/locations-search";
+
+        xhr.open("POST", url, true);
+
+        xhr.setRequestHeader("Content-Type", "application/json");
+
+        xhr.setRequestHeader("x-api-key'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                firstName: string
+                lastName: string
+                placeID: string
+                parentID: string
+                linkedProfileID: string
+                officeName: string
+                locality: string
+                region: string
+                postalCode: string
+                gender: string
+                phoneType: string
+                websiteType: string
+                type: string
+                profileDefinition: string
+                categoryID:
+                - string
+                categoryName:
+                - string
+                tag:
+                - string
+                utm: boolean
+                insuranceID:
+                - string
+                insuranceName:
+                - string
+                language:
+                - string
+                acceptingNewPatients: string
+                specialtyID:
+                - string
+                primaryProfile: string
+                lat: 0
+                lng: 0
+                radius: 0
+                sorts:
+                - fieldName: string
+                  sortOrder: string
+                offset: integer
+                limit: integer
+                query: string
+                updatedSince: string
+  /v3/locations-faceted-search:
+    get:
+      summary: Search Faceted Locations
+      operationId: get_locations_faceted_search
+      tags:
+      - Locations
+      security:
+      - ApiKeyAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          description: Bad request - invalid or missing parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized - invalid API key
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden - insufficient permissions
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '429':
+          description: Too many requests - rate limit exceeded
+        '500':
+          description: Internal server error
+      description: This endpoint facilitates a faceted profile search of the platform, providing aggregated counts of profiles based on specified criteria. Rather than returning individual profile data, this endpoint groups profiles based on a selected attribute (such as phoneType, gender, etc.) and returns a count of profiles for each distinct value within that attribute. It's an efficient way to understand the distribution of profiles based on varying characteristics without retrieving the details of each profil
+      parameters:
+      - name: offset
+        in: query
+        description: Offset for pagination
+        schema:
+          type: integer
+          default: 0
+      - name: limit
+        in: query
+        description: Maximum number of objects to return
+        schema:
+          type: integer
+          default: 20
+          maximum: 2000
+  /v3/locations/{locationID}:
+    get:
+      summary: Get Location
+      operationId: get_locations_locationID
+      tags:
+      - Locations
+      security:
+      - ApiKeyAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          description: Bad request - invalid or missing parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized - invalid API key
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden - insufficient permissions
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '429':
+          description: Too many requests - rate limit exceeded
+        '500':
+          description: Internal server error
+      description: 'This endpoint retrieves detailed information about a specific location profile on the platform based on the provided locationID.
+
+        The response returns detailed attributes of the location profile, including its internal and external names, industry type, state, associated places like office addresses, contact information, and more.
+
+        Note: The Get Locations and Get Location endpoints are designed to retrieve only cleansed profiles. If you attempt to fetch an unmanaged profile using either endpoint, '
+      parameters:
+      - name: locationID
+        in: path
+        required: true
+        schema:
+          type: string
+        description: The locationID identifier
+    delete:
+      summary: Delete Location
+      operationId: delete_locations_locationID
+      tags:
+      - Locations
+      security:
+      - ApiKeyAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          description: Bad request - invalid or missing parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized - invalid API key
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden - insufficient permissions
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '429':
+          description: Too many requests - rate limit exceeded
+        '500':
+          description: Internal server error
+      description: "This endpoint lets you delete a specific location profile from the system, identified by its locationID. If you wish to only mark the location as inactive rather than fully deleting it, you can utilize the optional preserveLocation query parameter.\nSample\nJavaScript XHR Request\nvar xhr = new XMLHttpRequest();\nxhr.open('DELETE', 'https://api.reputation.com/v3/locations/BP?preserveLocation=true', true);\nxhr.setRequestHeader('x-api-key', 'Your API key');\nxhr.onreadystatechange = function() {\n    if"
+      parameters:
+      - name: locationID
+        in: path
+        required: true
+        schema:
+          type: string
+        description: The locationID identifier
+  /v3/locations/{locationID}/opt-out:
+    put:
+      summary: Opt Out Of Audit
+      operationId: put_locations_locationID_opt_out
+      tags:
+      - Locations
+      security:
+      - ApiKeyAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          description: Bad request - invalid or missing parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized - invalid API key
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden - insufficient permissions
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '429':
+          description: Too many requests - rate limit exceeded
+        '500':
+          description: Internal server error
+      description: "Opt-out specific sources from location profiles. If no specific sourceIDs are provided, the profile will be opted out from all eligible sources.\nSample\nJavaScript XHR Request\nvar xhr = new XMLHttpRequest();\nxhr.open(\"PUT\", \"https://api.reputation.com/v3/locations/SA/opt-out?sourceIDs=FACEBOOK\", true);\nxhr.setRequestHeader(\"x-api-key\", \"Your API key\");\nxhr.onreadystatechange = function() {\n  if (xhr.readyState == 4 &amp;&amp; xhr.status == 200) {\n    var response = JSON.parse(xhr.responseText);\n "
+      parameters:
+      - name: locationID
+        in: path
+        required: true
+        schema:
+          type: string
+        description: The locationID identifier
+  /v3/locations/{locationID}/opt-in:
+    put:
+      summary: Opt In To Audit
+      operationId: put_locations_locationID_opt_in
+      tags:
+      - Locations
+      security:
+      - ApiKeyAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          description: Bad request - invalid or missing parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized - invalid API key
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden - insufficient permissions
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '429':
+          description: Too many requests - rate limit exceeded
+        '500':
+          description: Internal server error
+      description: "Opt-in specific sources from location profiles. If no specific sourceIDs are provided, the profile will be opted in to all eligible sources.\nSample\nJavaScript XHR Request\nvar xhr = new XMLHttpRequest();\nxhr.open(\"PUT\", \"https://api.reputation.com/v3/locations/SA/opt-in?sourceIDs=FACEBOOK\", true);\nxhr.setRequestHeader(\"x-api-key\", \"Your API key\");\nxhr.onreadystatechange = function() {\n  if (xhr.readyState == 4 &amp;&amp; xhr.status == 200) {\n    var response = JSON.parse(xhr.responseText);\n    co"
+      parameters:
+      - name: locationID
+        in: path
+        required: true
+        schema:
+          type: string
+        description: The locationID identifier
+  /v3/locations/{locationID}/addPage:
+    post:
+      summary: Add Page
+      operationId: post_locations_locationID_addPage
+      tags:
+      - Locations
+      security:
+      - ApiKeyAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          description: Bad request - invalid or missing parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized - invalid API key
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden - insufficient permissions
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '429':
+          description: Too many requests - rate limit exceeded
+        '500':
+          description: Internal server error
+      description: 'Use this endpoint to associate a new external page (such as a social media profile or a source page) with a specific location profile in the Reputation platform. It''s important to ensure that the provided URL and page ID are unclaimed.
+
+        For assistance in determining available source URLs, you can utilize the Autofind Results feature in the platform to identify potential matches for your location.
+
+        Sample
+
+        JavaScript XHR Request
+
+        var xhr = new XMLHttpRequest();
+
+        xhr.open("POST", "https://api.reputatio'
+      parameters:
+      - name: locationID
+        in: path
+        required: true
+        schema:
+          type: string
+        description: The locationID identifier
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                source: string
+                url: string
+                pageID: string
+  /v3/location-attribute-definitions:
+    get:
+      summary: Get Attribute Definitions
+      operationId: get_location_attribute_definitions
+      tags:
+      - Locations
+      security:
+      - ApiKeyAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          description: Bad request - invalid or missing parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized - invalid API key
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden - insufficient permissions
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '429':
+          description: Too many requests - rate limit exceeded
+        '500':
+          description: Internal server error
+      description: "An array of category IDs for which the attribute definitions are fetched. The provided IDs help in narrowing down the list of attribute definitions specific to the given profile categories.\nSample\nJavaScript XHR Request\nvar xhr = new XMLHttpRequest();\nxhr.open('GET', 'https://api.reputation.com/v3/location-attribute-definitions?categoryIds=RESTAURANTS_,ARTS_&amp;_ENTERTAINMENT_ARTIST', true);\nxhr.setRequestHeader('x-api-key', 'Your API Key');\nxhr.onreadystatechange = function() {\n    if (xhr.rea"
+  /v3/locations-duplicate:
+    get:
+      summary: Get Duplicate Locations
+      operationId: get_locations_duplicate
+      tags:
+      - Locations
+      security:
+      - ApiKeyAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          description: Bad request - invalid or missing parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized - invalid API key
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden - insufficient permissions
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '429':
+          description: Too many requests - rate limit exceeded
+        '500':
+          description: Internal server error
+      description: 'Retrieves location profiles from the Reputation platform that are identified as potential duplicates based on specific criteria. By using this endpoint, you can identify and manage locations that may have been inadvertently entered multiple times or those that appear similar across different sources.
+
+        Sample
+
+        JavaScript XHR Request
+
+        var xhr = new XMLHttpRequest();
+
+        xhr.open("GET", "https://api.reputation.com/v3/locations-duplicate", true);
+
+        xhr.setRequestHeader("x-api-key", "Your API key");
+
+        xhr.onrea'
+      parameters:
+      - name: offset
+        in: query
+        description: Offset for pagination
+        schema:
+          type: integer
+          default: 0
+      - name: limit
+        in: query
+        description: Maximum number of objects to return
+        schema:
+          type: integer
+          default: 20
+          maximum: 2000
+components:
+  schemas:
+    Error:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              field:
+                type: string
+              code:
+                type: string
+              message:
+                type: string
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-API-KEY
+      description: API key for authentication. For agency accounts, also include X-TENANT-ID header.

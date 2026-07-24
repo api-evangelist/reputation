@@ -1,0 +1,644 @@
+openapi: 3.0.0
+info:
+  title: Reputation Asset Library Surveys API
+  description: REST API for aggregating customer feedback, managing reviews and listings, running surveys, and accessing reputation metrics and insights across locations.
+  version: v3
+  contact:
+    name: Reputation Support
+    url: https://support.reputation.com/
+servers:
+- url: https://api.reputation.com
+  description: US Production
+- url: https://api-eu.reputation.com
+  description: EU Production
+security:
+- ApiKeyAuth: []
+tags:
+- name: Surveys
+  description: Survey management and results
+paths:
+  /v3/survey-results:
+    get:
+      summary: Get Survey Results
+      operationId: get_survey_results
+      tags:
+      - Surveys
+      security:
+      - ApiKeyAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          description: Bad request - invalid or missing parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized - invalid API key
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden - insufficient permissions
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '429':
+          description: Too many requests - rate limit exceeded
+        '500':
+          description: Internal server error
+      description: "The Get Survey Results endpoint allows you to fetch the results of surveys submitted by customers or respondents, providing a comprehensive insight into their feedback and perceptions regarding your services or products. This endpoint is instrumental for businesses aiming to evaluate and enhance customer satisfaction, and make data-driven decisions to improve overall customer experience.\nSample\nJavaScript XHR Request\nvar xhr = new XMLHttpRequest();\nxhr.onreadystatechange = function () {\n    if ("
+    post:
+      summary: Save Survey Result
+      operationId: post_survey_results
+      tags:
+      - Surveys
+      security:
+      - ApiKeyAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          description: Bad request - invalid or missing parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized - invalid API key
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden - insufficient permissions
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '429':
+          description: Too many requests - rate limit exceeded
+        '500':
+          description: Internal server error
+      description: Use this endpoint to submit and save your survey responses directly into the system. You need to provide essential details including the location ID, survey template ID, date, answers, locale, and the current status of the survey. Upon successful submission, the system will process your input, save the survey result, and return a unique identifier for your record, along with any additional pertinent information. This functionality is vital for gathering and analyzing customer feedback, ultimatel
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                locationID: string
+                surveyTemplateID: string
+                date: string (YYYY-MM-DDTHH:MM:SS)
+                answers:
+                - question:
+                    id: string
+                    text: string
+                    type: string
+                  answerValues:
+                  - id: string
+                    text: string
+                locale: string (language tag, e.g., 'en_US')
+                status: string
+                flags:
+                - 'string array (optional, valid values: ''READ'', ''PUBLISHED'', ''FLAGGED'', ''RESPONDED'')'
+  /v3/survey-results/{surveyID}:
+    get:
+      summary: Get Survey Result
+      operationId: get_survey_results_surveyID
+      tags:
+      - Surveys
+      security:
+      - ApiKeyAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          description: Bad request - invalid or missing parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized - invalid API key
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden - insufficient permissions
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '429':
+          description: Too many requests - rate limit exceeded
+        '500':
+          description: Internal server error
+      description: "This endpoint retrieves detailed information about a specific survey result. The result is identified by a unique surveyID and belongs to a particular survey template, identified by the surveyTemplateID.\nSample\nJavaScript XHR Result\nvar xhr = new XMLHttpRequest();\nxhr.open(\"GET\", \"https://api.reputation.com/v3/survey-results?surveyTemplateID=5e8d12a42a401b62ff1234a\", true);\nxhr.setRequestHeader(\"x-api-key\", \"Your API key\");\n\nxhr.onreadystatechange = function () {\n  if (xhr.readyState == 4 &amp;&"
+      parameters:
+      - name: surveyID
+        in: path
+        required: true
+        schema:
+          type: string
+        description: The surveyID identifier
+  /v3/surveys3-templates:
+    get:
+      summary: Get Survey Templates
+      operationId: get_surveys3_templates
+      tags:
+      - Surveys
+      security:
+      - ApiKeyAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          description: Bad request - invalid or missing parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized - invalid API key
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden - insufficient permissions
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '429':
+          description: Too many requests - rate limit exceeded
+        '500':
+          description: Internal server error
+      description: "This endpoint retrieves a list of survey templates based on specified criteria. You can filter the survey templates you need to retrieve by providing the status and type of the templates as query parameters.\nSample\nJavaScript XHR Request\nvar xhr = new XMLHttpRequest();\nxhr.open(\"GET\", \"https://api.reputation.com/v3/surveys3-templates?templateType=Conversational\", true);\nxhr.setRequestHeader(\"x-api-key\", \"Your API key\");\nxhr.onreadystatechange = function () {\n    if (xhr.readyState === 4) {\n     "
+      parameters:
+      - name: offset
+        in: query
+        description: Offset for pagination
+        schema:
+          type: integer
+          default: 0
+      - name: limit
+        in: query
+        description: Maximum number of objects to return
+        schema:
+          type: integer
+          default: 20
+          maximum: 2000
+  /v3/surveys-link:
+    post:
+      summary: Get Survey URL
+      operationId: post_surveys_link
+      tags:
+      - Surveys
+      security:
+      - ApiKeyAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          description: Bad request - invalid or missing parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized - invalid API key
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden - insufficient permissions
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '429':
+          description: Too many requests - rate limit exceeded
+        '500':
+          description: Internal server error
+      description: "This POST request generates a unique survey link. This is particularly useful when you want to send a personalized survey to a specific customer, ensuring that the survey content is relevant to their experience and the information you have about them.\nSample\nJavaScript XHR Request\nvar xhr = new XMLHttpRequest();\nxhr.onreadystatechange = function() {\n    if (this.readyState == 4 &amp;&amp; this.status == 200) {\n       // Handle the response here\n       console.log(this.responseText);\n    }\n};\nxhr"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                templateID: string
+                locationCode: string
+                overSurveyProtection: boolean
+                locale: string
+                templateVariables:
+                  Company: string
+                  StoreLocation: string
+                  VisitDate: string
+                  EmployeeName: string
+                templateAnswers:
+                  sq1: string
+                  sq2: string
+                  sq3: string
+                  sq4: string
+                  sq5: string
+                customer:
+                  emailID: string
+                  customerID: string
+                  name: string
+  /v3/surveys2-results:
+    get:
+      summary: Get Result (Deprecated)
+      operationId: get_surveys2_results
+      tags:
+      - Surveys
+      security:
+      - ApiKeyAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          description: Bad request - invalid or missing parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized - invalid API key
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden - insufficient permissions
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '429':
+          description: Too many requests - rate limit exceeded
+        '500':
+          description: Internal server error
+      description: Retrieves a survey result
+      deprecated: true
+      parameters:
+      - name: offset
+        in: query
+        description: Offset for pagination
+        schema:
+          type: integer
+          default: 0
+      - name: limit
+        in: query
+        description: Maximum number of objects to return
+        schema:
+          type: integer
+          default: 20
+          maximum: 2000
+    post:
+      summary: Save Result (Deprecated)
+      operationId: post_surveys2_results
+      tags:
+      - Surveys
+      security:
+      - ApiKeyAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          description: Bad request - invalid or missing parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized - invalid API key
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden - insufficient permissions
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '429':
+          description: Too many requests - rate limit exceeded
+        '500':
+          description: Internal server error
+      description: Saves a survey result
+      deprecated: true
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                id: string
+                createdDate: 0
+                surveyTemplateID: string
+                locationID: string
+                surveyTaker:
+                  name: string
+                  email: string
+                  phone: string
+                answers:
+                  property1:
+                  - string
+                  property2:
+                  - string
+                properties:
+                  property1: string
+                  property2: string
+                locale: en_US
+                externalID: string
+                status: Started
+                flags:
+                - READ
+  /v3/surveys2-results/create-url-from-encrypted:
+    post:
+      summary: Create URL From Encrypted (Deprecated)
+      operationId: post_surveys2_results_create_url_from_encrypted
+      tags:
+      - Surveys
+      security:
+      - ApiKeyAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          description: Bad request - invalid or missing parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized - invalid API key
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden - insufficient permissions
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '429':
+          description: Too many requests - rate limit exceeded
+        '500':
+          description: Internal server error
+      description: Creates a URL that can be used to resume a survey using an encrypted set of information.
+      deprecated: true
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                properties:
+                  some-property-name: some-property-value
+                answers:
+                  some-question-id:
+                  - some-question-value
+                  - some-other-question-value
+  /v3/surveys3-results/{surveyID}:
+    get:
+      summary: Retrieve Survey Result (Deprecated)
+      operationId: get_surveys3_results_surveyID
+      tags:
+      - Surveys
+      security:
+      - ApiKeyAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          description: Bad request - invalid or missing parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized - invalid API key
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden - insufficient permissions
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '429':
+          description: Too many requests - rate limit exceeded
+        '500':
+          description: Internal server error
+      description: Retrieves a survey result
+      deprecated: true
+      parameters:
+      - name: surveyID
+        in: path
+        required: true
+        schema:
+          type: string
+        description: The surveyID identifier
+  /v3/surveys3-results:
+    post:
+      summary: Save Survey Result (Deprecated)
+      operationId: post_surveys3_results
+      tags:
+      - Surveys
+      security:
+      - ApiKeyAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          description: Bad request - invalid or missing parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized - invalid API key
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden - insufficient permissions
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '429':
+          description: Too many requests - rate limit exceeded
+        '500':
+          description: Internal server error
+      description: Saves a survey result
+      deprecated: true
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                id: string
+                updatedDate: 0
+                tenantID: string
+                locationName: string
+                locationID: string
+                surveyTemplateID: string
+                surveyTakenDate: 0
+                answers:
+                - answerID: string
+                  answerValues:
+                  - string
+                  shownOptions:
+                  - string
+                properties:
+                  property1: string
+                  property2: string
+                locale: en_US
+                externalID: string
+                resultStatus: Started
+                templateStatus: Active
+                flags:
+                - READ
+components:
+  schemas:
+    Error:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              field:
+                type: string
+              code:
+                type: string
+              message:
+                type: string
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-API-KEY
+      description: API key for authentication. For agency accounts, also include X-TENANT-ID header.

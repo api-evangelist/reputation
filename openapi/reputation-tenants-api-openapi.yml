@@ -1,0 +1,340 @@
+openapi: 3.0.0
+info:
+  title: Reputation Asset Library Tenants API
+  description: REST API for aggregating customer feedback, managing reviews and listings, running surveys, and accessing reputation metrics and insights across locations.
+  version: v3
+  contact:
+    name: Reputation Support
+    url: https://support.reputation.com/
+servers:
+- url: https://api.reputation.com
+  description: US Production
+- url: https://api-eu.reputation.com
+  description: EU Production
+security:
+- ApiKeyAuth: []
+tags:
+- name: Tenants
+  description: Tenant/account management
+paths:
+  /v3/tenants:
+    get:
+      summary: Get Tenants
+      operationId: get_tenants
+      tags:
+      - Tenants
+      security:
+      - ApiKeyAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          description: Bad request - invalid or missing parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized - invalid API key
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden - insufficient permissions
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '429':
+          description: Too many requests - rate limit exceeded
+        '500':
+          description: Internal server error
+      description: 'Retrieve a list of tenants in the Reputation platform. This endpoint is ideal for quickly accessing details about various tenants, including their names, contact information, industry IDs, and the modules they are using. This endpoint is particularly useful for managing and understanding the scope of tenants under your purview, ensuring efficient oversight and analysis of multiple accounts.
+
+        NOTE: This API is intended for only for Agency customers who manage multiple tenant accounts on Reputation'
+      parameters:
+      - name: offset
+        in: query
+        description: Offset for pagination
+        schema:
+          type: integer
+          default: 0
+      - name: limit
+        in: query
+        description: Maximum number of objects to return
+        schema:
+          type: integer
+          default: 20
+          maximum: 2000
+    post:
+      summary: Save Tenant
+      operationId: post_tenants
+      tags:
+      - Tenants
+      security:
+      - ApiKeyAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          description: Bad request - invalid or missing parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized - invalid API key
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden - insufficient permissions
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '429':
+          description: Too many requests - rate limit exceeded
+        '500':
+          description: Internal server error
+      description: "Create or save tenant information within the system. This endpoint is crucial for managing tenant data, which includes details about names, contacts, and the specific services or modules each tenant utilizes.\nNOTE: This API is intended for only for Agency customers who manage multiple tenant accounts on Reputation platform.\nSample\nJavaScript XHR Request\nvar data = JSON.stringify({\n  \"tenant\": [\n    {\n      \"id\": \"5a7b73ee12345\",\n      \"agencyID\": \"Dental\",\n      \"name\": \"Downtown Dental Care\",\n "
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                tenant:
+                - id: string
+                  agencyID: string
+                  name: string
+                  contactName: string
+                  contactEmail: string
+                  skuIDs:
+                  - string
+                  moduleIDs:
+                  - string
+                  moduleSources:
+                    listing-auditing:
+                    - string
+                    listing-correcting:
+                    - string
+                  encrypted: boolean
+                  industryID: string
+                  logo: string
+                  tags:
+                  - string
+                  active: boolean
+                  state: string
+  /v3/tenants/{tenantID}:
+    get:
+      summary: Get Tenant
+      operationId: get_tenants_tenantID
+      tags:
+      - Tenants
+      security:
+      - ApiKeyAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          description: Bad request - invalid or missing parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized - invalid API key
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden - insufficient permissions
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '429':
+          description: Too many requests - rate limit exceeded
+        '500':
+          description: Internal server error
+      description: 'This endpoint allows you to retrieve detailed information about a specific tenant by using their unique tenant ID. By providing the tenant ID in the URL, you can access comprehensive data related to that particular tenant, including their name, contact information, active status, associated modules, and other relevant details. This is particularly useful for managing and understanding individual tenant profiles within your system.
+
+        NOTE: This API is intended for only for Agency customers who mana'
+      parameters:
+      - name: tenantID
+        in: path
+        required: true
+        schema:
+          type: string
+        description: The tenantID identifier
+  /v3/tenants/{tenantID}/pause:
+    put:
+      summary: Pause Tenant
+      operationId: put_tenants_tenantID_pause
+      tags:
+      - Tenants
+      security:
+      - ApiKeyAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          description: Bad request - invalid or missing parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized - invalid API key
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden - insufficient permissions
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '429':
+          description: Too many requests - rate limit exceeded
+        '500':
+          description: Internal server error
+      description: 'Inactivate a tenant in the system. By specifying the unique tenantID in the URL, you can change the status of the identified tenant to Paused. This action is particularly useful for temporarily disabling a tenant''s access or services without permanently deleting their data or settings.
+
+        NOTE: This API is intended for only for Agency customers who manage multiple tenant accounts on Reputation platform.
+
+        Sample
+
+        JavaScript XHR Request
+
+        var xhr = new XMLHttpRequest();
+
+        xhr.open("PUT", "https://api.reput'
+      parameters:
+      - name: tenantID
+        in: path
+        required: true
+        schema:
+          type: string
+        description: The tenantID identifier
+  /v3/tenants/{tenantID}/unpause:
+    put:
+      summary: Unpause Tenant
+      operationId: put_tenants_tenantID_unpause
+      tags:
+      - Tenants
+      security:
+      - ApiKeyAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          description: Bad request - invalid or missing parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized - invalid API key
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden - insufficient permissions
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '429':
+          description: Too many requests - rate limit exceeded
+        '500':
+          description: Internal server error
+      description: 'Used to reactivate a tenant within the system. By specifying the tenant''s unique identifier in the URL, this endpoint enables you to change the status of a previously inactivated or paused tenant back to active. This action effectively resumes all operations and functionalities associated with that specific tenant, reinstating access to services and features within the Reputation platform.
+
+        NOTE: This API is intended for only for Agency customers who manage multiple tenant accounts on Reputation '
+      parameters:
+      - name: tenantID
+        in: path
+        required: true
+        schema:
+          type: string
+        description: The tenantID identifier
+components:
+  schemas:
+    Error:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              field:
+                type: string
+              code:
+                type: string
+              message:
+                type: string
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-API-KEY
+      description: API key for authentication. For agency accounts, also include X-TENANT-ID header.

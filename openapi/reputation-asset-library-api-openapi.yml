@@ -1,0 +1,175 @@
+openapi: 3.0.0
+info:
+  title: Reputation Asset Library API
+  description: REST API for aggregating customer feedback, managing reviews and listings, running surveys, and accessing reputation metrics and insights across locations.
+  version: v3
+  contact:
+    name: Reputation Support
+    url: https://support.reputation.com/
+servers:
+- url: https://api.reputation.com
+  description: US Production
+- url: https://api-eu.reputation.com
+  description: EU Production
+security:
+- ApiKeyAuth: []
+tags:
+- name: Asset Library
+  description: Manage image assets
+paths:
+  /v3/asset-library/upload/image:
+    post:
+      summary: Upload Image Files
+      operationId: post_asset_library_upload_image
+      tags:
+      - Asset Library
+      security:
+      - ApiKeyAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          description: Bad request - invalid or missing parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized - invalid API key
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden - insufficient permissions
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '429':
+          description: Too many requests - rate limit exceeded
+        '500':
+          description: Internal server error
+      description: 'Select any number of files from your computer. Attach tags to each image and send them as formData in the API request. The images will display in your Asset Library (see below).
+
+
+
+        You must request to have the asset library enabled. Please contact your CSM for assistance.
+
+        Note: This endpoint only accepts .jpg, .jpeg, or .png files.
+
+        Sample Requests
+
+
+        Python
+
+        import requests
+
+        file_1 = (''ImageFile_1.png'', open(''path_to_ImageFile_1.png'', ''rb''))
+
+        file_2 = (''ImageFile_2.png'', open(''path_to_ImageFile_2.png'''
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                images:
+                  type: string
+                  format: binary
+                  description: '<p>(Required) Choose one or multiple image files from your computer. There''s no limit to how many you can upload.</p>
+
+                    '
+                tags:
+                  type: string
+                  description: '<p>Provide a valid JSON string with image file names as keys and their respective tags as values. For example: {"image1.jpg": ["tag1", "tag2"], "image2.jpg": ["tag2", "tag3"]}.</p>
+
+                    '
+  /v3/asset-library/upload/image/url:
+    post:
+      summary: Upload Image Using Public Urls
+      operationId: post_asset_library_upload_image_url
+      tags:
+      - Asset Library
+      security:
+      - ApiKeyAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          description: Bad request - invalid or missing parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized - invalid API key
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden - insufficient permissions
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '429':
+          description: Too many requests - rate limit exceeded
+        '500':
+          description: Internal server error
+      description: "Upload images to your asset library using a public URL rather than a direct file upload. The images will display in your Asset Library (see below).\n\n\nYou must request to have the asset library enabled. Please contact your CSM for assistance.\nNote: This endpoint only accepts .jpg, .jpeg, or .png files.\nSample Requests\n\nPython\nimport requests\nimport json\ndata = {\n    \"images\": [\n        {\n            \"url\": \"https://www.testImageUrl.com/image_1.jpg\",\n            \"tags\": [\"test_tag_1\", \"test_tag_2\""
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                images:
+                - url: string
+                  tags:
+                  - string
+components:
+  schemas:
+    Error:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              field:
+                type: string
+              code:
+                type: string
+              message:
+                type: string
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-API-KEY
+      description: API key for authentication. For agency accounts, also include X-TENANT-ID header.

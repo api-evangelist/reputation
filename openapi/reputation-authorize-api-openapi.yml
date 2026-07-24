@@ -1,0 +1,99 @@
+openapi: 3.0.0
+info:
+  title: Reputation Asset Library Authorize API
+  description: REST API for aggregating customer feedback, managing reviews and listings, running surveys, and accessing reputation metrics and insights across locations.
+  version: v3
+  contact:
+    name: Reputation Support
+    url: https://support.reputation.com/
+servers:
+- url: https://api.reputation.com
+  description: US Production
+- url: https://api-eu.reputation.com
+  description: EU Production
+security:
+- ApiKeyAuth: []
+tags:
+- name: Authorize
+  description: Authorization management
+paths:
+  /v3/authorize:
+    post:
+      summary: Authorize
+      operationId: post_authorize
+      tags:
+      - Authorize
+      security:
+      - ApiKeyAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          description: Bad request - invalid or missing parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized - invalid API key
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden - insufficient permissions
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '429':
+          description: Too many requests - rate limit exceeded
+        '500':
+          description: Internal server error
+      description: "Authorize a user on your platform, either granting them access or updating their permissions based on provided personal and role-specific details.\nSample Requests\nPython\nimport requests\nimport json\nurl = 'https://api.reputation.com/v3/authorize'\nheaders = {\n    'x-api-key': 'Your API key',\n    'Content-Type': 'application/json;charset=UTF-8'\n}\ndata = {\n    \"userId\": \"346345\",\n    \"locationCodes\": \"145, 742, 520\",\n    \"firstName\": \"Jeff\",\n    \"lastName\": \"Goodman\",\n    \"email\": \"john@goodman.com\""
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                userId: string
+                locationCodes: string array
+                firstName: string
+                lastName: string
+                email: string
+                role: string
+                timezone: string
+components:
+  schemas:
+    Error:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              field:
+                type: string
+              code:
+                type: string
+              message:
+                type: string
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-API-KEY
+      description: API key for authentication. For agency accounts, also include X-TENANT-ID header.

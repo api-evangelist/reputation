@@ -1,0 +1,432 @@
+openapi: 3.0.0
+info:
+  title: Reputation Asset Library Reviews API
+  description: REST API for aggregating customer feedback, managing reviews and listings, running surveys, and accessing reputation metrics and insights across locations.
+  version: v3
+  contact:
+    name: Reputation Support
+    url: https://support.reputation.com/
+servers:
+- url: https://api.reputation.com
+  description: US Production
+- url: https://api-eu.reputation.com
+  description: EU Production
+security:
+- ApiKeyAuth: []
+tags:
+- name: Reviews
+  description: Review management and responses
+paths:
+  /v3/reviews:
+    get:
+      summary: Get Reviews
+      operationId: get_reviews
+      tags:
+      - Reviews
+      security:
+      - ApiKeyAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          description: Bad request - invalid or missing parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized - invalid API key
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden - insufficient permissions
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '429':
+          description: Too many requests - rate limit exceeded
+        '500':
+          description: Internal server error
+      description: 'Retrieves a list of reviews based on various filter criteria. This endpoint allows for a wide range of parameters to narrow down and organize the list of reviews, providing flexibility to retrieve reviews from different time periods, sources, locations, and more.
+
+        Sample
+
+        JavaScript XHR Request
+
+        var xhr = new XMLHttpRequest();
+
+        xhr.open(''GET'', ''https://api.reputation.com/v3/reviews?range=PreviousWeek&amp;offset=0&amp;limit=3'', true);
+
+        xhr.setRequestHeader(''x-api-key'', ''Your API key'');
+
+        xhr.onreadystat'
+      parameters:
+      - name: offset
+        in: query
+        description: Offset for pagination
+        schema:
+          type: integer
+          default: 0
+      - name: limit
+        in: query
+        description: Maximum number of objects to return
+        schema:
+          type: integer
+          default: 20
+          maximum: 2000
+  /v3/reviews/{reviewID}/responses:
+    get:
+      summary: Get Review Responses
+      operationId: get_reviews_reviewID_responses
+      tags:
+      - Reviews
+      security:
+      - ApiKeyAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          description: Bad request - invalid or missing parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized - invalid API key
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden - insufficient permissions
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '429':
+          description: Too many requests - rate limit exceeded
+        '500':
+          description: Internal server error
+      description: 'This endpoint retrieves responses associated with a specific review from the Reputation.com API. Each review in the system has a unique identifier known as a reviewID. By providing this ID in the endpoint, you can fetch the associated responses given to that review, whether they are public comments or private messages. The data returned includes the name of the responder, their comment, the type of response (public or private), and the date of the response.
+
+        Sample
+
+        JavaScript XHR Request
+
+        var xhr '
+      parameters:
+      - name: reviewID
+        in: path
+        required: true
+        schema:
+          type: string
+        description: The reviewID identifier
+  /v3/reviews/{reviewID}/respond:
+    post:
+      summary: Respond To Review
+      operationId: post_reviews_reviewID_respond
+      tags:
+      - Reviews
+      security:
+      - ApiKeyAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          description: Bad request - invalid or missing parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized - invalid API key
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden - insufficient permissions
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '429':
+          description: Too many requests - rate limit exceeded
+        '500':
+          description: Internal server error
+      description: 'This endpoint allows you to respond to a specific review on the Reputation platform. By specifying the review''s unique identifier reviewID in the path parameter, you can craft and send a response directly to that review. This is particularly useful for businesses looking to engage with their customers by addressing their reviews, whether they''re positive, negative, or neutral.
+
+        Sample
+
+        JavaScript XHR Request
+
+        var xhr = new XMLHttpRequest();
+
+        xhr.open(''POST'', ''https://api.reputation.com/v3/reviews/DE'
+      parameters:
+      - name: reviewID
+        in: path
+        required: true
+        schema:
+          type: string
+        description: The reviewID identifier
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                name: string
+                comment: string
+                privateMsg: boolean
+  /v3/reviews3:
+    get:
+      summary: Get Reviews3
+      operationId: get_reviews3
+      tags:
+      - Reviews
+      security:
+      - ApiKeyAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          description: Bad request - invalid or missing parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized - invalid API key
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden - insufficient permissions
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '429':
+          description: Too many requests - rate limit exceeded
+        '500':
+          description: Internal server error
+      description: 'Retrieves a list of reviews based on various filter criteria. This endpoint allows for a wide range of parameters to narrow down and organize the list of reviews, providing flexibility to retrieve reviews from different time periods, sources, locations, and more.
+
+        Sample
+
+        JavaScript XHR Request
+
+        var xhr = new XMLHttpRequest();
+
+        xhr.open(''GET'', ''https://api.reputation.com/v3/reviews3?range=PreviousWeek&amp;offset=0&amp;limit=3'', true);
+
+        xhr.setRequestHeader(''x-api-key'', ''Your API key'');
+
+        xhr.onreadysta'
+      parameters:
+      - name: offset
+        in: query
+        description: Offset for pagination
+        schema:
+          type: integer
+          default: 0
+      - name: limit
+        in: query
+        description: Maximum number of objects to return
+        schema:
+          type: integer
+          default: 20
+          maximum: 2000
+  /v3/reviews3/{reviewID}/responses:
+    get:
+      summary: Get Reviews3 Responses
+      operationId: get_reviews3_reviewID_responses
+      tags:
+      - Reviews
+      security:
+      - ApiKeyAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          description: Bad request - invalid or missing parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized - invalid API key
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden - insufficient permissions
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '429':
+          description: Too many requests - rate limit exceeded
+        '500':
+          description: Internal server error
+      description: 'This endpoint retrieves responses associated with a specific review from the Reputation.com API. Each review in the system has a unique identifier known as a reviewID. By providing this ID in the endpoint, you can fetch the associated responses given to that review, whether they are public comments or private messages. The data returned includes the name of the responder, their comment, the type of response (public or private), and the date of the response.
+
+        Sample
+
+        JavaScript XHR Request
+
+        var xhr '
+      parameters:
+      - name: reviewID
+        in: path
+        required: true
+        schema:
+          type: string
+        description: The reviewID identifier
+  /v3/reviews3/{reviewID}/respond:
+    post:
+      summary: Respond to Review
+      operationId: post_reviews3_reviewID_respond
+      tags:
+      - Reviews
+      security:
+      - ApiKeyAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          description: Bad request - invalid or missing parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized - invalid API key
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden - insufficient permissions
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '429':
+          description: Too many requests - rate limit exceeded
+        '500':
+          description: Internal server error
+      description: 'This endpoint allows you to respond to a specific review on the Reputation platform. By specifying the review''s unique identifier reviewID in the path parameter, you can craft and send a response directly to that review. This is particularly useful for businesses looking to engage with their customers by addressing their reviews, whether they''re positive, negative, or neutral.
+
+        Sample
+
+        JavaScript XHR Request
+
+        var xhr = new XMLHttpRequest();
+
+        xhr.open(''POST'', ''https://api.reputation.com/v3/reviews3/D'
+      parameters:
+      - name: reviewID
+        in: path
+        required: true
+        schema:
+          type: string
+        description: The reviewID identifier
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                name: string
+                comment: string
+components:
+  schemas:
+    Error:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              field:
+                type: string
+              code:
+                type: string
+              message:
+                type: string
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-API-KEY
+      description: API key for authentication. For agency accounts, also include X-TENANT-ID header.

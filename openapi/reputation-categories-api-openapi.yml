@@ -1,0 +1,91 @@
+openapi: 3.0.0
+info:
+  title: Reputation Asset Library Categories API
+  description: REST API for aggregating customer feedback, managing reviews and listings, running surveys, and accessing reputation metrics and insights across locations.
+  version: v3
+  contact:
+    name: Reputation Support
+    url: https://support.reputation.com/
+servers:
+- url: https://api.reputation.com
+  description: US Production
+- url: https://api-eu.reputation.com
+  description: EU Production
+security:
+- ApiKeyAuth: []
+tags:
+- name: Categories
+  description: Business listing categories
+paths:
+  /v3/categories:
+    get:
+      summary: Get Categories
+      operationId: get_categories
+      tags:
+      - Categories
+      security:
+      - ApiKeyAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          description: Bad request - invalid or missing parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized - invalid API key
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden - insufficient permissions
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '429':
+          description: Too many requests - rate limit exceeded
+        '500':
+          description: Internal server error
+      description: "Provides the Business Listings categories for each profile, detailing each category's associated industries and identifiers.\nSample Requests\nPython\nimport requests\nurl = 'https://api.reputation.com/v3/categories?offset=0&amp;limit=3'\nheaders = {\n    'x-api-key': 'Your API Key',\n    'Content-Type': 'application/json;charset=UTF-8'\n}\nresponse = requests.get(url, headers=headers)\nif response.status_code &gt;= 200 and response.status_code &lt; 400:\n    print(response.text)\nelse:\n    print(\"Error: \","
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+components:
+  schemas:
+    Error:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              field:
+                type: string
+              code:
+                type: string
+              message:
+                type: string
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-API-KEY
+      description: API key for authentication. For agency accounts, also include X-TENANT-ID header.

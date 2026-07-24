@@ -1,0 +1,348 @@
+openapi: 3.0.0
+info:
+  title: Reputation Asset Library Tickets API
+  description: REST API for aggregating customer feedback, managing reviews and listings, running surveys, and accessing reputation metrics and insights across locations.
+  version: v3
+  contact:
+    name: Reputation Support
+    url: https://support.reputation.com/
+servers:
+- url: https://api.reputation.com
+  description: US Production
+- url: https://api-eu.reputation.com
+  description: EU Production
+security:
+- ApiKeyAuth: []
+tags:
+- name: Tickets
+  description: Customer service ticket management
+paths:
+  /v3/tickets:
+    get:
+      summary: Get Tickets
+      operationId: get_tickets
+      tags:
+      - Tickets
+      security:
+      - ApiKeyAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          description: Bad request - invalid or missing parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized - invalid API key
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden - insufficient permissions
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '429':
+          description: Too many requests - rate limit exceeded
+        '500':
+          description: Internal server error
+      description: 'Retrieves a list of tickets from the Reputation platform. You can specify various filters and sorting options to obtain a refined list of tickets based on requirements such as Queue IDs, Stage IDs, and location IDs. Additionally, you can specify date ranges for ticket creation and update dates to narrow down the results.
+
+        Note: This API refers to tickets that have been created from customer feedback andallows your teams to track the resolution timeline for taking action on the feedback.
+
+        Sample
+
+        Ja'
+      parameters:
+      - name: offset
+        in: query
+        description: Offset for pagination
+        schema:
+          type: integer
+          default: 0
+      - name: limit
+        in: query
+        description: Maximum number of objects to return
+        schema:
+          type: integer
+          default: 20
+          maximum: 2000
+    post:
+      summary: Save Ticket
+      operationId: post_tickets
+      tags:
+      - Tickets
+      security:
+      - ApiKeyAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          description: Bad request - invalid or missing parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized - invalid API key
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden - insufficient permissions
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '429':
+          description: Too many requests - rate limit exceeded
+        '500':
+          description: Internal server error
+      description: 'You can use this endpoint to create a new ticket in the system. By submitting relevant details such as the issue, location, and contact information, you can efficiently log and track customer issues, feedback, or inquiries. This tool is essential for managing customer interactions and ensuring timely responses to their needs.
+
+        Updating Existing Tickets
+
+        This endpoint also allows for the updating of existing tickets, provided they are not in a Closed stage. When making your request:
+
+
+        Always include'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                ticket:
+                  reporterName: String
+                  comment: String
+                  userDefined:
+                    sentiment: String
+                    source: String
+                  fullComment: String
+                  stageID: String
+                  queueID: String
+                  originalDueDate: Datetime ISO 8601
+                  dueDate: Datetime ISO 8601
+                  ticketType: String
+                  stageName: String
+                  queueName: String
+                  locationID: String
+                  customFields:
+                    ticketDefinitionID: String
+                    fieldValues:
+                    - fieldMetaId: String
+                      fieldMetaName: String
+                      values:
+                      - String
+                    - fieldMetaId: String
+                      fieldMetaName: String
+                      values:
+                      - String
+  /v3/ticket-queues:
+    get:
+      summary: Get Queues
+      operationId: get_ticket_queues
+      tags:
+      - Tickets
+      security:
+      - ApiKeyAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          description: Bad request - invalid or missing parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized - invalid API key
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden - insufficient permissions
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '429':
+          description: Too many requests - rate limit exceeded
+        '500':
+          description: Internal server error
+      description: 'You can use this endpoint to retrieve a comprehensive list of all ticket queues within the system. This functionality allows you to view and understand the different categories or departments where tickets are organized and managed. Each queue is uniquely identified by an ID and has a specific name that describes its purpose or area of focus.
+
+        Sample
+
+        JavaScript XHR Request
+
+        var xhr = new XMLHttpRequest();
+
+        xhr.open("GET", "https://api.reputation.com/v3/ticket-queues", true);
+
+        xhr.setRequestHeader("x'
+  /v3/ticket-stages:
+    get:
+      summary: Get Stages
+      operationId: get_ticket_stages
+      tags:
+      - Tickets
+      security:
+      - ApiKeyAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          description: Bad request - invalid or missing parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized - invalid API key
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden - insufficient permissions
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '429':
+          description: Too many requests - rate limit exceeded
+        '500':
+          description: Internal server error
+      description: 'You can use this endpoint to retrieve all ticket stages. This endpoint provides you with comprehensive information about each stage, including their IDs, names, and specific properties such as whether they are system-defined or custom, their order in the process flow, and whether they are marked as ''on hold''. This information helps you understand and manage the different stages that a ticket might go through in your workflow.
+
+        Sample
+
+        JavaScript XHR Request
+
+        var xhr = new XMLHttpRequest();
+
+        xhr.open'
+  /v3/ticket-types:
+    get:
+      summary: Get Ticket Definitions
+      operationId: get_ticket_types
+      tags:
+      - Tickets
+      security:
+      - ApiKeyAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          description: Bad request - invalid or missing parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized - invalid API key
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden - insufficient permissions
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '429':
+          description: Too many requests - rate limit exceeded
+        '500':
+          description: Internal server error
+      description: 'You can use this endpoint to retrieve all available ticket types in your system. Each ticket type contains unique identifiers, labels, and associated field groups that define the structure and information required for each ticket type. The field groups within a ticket type include their own identifiers, labels, and specific metadata fields.
+
+        Sample
+
+        JavaScript XHR Request
+
+        var xhr = new XMLHttpRequest();
+
+        xhr.open("GET", "https://api.reputation.com/v3/ticket-types", true);
+
+        xhr.setRequestHeader("x-ap'
+components:
+  schemas:
+    Error:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              field:
+                type: string
+              code:
+                type: string
+              message:
+                type: string
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-API-KEY
+      description: API key for authentication. For agency accounts, also include X-TENANT-ID header.
