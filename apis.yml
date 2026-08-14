@@ -17,7 +17,7 @@ accessModel:
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/reputation.png
 url: https://raw.githubusercontent.com/api-evangelist/reputation/refs/heads/main/apis.yml
 created: '2026-06-13'
-modified: '2026-06-13'
+modified: '2026-08-13'
 specificationVersion: '0.19'
 type: Index
 tags:
@@ -34,12 +34,14 @@ apis:
   name: Reputation Asset Library API
   description: Manage image assets
   humanURL: https://apidocs.reputation.com/
-  baseURL: https://reputation-api.com
+  baseURL: https://api.reputation.com
   tags:
   - Asset Library
   properties:
   - type: OpenAPI
     url: openapi/reputation-asset-library-api-openapi.yml
+  - type: Overlay
+    url: overlays/reputation-asset-library-api-overlay.yaml
   - type: Documentation
     url: https://apidocs.reputation.com/
   - type: Documentation
@@ -58,12 +60,14 @@ apis:
   name: Reputation Authorize API
   description: Authorization management
   humanURL: https://apidocs.reputation.com/
-  baseURL: https://reputation-api.com
+  baseURL: https://api.reputation.com
   tags:
   - Authorize
   properties:
   - type: OpenAPI
     url: openapi/reputation-authorize-api-openapi.yml
+  - type: Overlay
+    url: overlays/reputation-authorize-api-overlay.yaml
   - type: Documentation
     url: https://apidocs.reputation.com/
   - type: Documentation
@@ -82,12 +86,14 @@ apis:
   name: Reputation Categories API
   description: Business listing categories
   humanURL: https://apidocs.reputation.com/
-  baseURL: https://reputation-api.com
+  baseURL: https://api.reputation.com
   tags:
   - Categories
   properties:
   - type: OpenAPI
     url: openapi/reputation-categories-api-openapi.yml
+  - type: Overlay
+    url: overlays/reputation-categories-api-overlay.yaml
   - type: Documentation
     url: https://apidocs.reputation.com/
   - type: Documentation
@@ -106,12 +112,14 @@ apis:
   name: Reputation Credentials API
   description: OAuth credential management
   humanURL: https://apidocs.reputation.com/
-  baseURL: https://reputation-api.com
+  baseURL: https://api.reputation.com
   tags:
   - Credentials
   properties:
   - type: OpenAPI
     url: openapi/reputation-credentials-api-openapi.yml
+  - type: Overlay
+    url: overlays/reputation-credentials-api-overlay.yaml
   - type: Documentation
     url: https://apidocs.reputation.com/
   - type: Documentation
@@ -130,12 +138,14 @@ apis:
   name: Reputation Listing Audits API
   description: Audit business listings across sources
   humanURL: https://apidocs.reputation.com/
-  baseURL: https://reputation-api.com
+  baseURL: https://api.reputation.com
   tags:
   - Listing Audits
   properties:
   - type: OpenAPI
     url: openapi/reputation-listing-audits-api-openapi.yml
+  - type: Overlay
+    url: overlays/reputation-listing-audits-api-overlay.yaml
   - type: Documentation
     url: https://apidocs.reputation.com/
   - type: Documentation
@@ -154,12 +164,14 @@ apis:
   name: Reputation Locations API
   description: Manage business locations
   humanURL: https://apidocs.reputation.com/
-  baseURL: https://reputation-api.com
+  baseURL: https://api.reputation.com
   tags:
   - Locations
   properties:
   - type: OpenAPI
     url: openapi/reputation-locations-api-openapi.yml
+  - type: Overlay
+    url: overlays/reputation-locations-api-overlay.yaml
   - type: Documentation
     url: https://apidocs.reputation.com/
   - type: Documentation
@@ -178,12 +190,14 @@ apis:
   name: Reputation Metrics API
   description: Reputation metrics and insights
   humanURL: https://apidocs.reputation.com/
-  baseURL: https://reputation-api.com
+  baseURL: https://api.reputation.com
   tags:
   - Metrics
   properties:
   - type: OpenAPI
     url: openapi/reputation-metrics-api-openapi.yml
+  - type: Overlay
+    url: overlays/reputation-metrics-api-overlay.yaml
   - type: Documentation
     url: https://apidocs.reputation.com/
   - type: Documentation
@@ -202,12 +216,14 @@ apis:
   name: Reputation Reports API
   description: Report generation and export
   humanURL: https://apidocs.reputation.com/
-  baseURL: https://reputation-api.com
+  baseURL: https://api.reputation.com
   tags:
   - Reports
   properties:
   - type: OpenAPI
     url: openapi/reputation-reports-api-openapi.yml
+  - type: Overlay
+    url: overlays/reputation-reports-api-overlay.yaml
   - type: Documentation
     url: https://apidocs.reputation.com/
   - type: Documentation
@@ -226,12 +242,14 @@ apis:
   name: Reputation Requests API
   description: Review request management
   humanURL: https://apidocs.reputation.com/
-  baseURL: https://reputation-api.com
+  baseURL: https://api.reputation.com
   tags:
   - Requests
   properties:
   - type: OpenAPI
     url: openapi/reputation-requests-api-openapi.yml
+  - type: Overlay
+    url: overlays/reputation-requests-api-overlay.yaml
   - type: Documentation
     url: https://apidocs.reputation.com/
   - type: Documentation
@@ -250,12 +268,14 @@ apis:
   name: Reputation Reviews API
   description: Review management and responses
   humanURL: https://apidocs.reputation.com/
-  baseURL: https://reputation-api.com
+  baseURL: https://api.reputation.com
   tags:
   - Reviews
   properties:
   - type: OpenAPI
     url: openapi/reputation-reviews-api-openapi.yml
+  - type: Overlay
+    url: overlays/reputation-reviews-api-overlay.yaml
   - type: Documentation
     url: https://apidocs.reputation.com/
   - type: Documentation
@@ -274,12 +294,14 @@ apis:
   name: Reputation Rich Content API
   description: FAQs, menus, and product content
   humanURL: https://apidocs.reputation.com/
-  baseURL: https://reputation-api.com
+  baseURL: https://api.reputation.com
   tags:
   - Rich Content
   properties:
   - type: OpenAPI
     url: openapi/reputation-rich-content-api-openapi.yml
+  - type: Overlay
+    url: overlays/reputation-rich-content-api-overlay.yaml
   - type: Documentation
     url: https://apidocs.reputation.com/
   - type: Documentation
@@ -298,12 +320,14 @@ apis:
   name: Reputation Summary API
   description: Reputation summary data
   humanURL: https://apidocs.reputation.com/
-  baseURL: https://reputation-api.com
+  baseURL: https://api.reputation.com
   tags:
   - Summary
   properties:
   - type: OpenAPI
     url: openapi/reputation-summary-api-openapi.yml
+  - type: Overlay
+    url: overlays/reputation-summary-api-overlay.yaml
   - type: Documentation
     url: https://apidocs.reputation.com/
   - type: Documentation
@@ -322,12 +346,14 @@ apis:
   name: Reputation Surveys API
   description: Survey management and results
   humanURL: https://apidocs.reputation.com/
-  baseURL: https://reputation-api.com
+  baseURL: https://api.reputation.com
   tags:
   - Surveys
   properties:
   - type: OpenAPI
     url: openapi/reputation-surveys-api-openapi.yml
+  - type: Overlay
+    url: overlays/reputation-surveys-api-overlay.yaml
   - type: Documentation
     url: https://apidocs.reputation.com/
   - type: Documentation
@@ -346,12 +372,14 @@ apis:
   name: Reputation Tenants API
   description: Tenant/account management
   humanURL: https://apidocs.reputation.com/
-  baseURL: https://reputation-api.com
+  baseURL: https://api.reputation.com
   tags:
   - Tenants
   properties:
   - type: OpenAPI
     url: openapi/reputation-tenants-api-openapi.yml
+  - type: Overlay
+    url: overlays/reputation-tenants-api-overlay.yaml
   - type: Documentation
     url: https://apidocs.reputation.com/
   - type: Documentation
@@ -370,12 +398,14 @@ apis:
   name: Reputation Tickets API
   description: Customer service ticket management
   humanURL: https://apidocs.reputation.com/
-  baseURL: https://reputation-api.com
+  baseURL: https://api.reputation.com
   tags:
   - Tickets
   properties:
   - type: OpenAPI
     url: openapi/reputation-tickets-api-openapi.yml
+  - type: Overlay
+    url: overlays/reputation-tickets-api-overlay.yaml
   - type: Documentation
     url: https://apidocs.reputation.com/
   - type: Documentation
@@ -394,12 +424,14 @@ apis:
   name: Reputation Users API
   description: User management
   humanURL: https://apidocs.reputation.com/
-  baseURL: https://reputation-api.com
+  baseURL: https://api.reputation.com
   tags:
   - Users
   properties:
   - type: OpenAPI
     url: openapi/reputation-users-api-openapi.yml
+  - type: Overlay
+    url: overlays/reputation-users-api-overlay.yaml
   - type: Documentation
     url: https://apidocs.reputation.com/
   - type: Documentation
@@ -449,6 +481,56 @@ common:
     url: rate-limits/reputation-rate-limits.yml
   - type: FinOps
     url: finops/reputation-finops.yml
+  - type: Conventions
+    url: conventions/reputation-conventions.yml
+  - type: ErrorCatalog
+    url: errors/reputation-problem-types.yml
+  - type: Lifecycle
+    url: lifecycle/reputation-lifecycle.yml
+  - type: Conformance
+    url: conformance/reputation-conformance.yml
+  - type: Compliance
+    url: https://reputation.com/security-posture/
+  - type: TrustCenter
+    url: security/reputation-trust-center.yml
+  - type: DataModel
+    url: data-model/reputation-data-model.yml
+  - type: Packages
+    url: packages/reputation-packages.yml
+  - type: LLMsTxt
+    url: llms/reputation-llms.txt
+  - type: AgentSkill
+    url: skills/_index.yml
+  - type: Examples
+    url: examples/reputation-get-reviews-example.json
+  - type: Examples
+    url: examples/reputation-get-locations-example.json
+  - type: Examples
+    url: examples/reputation-respond-to-review-example.json
+  - type: Examples
+    url: examples/reputation-send-review-request-example.json
+  - type: Rules
+    url: rules/reputation-jsonschema-spectral-rules.yml
+  - type: DeveloperPortal
+    url: https://apidocs.reputation.com/
+  - type: APIReference
+    url: https://apidocs.reputation.com/
+  - type: Postman
+    url: https://apidocs.reputation.com/
+  - type: Support
+    url: https://support.reputation.com/
+  - type: Login
+    url: https://app.reputation.com/auth
+  - type: TermsOfService
+    url: https://reputation.com/legal-information/terms-of-use
+  - type: PrivacyPolicy
+    url: https://reputation.com/legal-information/privacy-notice
 maintainers:
   - FN: Kin Lane
     email: kin@apievangelist.com
+
+x-enrichment:
+  date: '2026-08-13'
+  status: enriched
+  artifacts_added: 31
+  pass: local-v1
