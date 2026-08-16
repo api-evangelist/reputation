@@ -5,7 +5,7 @@
       "source": "https://reputation.com/resources/articles/rss.xml",
       "feed_url": "https://reputation.com/resources/articles/rss.xml",
       "title": "",
-      "saved": 0,
+      "saved": 3,
       "method": "feed"
     },
     {
@@ -13,9 +13,10 @@
       "feed_url": "https://www.linkedin.com/company/reputation-com",
       "title": "",
       "saved": 0,
-      "method": "none"
+      "method": "none",
+      "error": "parse_failed"
     }
   ],
-  "fetched": "2026-08-06T14:08:46Z",
-  "post_count": 65
+  "fetched": "2026-08-15T12:11:08Z",
+  "post_count": 68
 }
