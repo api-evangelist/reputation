@@ -1,0 +1,103 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Reputation Asset Library Users API",
+    "version": "v3"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "X-API-KEY",
+      "value": "{{X-API-KEY}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Users",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Users",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.reputation.com/v3/users",
+            "params": [
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Offset for pagination"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of objects to return"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-API-KEY",
+              "value": "{{X-API-KEY}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Retrieve a list of users within your system, providing crucial details about each user. It's an essential tool for administrators to oversee user accounts, roles, and access levels.\nSample\nJavaScript XHR Request\nvar data = null;\nvar xhr = new XMLHttpRequest();\nxhr.withCredentials = true;\nxhr.addEventListener(\"readystatechange\", function () {\n    if (this.readyState === this.DONE) {\n        console.log(this.responseText);\n    }\n});\nxhr.open(\"GET\", \"https://api.reputation.com/v3/users?offset=0&amp"
+        },
+        {
+          "info": {
+            "name": "Save User",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.reputation.com/v3/users",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "X-API-KEY",
+              "value": "{{X-API-KEY}}",
+              "placement": "header"
+            }
+          },
+          "docs": "You can use this endpoint to create or update a user profile in your system. This is particularly useful for managing access and roles within your organization. When making a request, you'll need to provide essential details such as the user's unique ID, first name, last name, email, and role. Additional details like phone number, display name, and specific user scopes can also be specified to further customize the user's profile.\nSample\nJavaScript XHR Request\nvar xhr = new XMLHttpRequest();\nxhr"
+        },
+        {
+          "info": {
+            "name": "Get User",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.reputation.com/v3/users/:userID",
+            "params": [
+              {
+                "name": "userID",
+                "value": "",
+                "type": "path",
+                "description": "The userID identifier"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-API-KEY",
+              "value": "{{X-API-KEY}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Retrieve detailed information about a specific user within your organization. By specifying the unique userID, you can obtain comprehensive data about that individual user, including their role, contact details, and associated scopes.\nSample\nJavaScript XHR Request\nvar xhr = new XMLHttpRequest();\nxhr.open(\"GET\", \"https://api.reputation.com/v3/users/41807627\", true);\nxhr.setRequestHeader(\"x-api-key\", \"Your API key\");\n\nxhr.onreadystatechange = function () {\n    if (xhr.readyState === 4) {\n        c"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

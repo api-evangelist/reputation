@@ -1,0 +1,153 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Reputation Asset Library Tenants API",
+    "version": "v3"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "X-API-KEY",
+      "value": "{{X-API-KEY}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Tenants",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Tenants",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.reputation.com/v3/tenants",
+            "params": [
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Offset for pagination"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of objects to return"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-API-KEY",
+              "value": "{{X-API-KEY}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Retrieve a list of tenants in the Reputation platform. This endpoint is ideal for quickly accessing details about various tenants, including their names, contact information, industry IDs, and the modules they are using. This endpoint is particularly useful for managing and understanding the scope of tenants under your purview, ensuring efficient oversight and analysis of multiple accounts.\nNOTE: This API is intended for only for Agency customers who manage multiple tenant accounts on Reputation"
+        },
+        {
+          "info": {
+            "name": "Save Tenant",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.reputation.com/v3/tenants",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "X-API-KEY",
+              "value": "{{X-API-KEY}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Create or save tenant information within the system. This endpoint is crucial for managing tenant data, which includes details about names, contacts, and the specific services or modules each tenant utilizes.\nNOTE: This API is intended for only for Agency customers who manage multiple tenant accounts on Reputation platform.\nSample\nJavaScript XHR Request\nvar data = JSON.stringify({\n  \"tenant\": [\n    {\n      \"id\": \"5a7b73ee12345\",\n      \"agencyID\": \"Dental\",\n      \"name\": \"Downtown Dental Care\",\n "
+        },
+        {
+          "info": {
+            "name": "Get Tenant",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.reputation.com/v3/tenants/:tenantID",
+            "params": [
+              {
+                "name": "tenantID",
+                "value": "",
+                "type": "path",
+                "description": "The tenantID identifier"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-API-KEY",
+              "value": "{{X-API-KEY}}",
+              "placement": "header"
+            }
+          },
+          "docs": "This endpoint allows you to retrieve detailed information about a specific tenant by using their unique tenant ID. By providing the tenant ID in the URL, you can access comprehensive data related to that particular tenant, including their name, contact information, active status, associated modules, and other relevant details. This is particularly useful for managing and understanding individual tenant profiles within your system.\nNOTE: This API is intended for only for Agency customers who mana"
+        },
+        {
+          "info": {
+            "name": "Pause Tenant",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.reputation.com/v3/tenants/:tenantID/pause",
+            "params": [
+              {
+                "name": "tenantID",
+                "value": "",
+                "type": "path",
+                "description": "The tenantID identifier"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-API-KEY",
+              "value": "{{X-API-KEY}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Inactivate a tenant in the system. By specifying the unique tenantID in the URL, you can change the status of the identified tenant to Paused. This action is particularly useful for temporarily disabling a tenant's access or services without permanently deleting their data or settings.\nNOTE: This API is intended for only for Agency customers who manage multiple tenant accounts on Reputation platform.\nSample\nJavaScript XHR Request\nvar xhr = new XMLHttpRequest();\nxhr.open(\"PUT\", \"https://api.reput"
+        },
+        {
+          "info": {
+            "name": "Unpause Tenant",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.reputation.com/v3/tenants/:tenantID/unpause",
+            "params": [
+              {
+                "name": "tenantID",
+                "value": "",
+                "type": "path",
+                "description": "The tenantID identifier"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-API-KEY",
+              "value": "{{X-API-KEY}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Used to reactivate a tenant within the system. By specifying the tenant's unique identifier in the URL, this endpoint enables you to change the status of a previously inactivated or paused tenant back to active. This action effectively resumes all operations and functionalities associated with that specific tenant, reinstating access to services and features within the Reputation platform.\nNOTE: This API is intended for only for Agency customers who manage multiple tenant accounts on Reputation "
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

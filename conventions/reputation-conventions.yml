@@ -1,0 +1,122 @@
+generated: '2026-08-13'
+method: searched
+source: https://apidocs.reputation.com/
+docs: https://apidocs.reputation.com/
+note: >-
+  Captured from the Reputation API overview published in the public Postman documenter collection
+  at apidocs.reputation.com (collection 17280339/2s83YWk4kZ, fetched 2026-08-13, HTTP 200) and
+  cross-checked against openapi/_original/reputation-api-openapi.yml.
+authentication:
+  style: api-key-header
+  header: X-API-KEY
+  tenant_header: X-TENANT-ID
+  tenant_header_note: >-
+    Required only for Agency API keys, which manage resources across multiple client tenants. Each
+    request must name the target tenant so actions are scoped to the correct tenant's resources.
+  obtaining_credentials: Contact your Reputation customer success manager; there is no self-serve key issuance.
+  artifact: authentication/reputation-authentication.yml
+content_negotiation:
+  response_format: application/json
+  request_content_type: application/json
+  note: >-
+    "For GET requests the Accept HTTP header may be necessary, while POST and PUT requests often
+    require the Content-Type HTTP header set to application/json."
+idempotency:
+  supported: false
+  header: null
+  note: >-
+    Reputation documents NO idempotency key, no request-replay contract and no retry-safety
+    guarantee for its POST/PUT operations. The string "idempoten" does not appear anywhere in the
+    published collection. No Idempotency pointer is wired in apis.yml — this is a real gap in the
+    contract, not an omission in the harvest.
+pagination:
+  style: offset-limit-with-cursor-fallback
+  default_limit: 20
+  request_params:
+  - {name: offset, in: query, type: integer|string, description: 'Integer — number of records to skip (traditional offset pagination). String — a Base64-encoded token/cursor used for cursor-based pagination in newer endpoints.'}
+  - {name: limit, in: query, type: integer, description: Maximum number of objects that may be returned; a query may return fewer due to filtering.}
+  response_object: pagination
+  response_fields:
+  - {name: offset, type: integer|string}
+  - {name: limit, type: integer}
+  - {name: next, type: string, description: API endpoint returning the next page. Absent on the last page.}
+  - {name: previous, type: string, description: API endpoint returning the previous page. Absent on the first page.}
+  schema: openapi/_original/reputation-api-openapi.yml#/components/schemas/PaginationMeta
+date_ranges:
+  response_object: range
+  fields:
+  - {name: range, description: The specified date range}
+  - {name: from, description: Start date of the range}
+  - {name: to, description: End date of the range}
+  request_params: [from, to, range]
+  note: Endpoints that accept date ranges echo the applied range back in a `range` object.
+error_envelope:
+  format: vendor-specific
+  rfc9457: false
+  shape: '{ "errors": [ { "error": { "field": "...", "code": "...", "message": "..." } } ] }'
+  fields:
+  - {name: errors, type: array, description: An array of error objects.}
+  - {name: error, parent: errors, type: object, description: An object containing error details.}
+  - {name: field, parent: error, type: string, description: Name of the field which failed validation.}
+  - {name: code, parent: error, type: string, description: Validation failure code.}
+  - {name: message, parent: error, type: string, description: Message explaining the code.}
+  artifact: errors/reputation-problem-types.yml
+validation:
+  missing_resource: 404
+  failed_validation: 403
+  note: >-
+    "Every incoming request undergoes validation. If the desired resource is absent, a 404 is
+    returned. Should the validation not pass, a 403 is issued." Note this diverges from the common
+    422/400 convention — Reputation uses 403 for validation failure, which an agent must special-case.
+versioning:
+  scheme: uri-path
+  current: v3
+  base_path: /v3
+  note: >-
+    Version is carried in the URI path. Reputation also runs generation-suffixed resources side by
+    side (/v3/reviews vs /v3/reviews3, /v3/survey-results vs /v3/surveys2-results vs
+    /v3/surveys3-results); the un-suffixed and lower-numbered variants are marked deprecated.
+  artifact: lifecycle/reputation-lifecycle.yml
+request_tracing:
+  request_id_header: null
+  note: No correlation/request-id header is documented.
+rate_limit_signaling:
+  status_on_exhaustion: 429
+  headers: []
+  note: >-
+    The docs state 429 means "Too many requests. API rate limit exceeded" but publish no numeric
+    limit, no window and no RateLimit-*/Retry-After response headers.
+  artifact: rate-limits/reputation-rate-limits.yml
+field_expansion:
+  supported: false
+sparse_fieldsets:
+  supported: false
+metadata:
+  supported: false
+regions:
+- {region: US, api_host: https://api.reputation.com, docs: https://apidocs.reputation.com/}
+- {region: EU, api_host: https://api-eu.reputation.com, docs: https://apidocs-eu.reputation.com/}
+region_note: >-
+  Reputation runs geographically separated US and EU data regions (per its published security
+  posture) with separate API hosts and separate documentation collections. The two surfaces are
+  not identical — the EU collection exposes PUT /v3/reports/{reportID}/run where the US collection
+  exposes PUT /v3/reports/{reportID}/export.
+transport_security:
+  tls_cipher_policy_published: true
+  source: https://apidocs.reputation.com/
+  approved_ciphers:
+  - TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA
+  - TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256
+  - TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA
+  - TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384
+  - TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256
+  - TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA
+  - TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
+  - TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA
+  - TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+  - TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305_SHA256
+  - TLS_RSA_WITH_3DES_EDE_CBC_SHA
+  - TLS_RSA_WITH_AES_128_CBC_SHA
+  - TLS_RSA_WITH_AES_128_GCM_SHA256
+  - TLS_RSA_WITH_AES_256_CBC_SHA
+  - TLS_RSA_WITH_AES_256_GCM_SHA384

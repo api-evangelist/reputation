@@ -1,0 +1,16 @@
+# Reputation
+
+> Reputation helps multi-location brands manage reviews, listings, surveys, and customer feedback so they can improve local visibility, customer experience, and location-level performance.
+
+## Platform
+
+- [Reviews](https://reputation.com/platform/reviews?utm_source=llmstxt&utm_medium=ai_agent&utm_campaign=aeo_pilot): Request, monitor, and respond to customer reviews across major review sites. This page explains how Reputation helps multi-location brands improve trust, local search visibility, and review operations.
+- [Surveys](https://reputation.com/platform/surveys?utm_source=llmstxt&utm_medium=ai_agent&utm_campaign=aeo_pilot): Collect customer feedback through surveys at key points in the customer journey. This page covers survey distribution, response analysis, and how teams use feedback to improve customer experience.
+- [Listings & Local SEO](https://reputation.com/platform/listing-local-seo?utm_source=llmstxt&utm_medium=ai_agent&utm_campaign=aeo_pilot): Manage business information across directories, maps, and search platforms. This page explains how Reputation helps brands keep listings accurate, suppress duplicates, and monitor local SEO performance.
+- [Actions](https://reputation.com/platform/actions?utm_source=llmstxt&utm_medium=ai_agent&utm_campaign=aeo_pilot): Turn reviews, surveys, and other feedback into tasks for local teams. This page covers alerts, workflow routing, and follow-up tools that help brands respond to operational issues faster.
+
+## Solutions
+
+- [Healthcare](https://reputation.com/solutions/industries/healthcare?utm_source=llmstxt&utm_medium=ai_agent&utm_campaign=aeo_pilot): Solutions for healthcare organizations that need to manage reviews, listings, and patient feedback across locations. This page focuses on patient trust, service recovery, and local visibility.
+- [Real Estate](https://reputation.com/solutions/industries/real-estate?utm_source=llmstxt&utm_medium=ai_agent&utm_campaign=aeo_pilot): Solutions for real estate brands that need to manage listings, reviews, and resident or prospect feedback across properties and markets. This page focuses on trust, discoverability, and portfolio performance.
+- [Retail](https://reputation.com/solutions/industries/retail?utm_source=llmstxt&utm_medium=ai_agent&utm_campaign=aeo_pilot): Solutions for retail brands that need to manage reviews, listings, and customer feedback across store networks. This page focuses on local visibility, store experience, and location-level performance.

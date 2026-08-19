@@ -1,0 +1,181 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Reputation Asset Library Metrics API",
+    "version": "v3"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "X-API-KEY",
+      "value": "{{X-API-KEY}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Metrics",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Metrics (Deprecated)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.reputation.com/v3/metrics",
+            "params": [
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Offset for pagination"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of objects to return"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-API-KEY",
+              "value": "{{X-API-KEY}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Retrieve a variety of metrics based on specific criteria. These metrics can provide insights into trends, user behavior, and more, over different time intervals and for different sources or locations.\nNote: This endpoint is now deprecated and might be removed in future versions. Ensure you check for alternative endpoints or methods to fetch the required data.\nSample\nJavaScript XHR Request\nvar xhr = new XMLHttpRequest();\nxhr.open('GET', 'https://api.reputation.com/v3/metrics', true);\nxhr.setReque"
+        },
+        {
+          "info": {
+            "name": "Get Page Metrics",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.reputation.com/v3/page-metrics",
+            "params": [
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Offset for pagination"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of objects to return"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-API-KEY",
+              "value": "{{X-API-KEY}}",
+              "placement": "header"
+            }
+          },
+          "docs": "This endpoint allows for the retrieval of page-specific metrics from the Reputation API. By specifying various query parameters, you can filter and customize the data being fetched, enabling a more detailed and targeted insights analysis.\nSample\nJavaScript XHR Request\nvar xhr = new XMLHttpRequest();\nxhr.open('GET', 'https://api.reputation.com/v3/page-metrics?limit=2', true);\nxhr.setRequestHeader('x-api-key', 'Your API key');\nxhr.onreadystatechange = function() {\n    if (xhr.readyState == 4 &amp;"
+        },
+        {
+          "info": {
+            "name": "Get Post Metrics",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.reputation.com/v3/post-metrics",
+            "params": [
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Offset for pagination"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of objects to return"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-API-KEY",
+              "value": "{{X-API-KEY}}",
+              "placement": "header"
+            }
+          },
+          "docs": "This endpoint retrieves post metrics from the Reputation platform. It provides detailed insights based on various filtering criteria such as date range, source, location, type, and interval.\nSample\nJavaScript XHR\nvar xhr = new XMLHttpRequest();\nxhr.open('GET', 'https://api.reputation.com/v3/post-metrics?limit=2&amp;sourceIDs=FACEBOOK', true);\nxhr.onreadystatechange = function() {\n    if (xhr.readyState == 4 &amp;&amp; xhr.status == 200) {\n        var response = JSON.parse(xhr.responseText);\n    "
+        },
+        {
+          "info": {
+            "name": "Get Aggregate Page Metrics",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.reputation.com/v3/aggregate-page-metrics",
+            "params": [
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Offset for pagination"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of objects to return"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-API-KEY",
+              "value": "{{X-API-KEY}}",
+              "placement": "header"
+            }
+          },
+          "docs": "This endpoint retrieves aggregate metrics related to pages on various platforms. The metrics offer insights on page reach, views, clicks, and more, providing a comprehensive understanding of a page's performance over different sources and time frames.\nFor example:\n\nIf you want to know the total number of page views from all sources for a specific location over the past month, the endpoint would \"aggregate\" or sum up all the individual views from each source to provide a total count.\nIf you choos"
+        },
+        {
+          "info": {
+            "name": "Get Aggregate Post Metrics",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.reputation.com/v3/aggregate-post-metrics",
+            "params": [
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Offset for pagination"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of objects to return"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-API-KEY",
+              "value": "{{X-API-KEY}}",
+              "placement": "header"
+            }
+          },
+          "docs": "This endpoint retrieves aggregate metrics pertaining to posts from various sources. These metrics provide insights on aspects like post impressions, organic reach, and other related dimensions for a given period and set of filtering criteria.\nSample\nJavaScript XHR Sample\nvar xhr = new XMLHttpRequest();\nxhr.open('GET', 'https://api.reputation.com/v3/aggregate-post-metrics?locationIDs=SA&amp;sourceIDs=FACEBOOK', true);\nxhr.onreadystatechange = function() {\n    if (xhr.readyState == 4 &amp;&amp; xh"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

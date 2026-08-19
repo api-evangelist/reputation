@@ -1,0 +1,41 @@
+generated: '2026-08-13'
+method: searched
+probe: true
+url: https://reputation.com/security-posture/
+note: >-
+  probe-security-programs.py found no trust.reputation.com or security.reputation.com host (both
+  fail to resolve) and no /trust, /security or /compliance path on reputation.com (all 404).
+  Reputation's trust surface is instead a "Security Posture" page linked from
+  https://reputation.com/legal-information, fetched 2026-08-13 (HTTP 200), which names its
+  certifications directly. Upgraded from the probe by search.
+certifications:
+- SOC 2 Type II
+- ISO 27001
+- HIPAA
+- GDPR
+- Gramm-Leach-Bliley Act Safeguards Rule
+- CCPA
+practices:
+  penetration_testing: Conducted by an independent third-party assessor at least annually.
+  encryption_at_rest: AES symmetric block cipher.
+  encryption_in_transit: TLS, with a published approved-cipher policy in the API documentation.
+  password_storage: One-way bcrypt with random salt; 4096+ bit public/private key encryption for retrieval.
+  data_residency: Geographically separated US and EU data regions, reflected in separate API hosts.
+documents_available_on_request:
+- {name: SOC 2 Type II report, access: under NDA}
+- {name: ISO 27001 certificate, access: under NDA}
+related_pages:
+- {name: HIPAA Compliance, url: 'https://reputation.com/hipaa-compliance/'}
+- {name: CCPA Compliance FAQ, url: 'https://reputation.com/ccpa-compliance/'}
+- {name: Data Processing Addendum, url: 'https://reputation.com/reputation-data-processing-addendum/'}
+- {name: Subprocessors, url: 'https://reputation.com/legal-information/reputation-com-subprocessors/'}
+evidence:
+- {source: 'https://reputation.com/security-posture/', http_status: 200, keywords: [soc 2 type ii, iso 27001, hipaa, gdpr, penetration test, encryption]}
+- {source: 'https://reputation.com/hipaa-compliance/', http_status: 200}
+- {source: 'https://reputation.com/legal-information', http_status: 200}
+gaps:
+  vulnerability_disclosure: >-
+    NONE FOUND. No security.txt (404 on all hosts), no /responsible-disclosure, /security or
+    /vulnerability-disclosure page (all 404), no bug bounty on HackerOne/Bugcrowd/Intigriti, and no
+    security@ contact published on the security-posture page. No Security or VulnerabilityDisclosure
+    pointer is wired in apis.yml.

@@ -1,16 +1,63 @@
-generated: '2026-07-11'
-method: derived
-source: openapi/reputation-api-openapi.yml
+generated: '2026-08-13'
+method: searched
+source: openapi/_original/reputation-api-openapi.yml
+docs: https://apidocs.reputation.com/
 summary:
   types:
   - apiKey
   api_key_in:
   - header
+  oauth2_flows: []
+  applies_to_operations: 67
+  applies_to_operations_total: 67
 schemes:
 - name: ApiKeyAuth
   type: apiKey
   in: header
   parameter: X-API-KEY
-  description: API key for authentication. For agency accounts, also include X-TENANT-ID header.
+  description: >-
+    API key for authentication, applied globally to all 67 published operations. Issued only by a
+    Reputation customer success manager — there is no self-serve key issuance, no key-management
+    endpoint, and no documented rotation or expiry policy.
   sources:
-  - openapi/reputation-api-openapi.yml
+  - openapi/_original/reputation-api-openapi.yml
+companion_headers:
+- name: X-TENANT-ID
+  required_when: >-
+    The API key is an Agency key. An Agency key manages resources across multiple client tenants,
+    and each request must name the target tenant so actions are scoped correctly.
+  omission_behaviour: >-
+    Returns HTTP 404 "Missing Tenant Id" — not 401 or 400. Clients must special-case this.
+  source: https://apidocs.reputation.com/
+key_lifecycle:
+  issuance: Contact your Reputation customer success manager.
+  self_serve: false
+  rotation_endpoint: null
+  expiry_documented: false
+  scopes: null
+  scope_note: >-
+    The API has no OAuth2 surface and therefore no scopes. Permission is carried entirely by the
+    key; a key either is or is not "permitted the operation" (HTTP 403). No scopes/ artifact is
+    emitted because there is nothing to enumerate.
+transport:
+  tls_required: true
+  cipher_policy_published: true
+  cipher_policy_source: https://apidocs.reputation.com/
+oauth_lookalike:
+  operation: get_credentials_oauth
+  path: /v3/credentials/oauth
+  note: >-
+    GET /v3/credentials/oauth reports the OAuth connection status of third-party review and social
+    sources connected to the account. It is NOT an OAuth flow for the Reputation API itself and must
+    not be read as one.
+regions:
+- {region: US, host: 'https://api.reputation.com', docs: 'https://apidocs.reputation.com/'}
+- {region: EU, host: 'https://api-eu.reputation.com', docs: 'https://apidocs-eu.reputation.com/'}
+region_note: A key issued in one data region is not valid in the other; US and EU are separated.
+example:
+  curl: |
+    curl -H "Content-Type: application/json" \
+         -H "X-API-KEY: $ACCESS_TOKEN" \
+         -H "X-TENANT-ID: $TENANT_ID" \
+         "https://api.reputation.com/v3/locations"
+  source: https://apidocs.reputation.com/

@@ -1,0 +1,79 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for Reputation Asset Library Requests API
+  version: 1.0.0
+extends: openapi/reputation-requests-api-openapi.yml
+x-generated: '2026-08-13'
+x-method: generated
+actions:
+- target: $.info
+  description: Record API Evangelist provenance and the artifacts derived from this specification.
+  update:
+    x-apievangelist-provider: reputation
+    x-apievangelist-artifacts:
+      conventions: conventions/reputation-conventions.yml
+      errors: errors/reputation-problem-types.yml
+      authentication: authentication/reputation-authentication.yml
+      lifecycle: lifecycle/reputation-lifecycle.yml
+      conformance: conformance/reputation-conformance.yml
+      data-model: data-model/reputation-data-model.yml
+      rate-limits: rate-limits/reputation-rate-limits.yml
+    x-apievangelist-source: https://apidocs.reputation.com/ (public Postman documenter collection 17280339/2s83YWk4kZ)
+- target: $.info
+  description: Attach the runtime semantics Reputation publishes in prose but does not express in the
+    specification.
+  update:
+    x-pagination:
+      style: offset-limit
+      default_limit: 20
+      params:
+      - offset
+      - limit
+      response_object: pagination
+      response_fields:
+      - offset
+      - limit
+      - next
+      - previous
+      cursor_note: Newer endpoints accept a Base64-encoded cursor token in offset.
+    x-idempotency:
+      supported: false
+      note: Reputation documents no idempotency key or replay contract on write operations.
+    x-error-envelope:
+      rfc9457: false
+      shape: '{ "errors": [ { "error": { "field", "code", "message" } } ] }'
+    x-validation-status:
+      resource_missing: 404
+      validation_failed: 403
+      note: Validation failure returns 403, not 400/422.
+    x-rate-limit:
+      status: 429
+      headers: []
+      published_limits: null
+- target: $.components.securitySchemes.ApiKeyAuth
+  description: Document the agency tenant-scoping header that accompanies the API key.
+  update:
+    x-companion-header:
+      name: X-TENANT-ID
+      required_when: The API key is an Agency key operating across multiple client tenants.
+    x-credential-issuance: Contact your Reputation customer success manager; no self-serve key issuance.
+- target: $.servers
+  description: Note the region split between the US and EU production hosts.
+  update:
+  - url: https://api.reputation.com
+    description: US Production
+    x-region: us
+    x-docs: https://apidocs.reputation.com/
+  - url: https://api-eu.reputation.com
+    description: EU Production
+    x-region: eu
+    x-docs: https://apidocs-eu.reputation.com/
+- target: $.paths['/v3/request-urls'].get
+  description: Flag get_request_urls as superseded — Reputation labels it "(Deprecated)" in the documentation
+    but publishes no sunset date or policy.
+  update:
+    x-deprecation:
+      policy_published: false
+      sunset_date: null
+      sunset_header: false
+      source: https://apidocs.reputation.com/

@@ -1,34 +1,38 @@
+generated: '2026-08-13'
+method: searched
+source: https://apidocs.reputation.com/
 name: Reputation API Rate Limits
-description: Rate limiting policies for the Reputation REST API. Specific numeric limits are not publicly documented; contact your customer success manager for contractual details.
-url: https://apidocs.reputation.com/
+description: >-
+  Reputation publishes NO numeric rate limits, no window, and no rate-limit response headers. The
+  only published signal is the HTTP status returned on exhaustion. Limits are negotiated in the
+  enterprise contract and obtained from a customer success manager.
+docs: https://apidocs.reputation.com/
+limit_count: 0
+limits: []
+response_headers: []
+status_on_exhaustion: 429
+status_description: 'Too many requests. API rate limit exceeded'
+retry_after_header: false
 enforcement:
-  - type: API Key
-    description: All requests must include a valid API key in the request headers obtained from your customer success manager.
-    header: Authorization
-    format: Bearer token or API key header (confirm with Reputation support)
-
-headers:
-  - name: X-RateLimit-Limit
-    description: Total number of requests allowed in the current window.
-  - name: X-RateLimit-Remaining
-    description: Number of requests remaining in the current window.
-  - name: X-RateLimit-Reset
-    description: Unix timestamp when the current rate limit window resets.
-
-response_codes:
-  - code: 429
-    description: Too Many Requests — rate limit exceeded. Back off and retry after the window resets.
-
+  scope: per-api-key
+  credential: X-API-KEY header
+  tenant_scoping: X-TENANT-ID header on Agency keys
+  note: >-
+    Scope is inferred from the credential model — every request is authenticated by a single API
+    key and Reputation documents no per-endpoint or per-account limit separately. Reputation does
+    not state the enforcement scope explicitly.
 regions:
-  - name: US
-    base_url: https://reputation-api.com
-    docs_url: https://apidocs.reputation.com/
-  - name: EU
-    base_url: https://reputation-api.eu
-    docs_url: https://apidocs-eu.reputation.com/
-
+- {name: US, base_url: 'https://api.reputation.com', docs_url: 'https://apidocs.reputation.com/'}
+- {name: EU, base_url: 'https://api-eu.reputation.com', docs_url: 'https://apidocs-eu.reputation.com/'}
 notes:
-  - Reputation does not publish specific rate limit thresholds publicly.
-  - Rate limits are negotiated as part of enterprise contracts.
-  - Contact your customer success manager for contractual rate limit details.
-  - API consultancy (PROSERV-API-CONSULT) is available for guidance on API best practices.
+- >-
+  CORRECTION 2026-08-13 — the previous version of this file listed X-RateLimit-Limit,
+  X-RateLimit-Remaining and X-RateLimit-Reset response headers and named reputation-api.com /
+  reputation-api.eu as the base URLs. None of that is published by Reputation. The string
+  "X-RateLimit" does not appear anywhere in the public API documentation, and reputation-api.com
+  does not resolve. Both have been removed rather than carried forward.
+- >-
+  With no published limit and no Retry-After or RateLimit-* header, a client has no runtime signal
+  at all — it can only discover the limit by hitting 429 and must back off blind.
+- Contact your Reputation customer success manager for contractual rate-limit details.
+- 'API consultancy (SKU PROSERV-API-CONSULT) is offered as a paid add-on for API best-practice guidance.'

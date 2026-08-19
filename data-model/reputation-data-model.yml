@@ -1,0 +1,145 @@
+generated: '2026-08-13'
+method: derived
+source: >-
+  json-schema/*.json and openapi/_original/reputation-api-openapi.yml, cross-checked against the
+  request/response examples in the public Postman collection at https://apidocs.reputation.com/
+note: >-
+  Derived from id-reference fields in the repo's JSON Schemas and from the path parameters of the
+  67 published operations. Reputation's OpenAPI declares only two shared components (PaginationMeta,
+  Error) — response bodies are typed `object` — so the entity graph is reconstructed from the
+  schemas and the URI hierarchy, not from $ref links inside the spec.
+root_entity: Tenant
+entities:
+- name: Tenant
+  id_field: tenantID
+  schema: null
+  operations: [get_tenants, post_tenants, get_tenants_tenantID, put_tenants_tenantID_pause, put_tenants_tenantID_unpause]
+  path: /v3/tenants
+  note: >-
+    Top-level account boundary. Agency API keys operate across tenants and must carry the target
+    tenant in the X-TENANT-ID request header; a single-tenant key implies its own tenant.
+- name: Location
+  id_field: locationID
+  schema: json-schema/reputation-location.json
+  operations: [get_locations, post_locations, get_locations_search, post_locations_search, get_locations_faceted_search, get_locations_locationID, delete_locations_locationID, get_locations_duplicate, put_locations_locationID_opt_in, put_locations_locationID_opt_out, post_locations_locationID_addPage]
+  path: /v3/locations
+  note: The pivot entity — reviews, metrics, surveys, tickets and listing audits are all keyed by locationID.
+- name: Review
+  id_field: reviewID
+  schema: json-schema/reputation-review.json
+  operations: [get_reviews3, get_reviews3_reviewID_responses, post_reviews3_reviewID_respond, get_reviews, get_reviews_reviewID_responses, post_reviews_reviewID_respond]
+  path: /v3/reviews3
+- name: ReviewResponse
+  id_field: null
+  operations: [get_reviews3_reviewID_responses, post_reviews3_reviewID_respond]
+  path: '/v3/reviews3/{reviewID}/responses'
+  note: Subresource of Review; has no independent identifier in the published contract.
+- name: SurveyResult
+  id_field: surveyID
+  schema: json-schema/reputation-survey.json
+  operations: [get_survey_results, post_survey_results, get_survey_results_surveyID, post_surveys_link]
+  path: /v3/survey-results
+- name: SurveyTemplate
+  id_field: surveyTemplateID
+  operations: [get_surveys3_templates]
+  path: /v3/surveys3-templates
+- name: Ticket
+  id_field: ticketID
+  schema: json-schema/reputation-ticket.json
+  operations: [get_tickets, post_tickets]
+  path: /v3/tickets
+- name: TicketQueue
+  id_field: queue
+  operations: [get_ticket_queues]
+  path: /v3/ticket-queues
+- name: TicketStage
+  id_field: stage
+  operations: [get_ticket_stages]
+  path: /v3/ticket-stages
+- name: TicketType
+  id_field: type
+  operations: [get_ticket_types]
+  path: /v3/ticket-types
+- name: Metric
+  id_field: null
+  schema: json-schema/reputation-metric.json
+  operations: [get_page_metrics, get_post_metrics, get_aggregate_page_metrics, get_aggregate_post_metrics, get_metrics]
+  path: /v3/page-metrics
+  note: A computed projection keyed by locationID and a date range, not a stored addressable object.
+- name: User
+  id_field: userID
+  operations: [get_users, post_users, get_users_userID]
+  path: /v3/users
+- name: Category
+  id_field: categoryId
+  operations: [get_categories, get_location_attribute_definitions]
+  path: /v3/categories
+  note: Business-listing category taxonomy; drives which location attribute definitions apply.
+- name: ListingAudit
+  id_field: null
+  operations: [get_listing_audits]
+  path: /v3/listing-audits
+  note: Keyed by locationIDs + sourceIDs + date range.
+- name: RequestTemplate
+  id_field: null
+  operations: [get_requests_templates]
+  path: /v3/requests/templates
+- name: RequestURL
+  id_field: null
+  operations: [get_requests_request_urls, get_request_urls]
+  path: /v3/requests/request-urls
+- name: Unsubscribe
+  id_field: null
+  operations: [get_requests_unsubscribes, post_requests_unsubscribe_email, post_requests_unsubscribe_phone]
+  path: /v3/requests/unsubscribes
+- name: FAQ
+  id_field: faqId
+  operations: [get_rich_content_faqs, get_rich_content_faqs_faqId]
+  path: /v3/rich-content/faqs
+- name: Menu
+  id_field: null
+  operations: [get_rich_content_menus]
+  path: /v3/rich-content/menus
+- name: Product
+  id_field: null
+  operations: [get_rich_content_products]
+  path: /v3/rich-content/products
+- name: Asset
+  id_field: null
+  operations: [post_asset_library_upload_image, post_asset_library_upload_image_url]
+  path: /v3/asset-library/upload/image
+- name: Report
+  id_field: reportID
+  operations: [put_reports_reportID_export]
+  path: '/v3/reports/{reportID}/export'
+relationships:
+- {from: Tenant, to: Location, kind: has_many, via: tenantID, evidence: 'json-schema/reputation-location.json#tenantID'}
+- {from: Location, to: Review, kind: has_many, via: locationID, evidence: 'json-schema/reputation-review.json#locationID'}
+- {from: Location, to: SurveyResult, kind: has_many, via: locationID, evidence: 'json-schema/reputation-survey.json#locationID'}
+- {from: Location, to: Ticket, kind: has_many, via: locationID, evidence: 'json-schema/reputation-ticket.json#locationID'}
+- {from: Location, to: Metric, kind: has_many, via: locationID, evidence: 'json-schema/reputation-metric.json#locationID'}
+- {from: Location, to: ListingAudit, kind: has_many, via: locationIDs, evidence: 'openapi #get_listing_audits query parameter locationIDs'}
+- {from: Location, to: Category, kind: has_many, via: categories, evidence: 'json-schema/reputation-location.json#categories'}
+- {from: Review, to: ReviewResponse, kind: has_many, via: responses, evidence: 'json-schema/reputation-review.json#responses'}
+- {from: Review, to: Ticket, kind: has_one, via: ticketID, evidence: 'json-schema/reputation-review.json#ticketID'}
+- {from: Ticket, to: Review, kind: belongs_to, via: reviewID, evidence: 'json-schema/reputation-ticket.json#reviewID'}
+- {from: Ticket, to: TicketQueue, kind: belongs_to, via: queue, evidence: 'json-schema/reputation-ticket.json#queue'}
+- {from: Ticket, to: TicketStage, kind: belongs_to, via: stage, evidence: 'json-schema/reputation-ticket.json#stage'}
+- {from: Ticket, to: TicketType, kind: belongs_to, via: type, evidence: 'json-schema/reputation-ticket.json#type'}
+- {from: SurveyResult, to: SurveyTemplate, kind: belongs_to, via: surveyTemplateID, evidence: 'json-schema/reputation-survey.json#surveyTemplateID'}
+- {from: Review, to: Location, kind: belongs_to, via: locationID, evidence: 'json-schema/reputation-review.json#locationID'}
+- {from: Category, to: Location, kind: has_many, via: categoryIds, evidence: 'openapi #get_location_attribute_definitions query parameter categoryIds'}
+id_conventions:
+- {entity: Review, field: reviewID, format: string}
+- {entity: Location, field: locationID, format: string, note: 'Also exposed as locationCode, a customer-assigned external code.'}
+- {entity: Ticket, field: ticketID, format: string}
+- {entity: SurveyResult, field: surveyID, format: string}
+- {entity: SurveyTemplate, field: surveyTemplateID, format: 'string (24-char hexadecimal / ObjectId shape, per the published examples)'}
+- {entity: Tenant, field: tenantID, format: string, note: 'Carried in the X-TENANT-ID header for agency keys.'}
+- {entity: User, field: userID, format: string}
+gaps:
+- >-
+  The OpenAPI types every 200 response body as a bare `object`, so no entity schema is reachable
+  from the spec itself. The five JSON Schemas in json-schema/ are the only structured object
+  reference available and they are API Evangelist artifacts, not provider-published schemas.
+- No published object reference or ERD on apidocs.reputation.com.

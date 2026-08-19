@@ -1,0 +1,55 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Reputation Asset Library Reports API",
+    "version": "v3"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "X-API-KEY",
+      "value": "{{X-API-KEY}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Reports",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Run Report",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.reputation.com/v3/reports/:reportID/export",
+            "params": [
+              {
+                "name": "reportID",
+                "value": "",
+                "type": "path",
+                "description": "The reportID identifier"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "X-API-KEY",
+              "value": "{{X-API-KEY}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Execute a specific report within the Reputation platform. By sending a PUT request to this endpoint, you can define how and when the report is exported, with the capability to override its configurations, specify the locale, and select a user context. This ensures that the generated report caters to the precise analytical needs for a given scenario.\nFinding the Report ID\nSee this article to learn how to find the report ID for the report you wish to export.\nSample\nJavaScript XHR Request\nvar xhr ="
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,76 @@
+generated: '2026-08-13'
+method: searched
+source: https://apidocs.reputation.com/
+versioning:
+  scheme: uri-path
+  current: v3
+  base_path: /v3
+  docs: https://apidocs.reputation.com/
+  note: >-
+    All 67 published operations sit under /v3. Reputation additionally runs generation-suffixed
+    resources in parallel (reviews vs reviews3; survey-results vs surveys2-results vs
+    surveys3-results) and marks the older generation deprecated in the documentation.
+deprecation:
+  policy_url: null
+  policy_published: false
+  sunset_header: false
+  deprecation_header: false
+  note: >-
+    Reputation marks individual endpoints "(Deprecated)" in the documentation but publishes NO
+    deprecation policy, no notice period, no removal dates, and no RFC 8594 Sunset/Deprecation
+    response headers. A client has no machine-readable signal that an operation is going away.
+    No `Deprecation` pointer is wired in apis.yml because there is no policy to point at.
+deprecated_operations:
+- {operation: 'openapi/reputation-metrics-api-openapi.yml#get_metrics', path: /v3/metrics, replacement: /v3/page-metrics and /v3/post-metrics}
+- {operation: 'openapi/reputation-requests-api-openapi.yml#get_request_urls', path: /v3/request-urls, replacement: /v3/requests/request-urls}
+- {operation: 'openapi/reputation-surveys-api-openapi.yml#get_surveys2_results', path: /v3/surveys2-results, replacement: /v3/survey-results}
+- {operation: 'openapi/reputation-surveys-api-openapi.yml#post_surveys2_results', path: /v3/surveys2-results, replacement: /v3/survey-results}
+- {operation: 'openapi/reputation-surveys-api-openapi.yml#post_surveys2_results_create_url_from_encrypted', path: /v3/surveys2-results/create-url-from-encrypted, replacement: /v3/surveys-link}
+- {operation: 'openapi/reputation-surveys-api-openapi.yml#get_surveys3_results_surveyID', path: '/v3/surveys3-results/{surveyID}', replacement: '/v3/survey-results/{surveyID}'}
+- {operation: 'openapi/reputation-surveys-api-openapi.yml#post_surveys3_results', path: /v3/surveys3-results, replacement: /v3/survey-results}
+deprecated_count: 7
+status_page:
+  url: https://status.reputation.com
+  platform: Atlassian Statuspage
+  status_api: https://status.reputation.com/api/v2/status.json
+  history: https://status.reputation.com/history
+  feeds:
+    rss: https://status.reputation.com/history.rss
+    atom: https://status.reputation.com/history.atom
+  subscribe: [email, sms, slack, rss, atom]
+  components:
+  - Platform
+  - Application
+  - Surveys
+  - Reviews
+  - Social
+  - Actions
+  - Insights
+  - Mobile
+  - Listings
+  - Pages and Locators
+  - API
+  - Profiles API
+  - Integrations
+  - FTP
+  - Integrator
+  - Widgets
+  note: >-
+    The API is a first-class status component ("API" and "Profiles API" are separately tracked),
+    and the page exposes a machine-readable Statuspage v2 JSON API plus RSS/Atom incident feeds.
+sla:
+  url: null
+  uptime_target: null
+  note: >-
+    No public SLA or uptime commitment. The status page reports observed uptime (100% across all
+    16 components over the trailing 90 days as observed 2026-08-13) but publishes no contractual
+    target; SLAs are negotiated in the enterprise agreement.
+changelog:
+  url: null
+  note: >-
+    No dated API changelog or release-notes feed was found on apidocs.reputation.com,
+    apidocs-eu.reputation.com, reputation.com or support.reputation.com. The Postman documenter
+    exposes only a `versionTag=latest` collection with no published version history.
+support:
+  url: https://support.reputation.com/
+  api_key_issuance: Contact your Reputation customer success manager.

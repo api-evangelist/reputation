@@ -1,0 +1,78 @@
+generated: '2026-08-13'
+method: searched
+source: https://apidocs.reputation.com/
+derived_from: openapi/_original/reputation-api-openapi.yml
+format: vendor-specific
+rfc9457: false
+envelope:
+  media_type: application/json
+  shape: '{ "errors": [ { "error": { "field": "...", "code": "...", "message": "..." } } ] }'
+  schema: openapi/_original/reputation-api-openapi.yml#/components/schemas/Error
+  fields:
+  - {name: errors, type: array, description: An array of error objects.}
+  - {name: error, parent: errors, type: object, description: An object containing error details.}
+  - {name: field, parent: error, type: string, description: Name of the field which failed validation.}
+  - {name: code, parent: error, type: string, description: Validation failure code.}
+  - {name: message, parent: error, type: string, description: Message explaining the code.}
+note: >-
+  Reputation publishes an HTTP status-code table and an error-envelope field reference in the API
+  overview, but NOT a registry of individual error `code` values. The `code` field is documented as
+  a "validation failure code" with no enumerated vocabulary, so an agent cannot branch on specific
+  codes — only on HTTP status. The statuses below are the published table, cross-checked against
+  the 4xx/5xx responses declared on all 67 operations in the OpenAPI.
+problems:
+- status: 400
+  title: Bad Parameters
+  meanings: [Bad parameters, Account is locked, Invalid parameters, Missing parameters]
+  remediation: Correct the request parameters. An account-locked condition also surfaces here and requires operator intervention, not a retry.
+  in_spec: true
+  operations_declaring: 67
+- status: 401
+  title: 'Unauthorized: API key is invalid'
+  remediation: Verify the X-API-KEY header. Keys are issued by a Reputation customer success manager; there is no self-serve rotation endpoint.
+  in_spec: true
+  operations_declaring: 67
+- status: 403
+  title: 'Forbidden: API key is not permitted the operation'
+  remediation: >-
+    Two distinct causes share this status. Either the key lacks permission for the operation, or the
+    request FAILED VALIDATION — the docs state "should the validation not pass, a 403 status code is
+    issued". Inspect the errors[] array to tell them apart; a validation 403 is not retryable unmodified.
+  in_spec: true
+  operations_declaring: 67
+- status: 404
+  title: 'Resource Not Found'
+  meanings: [Resource not found, Missing Tenant Id, Missing Location Id, Missing Source Id]
+  remediation: >-
+    Also returned when a required identifier is missing rather than merely unknown — a missing
+    X-TENANT-ID on an agency key produces a 404, not a 400.
+  in_spec: true
+  operations_declaring: 67
+- status: 405
+  title: Action not supported by this method
+  remediation: Use the documented HTTP method for the endpoint.
+  in_spec: false
+  in_docs: true
+- status: 429
+  title: 'Too many requests. API rate limit exceeded'
+  remediation: >-
+    Back off and retry. No Retry-After or RateLimit-* header is documented, and no numeric limit is
+    published, so a client must implement blind exponential backoff.
+  in_spec: true
+  operations_declaring: 67
+  artifact: rate-limits/reputation-rate-limits.yml
+- status: 500
+  title: Internal Server Error
+  remediation: Retry with backoff; check https://status.reputation.com for a platform incident.
+  in_spec: true
+  operations_declaring: 67
+- status: 504
+  title: Timeout
+  remediation: Retry with backoff. Narrow the date range or lower `limit` on large metric/report queries.
+  in_docs: true
+  in_spec: false
+gaps:
+- No RFC 9457 application/problem+json representation.
+- No enumerated error-code registry; `code` values are undocumented.
+- 405 and 504 appear in the published status table but are not declared in any OpenAPI operation.
+- No type URIs, so errors are not dereferenceable.

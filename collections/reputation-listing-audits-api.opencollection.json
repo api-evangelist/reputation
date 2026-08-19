@@ -1,0 +1,57 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Reputation Asset Library Listing Audits API",
+    "version": "v3"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "X-API-KEY",
+      "value": "{{X-API-KEY}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Listing Audits",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Listing Audits",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.reputation.com/v3/listing-audits",
+            "params": [
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Offset for pagination"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of objects to return"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-API-KEY",
+              "value": "{{X-API-KEY}}",
+              "placement": "header"
+            }
+          },
+          "docs": "This endpoint facilitates the retrieval of listing audits, allowing you to examine and assess the integrity of listings over specified time frames or for specific locations and sources with the optional query parameters.\nSample Requests\nJavaScript XHR Request\nvar xhr = new XMLHttpRequest();\nxhr.open('GET', 'https://api.reputation.com/v3/listing-audits?limit=2', true);\nxhr.setRequestHeader('Accept', 'application/json');\nxhr.setRequestHeader('x-api-key', 'Your API key');\nxhr.onreadystatechange = f"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

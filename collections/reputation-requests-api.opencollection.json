@@ -1,0 +1,251 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Reputation Asset Library Requests API",
+    "version": "v3"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "X-API-KEY",
+      "value": "{{X-API-KEY}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Requests",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Request URLs (Deprecated)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.reputation.com/v3/request-urls",
+            "auth": {
+              "type": "apikey",
+              "key": "X-API-KEY",
+              "value": "{{X-API-KEY}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Retrieve specific request URLs associated with given parameters. This endpoint allows users to fetch URLs based on specified location IDs, source IDs and optional template names, and source IDs.\nA \"request URL\" refers to a specific web address (or URL) associated with a certain platform, source, or service where reviews, feedback, or other user-generated content related to a business or entity can be found or requested.\nNote: This endpoint is now deprecated, and support for it has been discontin"
+        },
+        {
+          "info": {
+            "name": "Get Metrics",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.reputation.com/v3/requests/metrics",
+            "params": [
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Offset for pagination"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of objects to return"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-API-KEY",
+              "value": "{{X-API-KEY}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Retrieve key metrics related to the request processes within the Reputation platform. This endpoint offers insight into request analytics segmented by various criteria such as mode, location, or requester role. It's tailored to provide a comprehensive view of request-related activities, ensuring users have the data needed to optimize their strategies and ensure effective engagement.\nSample\nJavaScript XHR Request\nvar xhr = new XMLHttpRequest();\nxhr.open('GET', 'https://api.reputation.com/v3/reque"
+        },
+        {
+          "info": {
+            "name": "Get Request Urls",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.reputation.com/v3/requests/request-urls",
+            "params": [
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Offset for pagination"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of objects to return"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-API-KEY",
+              "value": "{{X-API-KEY}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Retrieve specific request URLs associated with given parameters. This endpoint allows users to fetch URLs based on specified location IDs, optional template names, and source ID\nA Request URL refers to a specific web address (or URL) associated with a certain platform, source, or service where reviews, feedback, or other user-generated content related to a business or entity can be found or requested.\nSample\nJavaScript XHR Request\nvar xhr = new XMLHttpRequest();\nxhr.open('GET', 'https://api.repu"
+        },
+        {
+          "info": {
+            "name": "Send Email",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.reputation.com/v3/requests/send-email",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "X-API-KEY",
+              "value": "{{X-API-KEY}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Facilitates the sending of email requests, leveraging customizable templates and personalization through variables. The emails can be tailored based on location, sources, and other criteria.\nSample\nJavaScript XHR Request\nvar xhr = new XMLHttpRequest();\nxhr.open('POST', 'https://api.reputation.com/v3/requests/send-email', true);\nxhr.setRequestHeader('Content-Type', 'application/json');\nxhr.setRequestHeader('x-api-key', 'Your API key');\nxhr.onreadystatechange = function() {\n    if (xhr.readyState "
+        },
+        {
+          "info": {
+            "name": "Send SMS",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.reputation.com/v3/requests/send-sms",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "X-API-KEY",
+              "value": "{{X-API-KEY}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Send an SMS request to a client. By using specific templates and defining the recipient, you can send tailored SMS messages to your desired audience.\nSample\nJavaScript XHR Request\nvar xhr = new XMLHttpRequest();\nxhr.open('POST', 'https://api.reputation.com/v3/requests/send-sms', true);\nxhr.setRequestHeader('x-api-key', 'Your API key');\nxhr.setRequestHeader('Content-Type', 'application/json');\nxhr.onreadystatechange = function() {\n  if (xhr.readyState == 4 &amp;&amp; xhr.status == 200) {\n    var "
+        },
+        {
+          "info": {
+            "name": "Unsubscribe Email",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.reputation.com/v3/requests/unsubscribe-email",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "X-API-KEY",
+              "value": "{{X-API-KEY}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Unsubscribe a client's email from your marketing. Once requested the email address will no longer recieve emails.\nSample\nJavaScript XHR Request\nvar xhr = new XMLHttpRequest();\nxhr.open(\"POST\", \"https://api.reputation.com/v3/requests/unsubscribe-email\", true);\nxhr.setRequestHeader(\"Content-Type\", \"application/json;charset=UTF-8\");\nxhr.setRequestHeader(\"x-api-key\", \"Your API key\");\nxhr.onreadystatechange = function() {\n  if (xhr.readyState == 4 &amp;&amp; xhr.status == 200) {\n    console.log(xhr.r"
+        },
+        {
+          "info": {
+            "name": "Unsubscribe Phone",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.reputation.com/v3/requests/unsubscribe-phone",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "X-API-KEY",
+              "value": "{{X-API-KEY}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Unsubscribe a client's phone number from your marketing. Once requested the phone number will no longer recieve SMSs.\nSample\nJavaScript XHR Request\nvar xhr = new XMLHttpRequest();\nxhr.open(\"POST\", \"https://api.reputation.com/v3/requests/unsubscribe-phone\", true);\nxhr.setRequestHeader(\"Content-Type\", \"application/json;charset=UTF-8\");\nxhr.setRequestHeader(\"x-api-key\", \"Your API key\");\nxhr.onreadystatechange = function() {\n  if (xhr.readyState == 4 &amp;&amp; xhr.status == 200) {\n    console.log(x"
+        },
+        {
+          "info": {
+            "name": "Get Unsubscribes",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.reputation.com/v3/requests/unsubscribes",
+            "params": [
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Offset for pagination"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of objects to return"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-API-KEY",
+              "value": "{{X-API-KEY}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Retrieve a list of unsubscribes based on a specified date range and pagination constraints. This endpoint is useful for monitoring customers who have opted out of communications, whether via email or phone.\nSample\nJavaScript XHR Request\nvar xhr = new XMLHttpRequest();\nxhr.open('GET', 'https://api.reputation.com/v3/requests/unsubscribes?offset=0&amp;limit=20', true);\nxhr.setRequestHeader('x-api-key', 'Your API key');\nxhr.onreadystatechange = function() {\n    if (xhr.readyState == 4 &amp;&amp; xhr"
+        },
+        {
+          "info": {
+            "name": "Get Request Templates",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.reputation.com/v3/requests/templates",
+            "params": [
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Offset for pagination"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of objects to return"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-API-KEY",
+              "value": "{{X-API-KEY}}",
+              "placement": "header"
+            }
+          },
+          "docs": "This endpoint allows you to retrieve a list of available request templates based on the specified template type. The request templates define preset formats and structures for various types of requests such as Kiosk, Request Review, or SMS. By passing the appropriate templateType parameter, you can filter out the templates that match the desired type.\nSample\nJavaScript XHR Request\nvar xhr = new XMLHttpRequest();\n\nxhr.open('GET', 'https://api.reputation.com/v3/requests/templates?templateType=3', "
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

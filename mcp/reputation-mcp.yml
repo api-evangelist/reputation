@@ -1,0 +1,49 @@
+generated: '2026-08-13'
+method: derived
+status: candidate
+source: openapi/_original/reputation-api-openapi.yml
+note: >-
+  Reputation publishes NO MCP server. No hosted/remote endpoint, no stdio package on npm or PyPI,
+  and no mention of MCP, Model Context Protocol or agent tooling anywhere in the API documentation
+  (the Postman collection at apidocs.reputation.com), the llms.txt at reputation.com/llms.txt, or
+  the github.com/reputation organization. The tool list below is a CANDIDATE derived from the
+  provider's own OpenAPI operations to show what an MCP server over this API would expose — it is
+  not something Reputation ships and nothing here is callable by an agent today.
+deployment:
+  mode: none
+  endpoint: null
+  install: null
+  package: null
+  auth: api-key
+  verified: derived
+pointer_note: >-
+  NO `MCPServer` pointer is wired in apis.yml for this file. The scoring rubric awards
+  mcp_server_present (4 pts) and the agent-readiness mcp_server dimension (12 pts) to a provider
+  that ships an MCP server; Reputation does not ship one, and pointing at a candidate we derived
+  ourselves would credit them with an agent surface that does not exist. The pointer becomes
+  correct the day Reputation publishes a real endpoint or package.
+server:
+  name: reputation
+  transport: null
+  url: null
+tools:
+- {name: list_reviews, description: List reviews across locations, source_operation: 'openapi/reputation-reviews-api-openapi.yml#get_reviews3'}
+- {name: get_review_responses, description: Get the responses posted to a review, source_operation: 'openapi/reputation-reviews-api-openapi.yml#get_reviews3_reviewID_responses'}
+- {name: respond_to_review, description: Post a response to a review, source_operation: 'openapi/reputation-reviews-api-openapi.yml#post_reviews3_reviewID_respond'}
+- {name: list_locations, description: List business locations, source_operation: 'openapi/reputation-locations-api-openapi.yml#get_locations'}
+- {name: search_locations, description: Search business locations, source_operation: 'openapi/reputation-locations-api-openapi.yml#post_locations_search'}
+- {name: get_location, description: Get a single location by ID, source_operation: 'openapi/reputation-locations-api-openapi.yml#get_locations_locationID'}
+- {name: create_location, description: Create or update a business location, source_operation: 'openapi/reputation-locations-api-openapi.yml#post_locations'}
+- {name: list_duplicate_locations, description: List detected duplicate locations, source_operation: 'openapi/reputation-locations-api-openapi.yml#get_locations_duplicate'}
+- {name: get_listing_audits, description: Retrieve listing accuracy audits across sources, source_operation: 'openapi/reputation-listing-audits-api-openapi.yml#get_listing_audits'}
+- {name: get_summary, description: Get the reputation summary for the account, source_operation: 'openapi/reputation-summary-api-openapi.yml#get_summary'}
+- {name: get_page_metrics, description: Get page-level reputation metrics, source_operation: 'openapi/reputation-metrics-api-openapi.yml#get_page_metrics'}
+- {name: get_aggregate_page_metrics, description: Get aggregated page metrics, source_operation: 'openapi/reputation-metrics-api-openapi.yml#get_aggregate_page_metrics'}
+- {name: send_review_request_email, description: Send a review request by email, source_operation: 'openapi/reputation-requests-api-openapi.yml#post_requests_send_email'}
+- {name: send_review_request_sms, description: Send a review request by SMS, source_operation: 'openapi/reputation-requests-api-openapi.yml#post_requests_send_sms'}
+- {name: list_unsubscribes, description: List unsubscribed recipients, source_operation: 'openapi/reputation-requests-api-openapi.yml#get_requests_unsubscribes'}
+- {name: list_survey_results, description: List survey results, source_operation: 'openapi/reputation-surveys-api-openapi.yml#get_survey_results'}
+- {name: create_survey_url, description: Generate a survey URL for a recipient, source_operation: 'openapi/reputation-surveys-api-openapi.yml#post_surveys_link'}
+- {name: list_tickets, description: List customer service tickets, source_operation: 'openapi/reputation-tickets-api-openapi.yml#get_tickets'}
+- {name: create_ticket, description: Create a customer service ticket, source_operation: 'openapi/reputation-tickets-api-openapi.yml#post_tickets'}
+- {name: list_faqs, description: List rich-content FAQs, source_operation: 'openapi/reputation-rich-content-api-openapi.yml#get_rich_content_faqs'}

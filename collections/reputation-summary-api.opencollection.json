@@ -1,0 +1,57 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Reputation Asset Library Summary API",
+    "version": "v3"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "X-API-KEY",
+      "value": "{{X-API-KEY}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Summary",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Summary",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.reputation.com/v3/summary",
+            "params": [
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Offset for pagination"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of objects to return"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-API-KEY",
+              "value": "{{X-API-KEY}}",
+              "placement": "header"
+            }
+          },
+          "docs": "This endpoint provides a comprehensive summary of reviews and associated metrics for your business. You can filter results by specific date ranges, locations, and group the summary by overall metrics, location, or source. The provided metrics include review count by sentiment, average ratings, reputation score, and various score signals detailing aspects like review recency, review distribution across platforms, and social engagement, and more.\nSamples\nJavaScript XHR Request\nvar xhr = new XMLHtt"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

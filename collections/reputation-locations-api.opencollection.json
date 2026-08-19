@@ -1,0 +1,338 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Reputation Asset Library Locations API",
+    "version": "v3"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "X-API-KEY",
+      "value": "{{X-API-KEY}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Locations",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Locations",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.reputation.com/v3/locations",
+            "params": [
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Offset for pagination"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of objects to return"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-API-KEY",
+              "value": "{{X-API-KEY}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Retrieves detailed location profiles, providing comprehensive data that extends beyond just basic location attributes within the Business Listing Solution. You can use this endpoint to access an array of information about specific profiles.\nNote: The Get Locations and Get Location endpoints are designed to retrieve only cleansed profiles. If you attempt to fetch an unmanaged profile using either endpoint, the response will result in a null value.\nSample\nJavaScript XHR Request\nvar xhr = new XMLHt"
+        },
+        {
+          "info": {
+            "name": "Save Location",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.reputation.com/v3/locations",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "X-API-KEY",
+              "value": "{{X-API-KEY}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Let's you submit a detailed location profile, providing comprehensive data that extends beyond just basic location attributes within the Business Listing Solution. You can also use this endpoint to add our update information about specific profile.\nPlease note: Incremental changes are not supported. All profile data must be included in each request to prevent existing data from being overwritten or removed.\nSample\nJavaScript XHR Request\nvar xhr = new XMLHttpRequest();\nxhr.open('POST', 'https://a"
+        },
+        {
+          "info": {
+            "name": "Search Locations",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.reputation.com/v3/locations-search",
+            "params": [
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Offset for pagination"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of objects to return"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-API-KEY",
+              "value": "{{X-API-KEY}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Facilitates the searching of profiles based on various parameters like name, location, type, and more. It's designed to offer a comprehensive search capability for you to filter and retrieve specific profiles from the vast Business Listing Solution database.\nSample\nJavaScript XHR Request\nvar xhr = new XMLHttpRequest();\nxhr.open('GET', 'https://api.reputation.com/v3/locations-search?type=Person&amp;primaryProfile=true&amp;sort=ASC&amp;offset=0&amp;limit=20', true);\nxhr.setRequestHeader('x-api-key"
+        },
+        {
+          "info": {
+            "name": "Search Locations",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.reputation.com/v3/locations-search",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "X-API-KEY",
+              "value": "{{X-API-KEY}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Facilitates detailed searches for location profiles based on a range of specific parameters provided in the request body. It serves as an alternative to the GET version of the endpoint, providing a means to submit search parameters in the body of the request.\nSample\nJavaScript XHR Request\nvar xhr = new XMLHttpRequest();\nvar url = \"https://api.reputation.com/v3/locations-search\";\nxhr.open(\"POST\", url, true);\nxhr.setRequestHeader(\"Content-Type\", \"application/json\");\nxhr.setRequestHeader(\"x-api-key"
+        },
+        {
+          "info": {
+            "name": "Search Faceted Locations",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.reputation.com/v3/locations-faceted-search",
+            "params": [
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Offset for pagination"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of objects to return"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-API-KEY",
+              "value": "{{X-API-KEY}}",
+              "placement": "header"
+            }
+          },
+          "docs": "This endpoint facilitates a faceted profile search of the platform, providing aggregated counts of profiles based on specified criteria. Rather than returning individual profile data, this endpoint groups profiles based on a selected attribute (such as phoneType, gender, etc.) and returns a count of profiles for each distinct value within that attribute. It's an efficient way to understand the distribution of profiles based on varying characteristics without retrieving the details of each profil"
+        },
+        {
+          "info": {
+            "name": "Get Location",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.reputation.com/v3/locations/:locationID",
+            "params": [
+              {
+                "name": "locationID",
+                "value": "",
+                "type": "path",
+                "description": "The locationID identifier"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-API-KEY",
+              "value": "{{X-API-KEY}}",
+              "placement": "header"
+            }
+          },
+          "docs": "This endpoint retrieves detailed information about a specific location profile on the platform based on the provided locationID.\nThe response returns detailed attributes of the location profile, including its internal and external names, industry type, state, associated places like office addresses, contact information, and more.\nNote: The Get Locations and Get Location endpoints are designed to retrieve only cleansed profiles. If you attempt to fetch an unmanaged profile using either endpoint, "
+        },
+        {
+          "info": {
+            "name": "Delete Location",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.reputation.com/v3/locations/:locationID",
+            "params": [
+              {
+                "name": "locationID",
+                "value": "",
+                "type": "path",
+                "description": "The locationID identifier"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-API-KEY",
+              "value": "{{X-API-KEY}}",
+              "placement": "header"
+            }
+          },
+          "docs": "This endpoint lets you delete a specific location profile from the system, identified by its locationID. If you wish to only mark the location as inactive rather than fully deleting it, you can utilize the optional preserveLocation query parameter.\nSample\nJavaScript XHR Request\nvar xhr = new XMLHttpRequest();\nxhr.open('DELETE', 'https://api.reputation.com/v3/locations/BP?preserveLocation=true', true);\nxhr.setRequestHeader('x-api-key', 'Your API key');\nxhr.onreadystatechange = function() {\n    if"
+        },
+        {
+          "info": {
+            "name": "Opt Out Of Audit",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.reputation.com/v3/locations/:locationID/opt-out",
+            "params": [
+              {
+                "name": "locationID",
+                "value": "",
+                "type": "path",
+                "description": "The locationID identifier"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-API-KEY",
+              "value": "{{X-API-KEY}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Opt-out specific sources from location profiles. If no specific sourceIDs are provided, the profile will be opted out from all eligible sources.\nSample\nJavaScript XHR Request\nvar xhr = new XMLHttpRequest();\nxhr.open(\"PUT\", \"https://api.reputation.com/v3/locations/SA/opt-out?sourceIDs=FACEBOOK\", true);\nxhr.setRequestHeader(\"x-api-key\", \"Your API key\");\nxhr.onreadystatechange = function() {\n  if (xhr.readyState == 4 &amp;&amp; xhr.status == 200) {\n    var response = JSON.parse(xhr.responseText);\n "
+        },
+        {
+          "info": {
+            "name": "Opt In To Audit",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.reputation.com/v3/locations/:locationID/opt-in",
+            "params": [
+              {
+                "name": "locationID",
+                "value": "",
+                "type": "path",
+                "description": "The locationID identifier"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-API-KEY",
+              "value": "{{X-API-KEY}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Opt-in specific sources from location profiles. If no specific sourceIDs are provided, the profile will be opted in to all eligible sources.\nSample\nJavaScript XHR Request\nvar xhr = new XMLHttpRequest();\nxhr.open(\"PUT\", \"https://api.reputation.com/v3/locations/SA/opt-in?sourceIDs=FACEBOOK\", true);\nxhr.setRequestHeader(\"x-api-key\", \"Your API key\");\nxhr.onreadystatechange = function() {\n  if (xhr.readyState == 4 &amp;&amp; xhr.status == 200) {\n    var response = JSON.parse(xhr.responseText);\n    co"
+        },
+        {
+          "info": {
+            "name": "Add Page",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.reputation.com/v3/locations/:locationID/addPage",
+            "params": [
+              {
+                "name": "locationID",
+                "value": "",
+                "type": "path",
+                "description": "The locationID identifier"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "X-API-KEY",
+              "value": "{{X-API-KEY}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Use this endpoint to associate a new external page (such as a social media profile or a source page) with a specific location profile in the Reputation platform. It's important to ensure that the provided URL and page ID are unclaimed.\nFor assistance in determining available source URLs, you can utilize the Autofind Results feature in the platform to identify potential matches for your location.\nSample\nJavaScript XHR Request\nvar xhr = new XMLHttpRequest();\nxhr.open(\"POST\", \"https://api.reputatio"
+        },
+        {
+          "info": {
+            "name": "Get Attribute Definitions",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.reputation.com/v3/location-attribute-definitions",
+            "auth": {
+              "type": "apikey",
+              "key": "X-API-KEY",
+              "value": "{{X-API-KEY}}",
+              "placement": "header"
+            }
+          },
+          "docs": "An array of category IDs for which the attribute definitions are fetched. The provided IDs help in narrowing down the list of attribute definitions specific to the given profile categories.\nSample\nJavaScript XHR Request\nvar xhr = new XMLHttpRequest();\nxhr.open('GET', 'https://api.reputation.com/v3/location-attribute-definitions?categoryIds=RESTAURANTS_,ARTS_&amp;_ENTERTAINMENT_ARTIST', true);\nxhr.setRequestHeader('x-api-key', 'Your API Key');\nxhr.onreadystatechange = function() {\n    if (xhr.rea"
+        },
+        {
+          "info": {
+            "name": "Get Duplicate Locations",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.reputation.com/v3/locations-duplicate",
+            "params": [
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Offset for pagination"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of objects to return"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-API-KEY",
+              "value": "{{X-API-KEY}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Retrieves location profiles from the Reputation platform that are identified as potential duplicates based on specific criteria. By using this endpoint, you can identify and manage locations that may have been inadvertently entered multiple times or those that appear similar across different sources.\nSample\nJavaScript XHR Request\nvar xhr = new XMLHttpRequest();\nxhr.open(\"GET\", \"https://api.reputation.com/v3/locations-duplicate\", true);\nxhr.setRequestHeader(\"x-api-key\", \"Your API key\");\nxhr.onrea"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

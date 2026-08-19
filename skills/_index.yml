@@ -1,0 +1,24 @@
+generated: '2026-08-13'
+method: generated
+source: >-
+  Generated from the 67 operations in openapi/_original/reputation-api-openapi.yml (all
+  operationIds verified present in the refined per-tag specs) plus the conventions, errors and
+  lifecycle rules captured from https://apidocs.reputation.com/. Reputation publishes no AGENTS.md
+  or first-party agent skills.
+skills:
+- file: reputation-monitor-and-respond-to-reviews.md
+  name: Monitor and respond to reviews
+  api: openapi/reputation-reviews-api-openapi.yml
+  operations: [get_reviews3, get_reviews3_reviewID_responses, post_reviews3_reviewID_respond]
+- file: reputation-request-reviews-and-surveys.md
+  name: Request reviews and run surveys
+  api: openapi/reputation-requests-api-openapi.yml
+  operations: [get_requests_templates, get_requests_unsubscribes, post_requests_send_email, post_requests_send_sms, post_requests_unsubscribe_email, post_requests_unsubscribe_phone, get_requests_metrics, post_surveys_link, get_survey_results, get_surveys3_templates]
+- file: reputation-manage-locations-and-listings.md
+  name: Manage locations and listings
+  api: openapi/reputation-locations-api-openapi.yml
+  operations: [get_locations, post_locations, get_locations_search, post_locations_search, get_locations_faceted_search, get_locations_locationID, delete_locations_locationID, get_locations_duplicate, put_locations_locationID_opt_in, put_locations_locationID_opt_out, post_locations_locationID_addPage, get_location_attribute_definitions, get_categories, get_listing_audits]
+- file: reputation-read-metrics-and-triage-tickets.md
+  name: Read reputation metrics and triage tickets
+  api: openapi/reputation-metrics-api-openapi.yml
+  operations: [get_summary, get_page_metrics, get_post_metrics, get_aggregate_page_metrics, get_aggregate_post_metrics, get_tickets, post_tickets, get_ticket_queues, get_ticket_stages, get_ticket_types, put_reports_reportID_export]

@@ -1,0 +1,79 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Reputation Asset Library API",
+    "version": "v3"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "X-API-KEY",
+      "value": "{{X-API-KEY}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Asset Library",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Upload Image Files",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.reputation.com/v3/asset-library/upload/image",
+            "body": {
+              "type": "multipart-form",
+              "data": [
+                {
+                  "name": "images",
+                  "type": "text",
+                  "value": ""
+                },
+                {
+                  "name": "tags",
+                  "type": "text",
+                  "value": ""
+                }
+              ]
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "X-API-KEY",
+              "value": "{{X-API-KEY}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Select any number of files from your computer. Attach tags to each image and send them as formData in the API request. The images will display in your Asset Library (see below).\n\n\nYou must request to have the asset library enabled. Please contact your CSM for assistance.\nNote: This endpoint only accepts .jpg, .jpeg, or .png files.\nSample Requests\n\nPython\nimport requests\nfile_1 = ('ImageFile_1.png', open('path_to_ImageFile_1.png', 'rb'))\nfile_2 = ('ImageFile_2.png', open('path_to_ImageFile_2.png'"
+        },
+        {
+          "info": {
+            "name": "Upload Image Using Public Urls",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.reputation.com/v3/asset-library/upload/image/url",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "X-API-KEY",
+              "value": "{{X-API-KEY}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Upload images to your asset library using a public URL rather than a direct file upload. The images will display in your Asset Library (see below).\n\n\nYou must request to have the asset library enabled. Please contact your CSM for assistance.\nNote: This endpoint only accepts .jpg, .jpeg, or .png files.\nSample Requests\n\nPython\nimport requests\nimport json\ndata = {\n    \"images\": [\n        {\n            \"url\": \"https://www.testImageUrl.com/image_1.jpg\",\n            \"tags\": [\"test_tag_1\", \"test_tag_2\""
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

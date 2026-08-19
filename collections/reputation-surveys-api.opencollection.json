@@ -1,0 +1,260 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Reputation Asset Library Surveys API",
+    "version": "v3"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "X-API-KEY",
+      "value": "{{X-API-KEY}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Surveys",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Survey Results",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.reputation.com/v3/survey-results",
+            "auth": {
+              "type": "apikey",
+              "key": "X-API-KEY",
+              "value": "{{X-API-KEY}}",
+              "placement": "header"
+            }
+          },
+          "docs": "The Get Survey Results endpoint allows you to fetch the results of surveys submitted by customers or respondents, providing a comprehensive insight into their feedback and perceptions regarding your services or products. This endpoint is instrumental for businesses aiming to evaluate and enhance customer satisfaction, and make data-driven decisions to improve overall customer experience.\nSample\nJavaScript XHR Request\nvar xhr = new XMLHttpRequest();\nxhr.onreadystatechange = function () {\n    if ("
+        },
+        {
+          "info": {
+            "name": "Save Survey Result",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.reputation.com/v3/survey-results",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "X-API-KEY",
+              "value": "{{X-API-KEY}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Use this endpoint to submit and save your survey responses directly into the system. You need to provide essential details including the location ID, survey template ID, date, answers, locale, and the current status of the survey. Upon successful submission, the system will process your input, save the survey result, and return a unique identifier for your record, along with any additional pertinent information. This functionality is vital for gathering and analyzing customer feedback, ultimatel"
+        },
+        {
+          "info": {
+            "name": "Get Survey Result",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.reputation.com/v3/survey-results/:surveyID",
+            "params": [
+              {
+                "name": "surveyID",
+                "value": "",
+                "type": "path",
+                "description": "The surveyID identifier"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-API-KEY",
+              "value": "{{X-API-KEY}}",
+              "placement": "header"
+            }
+          },
+          "docs": "This endpoint retrieves detailed information about a specific survey result. The result is identified by a unique surveyID and belongs to a particular survey template, identified by the surveyTemplateID.\nSample\nJavaScript XHR Result\nvar xhr = new XMLHttpRequest();\nxhr.open(\"GET\", \"https://api.reputation.com/v3/survey-results?surveyTemplateID=5e8d12a42a401b62ff1234a\", true);\nxhr.setRequestHeader(\"x-api-key\", \"Your API key\");\n\nxhr.onreadystatechange = function () {\n  if (xhr.readyState == 4 &amp;&"
+        },
+        {
+          "info": {
+            "name": "Get Survey Templates",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.reputation.com/v3/surveys3-templates",
+            "params": [
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Offset for pagination"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of objects to return"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-API-KEY",
+              "value": "{{X-API-KEY}}",
+              "placement": "header"
+            }
+          },
+          "docs": "This endpoint retrieves a list of survey templates based on specified criteria. You can filter the survey templates you need to retrieve by providing the status and type of the templates as query parameters.\nSample\nJavaScript XHR Request\nvar xhr = new XMLHttpRequest();\nxhr.open(\"GET\", \"https://api.reputation.com/v3/surveys3-templates?templateType=Conversational\", true);\nxhr.setRequestHeader(\"x-api-key\", \"Your API key\");\nxhr.onreadystatechange = function () {\n    if (xhr.readyState === 4) {\n     "
+        },
+        {
+          "info": {
+            "name": "Get Survey URL",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.reputation.com/v3/surveys-link",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "X-API-KEY",
+              "value": "{{X-API-KEY}}",
+              "placement": "header"
+            }
+          },
+          "docs": "This POST request generates a unique survey link. This is particularly useful when you want to send a personalized survey to a specific customer, ensuring that the survey content is relevant to their experience and the information you have about them.\nSample\nJavaScript XHR Request\nvar xhr = new XMLHttpRequest();\nxhr.onreadystatechange = function() {\n    if (this.readyState == 4 &amp;&amp; this.status == 200) {\n       // Handle the response here\n       console.log(this.responseText);\n    }\n};\nxhr"
+        },
+        {
+          "info": {
+            "name": "Get Result (Deprecated)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.reputation.com/v3/surveys2-results",
+            "params": [
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Offset for pagination"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of objects to return"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-API-KEY",
+              "value": "{{X-API-KEY}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Retrieves a survey result"
+        },
+        {
+          "info": {
+            "name": "Save Result (Deprecated)",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.reputation.com/v3/surveys2-results",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "X-API-KEY",
+              "value": "{{X-API-KEY}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Saves a survey result"
+        },
+        {
+          "info": {
+            "name": "Create URL From Encrypted (Deprecated)",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.reputation.com/v3/surveys2-results/create-url-from-encrypted",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "X-API-KEY",
+              "value": "{{X-API-KEY}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Creates a URL that can be used to resume a survey using an encrypted set of information."
+        },
+        {
+          "info": {
+            "name": "Retrieve Survey Result (Deprecated)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.reputation.com/v3/surveys3-results/:surveyID",
+            "params": [
+              {
+                "name": "surveyID",
+                "value": "",
+                "type": "path",
+                "description": "The surveyID identifier"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-API-KEY",
+              "value": "{{X-API-KEY}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Retrieves a survey result"
+        },
+        {
+          "info": {
+            "name": "Save Survey Result (Deprecated)",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.reputation.com/v3/surveys3-results",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "X-API-KEY",
+              "value": "{{X-API-KEY}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Saves a survey result"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
