@@ -487,8 +487,6 @@ common:
     url: vocabulary/reputation-vocabulary.yml
   - type: JSONLDContext
     url: json-ld/reputation-context.jsonld
-  - type: Blog
-    url: blogs/blogs.json
   - type: Plans
     url: plans/reputation-plans-pricing.yml
   - type: RateLimits
