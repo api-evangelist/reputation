@@ -180,6 +180,8 @@ apis:
   humanURL: https://apidocs.reputation.com/
   baseURL: https://api.reputation.com
   tags:
+  - Location
+  tags_raw:
   - Locations
   properties:
   - type: OpenAPI
