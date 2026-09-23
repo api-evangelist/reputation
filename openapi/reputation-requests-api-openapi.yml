@@ -1,6 +1,6 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
-  title: Reputation Asset Library Requests API
+  title: Reputation Requests API
   description: REST API for aggregating customer feedback, managing reviews and listings, running surveys, and accessing reputation metrics and insights across locations.
   version: v3
   contact:
@@ -243,7 +243,23 @@ paths:
           description: Too many requests - rate limit exceeded
         '500':
           description: Internal server error
-      description: "Facilitates the sending of email requests, leveraging customizable templates and personalization through variables. The emails can be tailored based on location, sources, and other criteria.\nSample\nJavaScript XHR Request\nvar xhr = new XMLHttpRequest();\nxhr.open('POST', 'https://api.reputation.com/v3/requests/send-email', true);\nxhr.setRequestHeader('Content-Type', 'application/json');\nxhr.setRequestHeader('x-api-key', 'Your API key');\nxhr.onreadystatechange = function() {\n    if (xhr.readyState "
+      description: 'Facilitates the sending of email requests, leveraging customizable templates and personalization through variables. The emails can be tailored based on location, sources, and other criteria.
+
+        Sample
+
+        JavaScript XHR Request
+
+        var xhr = new XMLHttpRequest();
+
+        xhr.open(''POST'', ''https://api.reputation.com/v3/requests/send-email'', true);
+
+        xhr.setRequestHeader(''Content-Type'', ''application/json'');
+
+        xhr.setRequestHeader(''x-api-key'', ''Your API key'');
+
+        xhr.onreadystatechange = function() {
+
+        if (xhr.readyState'
       requestBody:
         required: true
         content:
@@ -317,7 +333,25 @@ paths:
           description: Too many requests - rate limit exceeded
         '500':
           description: Internal server error
-      description: "Send an SMS request to a client. By using specific templates and defining the recipient, you can send tailored SMS messages to your desired audience.\nSample\nJavaScript XHR Request\nvar xhr = new XMLHttpRequest();\nxhr.open('POST', 'https://api.reputation.com/v3/requests/send-sms', true);\nxhr.setRequestHeader('x-api-key', 'Your API key');\nxhr.setRequestHeader('Content-Type', 'application/json');\nxhr.onreadystatechange = function() {\n  if (xhr.readyState == 4 &amp;&amp; xhr.status == 200) {\n    var "
+      description: 'Send an SMS request to a client. By using specific templates and defining the recipient, you can send tailored SMS messages to your desired audience.
+
+        Sample
+
+        JavaScript XHR Request
+
+        var xhr = new XMLHttpRequest();
+
+        xhr.open(''POST'', ''https://api.reputation.com/v3/requests/send-sms'', true);
+
+        xhr.setRequestHeader(''x-api-key'', ''Your API key'');
+
+        xhr.setRequestHeader(''Content-Type'', ''application/json'');
+
+        xhr.onreadystatechange = function() {
+
+        if (xhr.readyState == 4 && xhr.status == 200) {
+
+        var'
       requestBody:
         required: true
         content:
@@ -383,7 +417,25 @@ paths:
           description: Too many requests - rate limit exceeded
         '500':
           description: Internal server error
-      description: "Unsubscribe a client's email from your marketing. Once requested the email address will no longer recieve emails.\nSample\nJavaScript XHR Request\nvar xhr = new XMLHttpRequest();\nxhr.open(\"POST\", \"https://api.reputation.com/v3/requests/unsubscribe-email\", true);\nxhr.setRequestHeader(\"Content-Type\", \"application/json;charset=UTF-8\");\nxhr.setRequestHeader(\"x-api-key\", \"Your API key\");\nxhr.onreadystatechange = function() {\n  if (xhr.readyState == 4 &amp;&amp; xhr.status == 200) {\n    console.log(xhr.r"
+      description: 'Unsubscribe a client''s email from your marketing. Once requested the email address will no longer recieve emails.
+
+        Sample
+
+        JavaScript XHR Request
+
+        var xhr = new XMLHttpRequest();
+
+        xhr.open("POST", "https://api.reputation.com/v3/requests/unsubscribe-email", true);
+
+        xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+
+        xhr.setRequestHeader("x-api-key", "Your API key");
+
+        xhr.onreadystatechange = function() {
+
+        if (xhr.readyState == 4 && xhr.status == 200) {
+
+        console.log(xhr.r'
       requestBody:
         required: true
         content:
@@ -435,7 +487,25 @@ paths:
           description: Too many requests - rate limit exceeded
         '500':
           description: Internal server error
-      description: "Unsubscribe a client's phone number from your marketing. Once requested the phone number will no longer recieve SMSs.\nSample\nJavaScript XHR Request\nvar xhr = new XMLHttpRequest();\nxhr.open(\"POST\", \"https://api.reputation.com/v3/requests/unsubscribe-phone\", true);\nxhr.setRequestHeader(\"Content-Type\", \"application/json;charset=UTF-8\");\nxhr.setRequestHeader(\"x-api-key\", \"Your API key\");\nxhr.onreadystatechange = function() {\n  if (xhr.readyState == 4 &amp;&amp; xhr.status == 200) {\n    console.log(x"
+      description: 'Unsubscribe a client''s phone number from your marketing. Once requested the phone number will no longer recieve SMSs.
+
+        Sample
+
+        JavaScript XHR Request
+
+        var xhr = new XMLHttpRequest();
+
+        xhr.open("POST", "https://api.reputation.com/v3/requests/unsubscribe-phone", true);
+
+        xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+
+        xhr.setRequestHeader("x-api-key", "Your API key");
+
+        xhr.onreadystatechange = function() {
+
+        if (xhr.readyState == 4 && xhr.status == 200) {
+
+        console.log(x'
       requestBody:
         required: true
         content:
@@ -487,7 +557,21 @@ paths:
           description: Too many requests - rate limit exceeded
         '500':
           description: Internal server error
-      description: "Retrieve a list of unsubscribes based on a specified date range and pagination constraints. This endpoint is useful for monitoring customers who have opted out of communications, whether via email or phone.\nSample\nJavaScript XHR Request\nvar xhr = new XMLHttpRequest();\nxhr.open('GET', 'https://api.reputation.com/v3/requests/unsubscribes?offset=0&amp;limit=20', true);\nxhr.setRequestHeader('x-api-key', 'Your API key');\nxhr.onreadystatechange = function() {\n    if (xhr.readyState == 4 &amp;&amp; xhr"
+      description: 'Retrieve a list of unsubscribes based on a specified date range and pagination constraints. This endpoint is useful for monitoring customers who have opted out of communications, whether via email or phone.
+
+        Sample
+
+        JavaScript XHR Request
+
+        var xhr = new XMLHttpRequest();
+
+        xhr.open(''GET'', ''https://api.reputation.com/v3/requests/unsubscribes?offset=0&limit=20'', true);
+
+        xhr.setRequestHeader(''x-api-key'', ''Your API key'');
+
+        xhr.onreadystatechange = function() {
+
+        if (xhr.readyState == 4 && xhr'
       parameters:
       - name: offset
         in: query
@@ -554,7 +638,7 @@ paths:
         var xhr = new XMLHttpRequest();
 
 
-        xhr.open(''GET'', ''https://api.reputation.com/v3/requests/templates?templateType=3'', '
+        xhr.open(''GET'', ''https://api.reputation.com/v3/requests/templates?templateType=3'','
       parameters:
       - name: offset
         in: query

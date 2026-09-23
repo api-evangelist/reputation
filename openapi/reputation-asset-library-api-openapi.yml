@@ -1,4 +1,4 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
   title: Reputation Asset Library API
   description: REST API for aggregating customer feedback, managing reviews and listings, running surveys, and accessing reputation metrics and insights across locations.
@@ -61,7 +61,6 @@ paths:
         '500':
           description: Internal server error
       description: 'Select any number of files from your computer. Attach tags to each image and send them as formData in the API request. The images will display in your Asset Library (see below).
-
 
 
         You must request to have the asset library enabled. Please contact your CSM for assistance.
@@ -139,7 +138,31 @@ paths:
           description: Too many requests - rate limit exceeded
         '500':
           description: Internal server error
-      description: "Upload images to your asset library using a public URL rather than a direct file upload. The images will display in your Asset Library (see below).\n\n\nYou must request to have the asset library enabled. Please contact your CSM for assistance.\nNote: This endpoint only accepts .jpg, .jpeg, or .png files.\nSample Requests\n\nPython\nimport requests\nimport json\ndata = {\n    \"images\": [\n        {\n            \"url\": \"https://www.testImageUrl.com/image_1.jpg\",\n            \"tags\": [\"test_tag_1\", \"test_tag_2\""
+      description: 'Upload images to your asset library using a public URL rather than a direct file upload. The images will display in your Asset Library (see below).
+
+
+        You must request to have the asset library enabled. Please contact your CSM for assistance.
+
+        Note: This endpoint only accepts .jpg, .jpeg, or .png files.
+
+        Sample Requests
+
+
+        Python
+
+        import requests
+
+        import json
+
+        data = {
+
+        "images": [
+
+        {
+
+        "url": "https://www.testImageUrl.com/image_1.jpg",
+
+        "tags": ["test_tag_1", "test_tag_2"'
       requestBody:
         required: true
         content:

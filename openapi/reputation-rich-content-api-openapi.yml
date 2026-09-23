@@ -1,6 +1,6 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
-  title: Reputation Asset Library Rich Content API
+  title: Reputation Rich Content API
   description: REST API for aggregating customer feedback, managing reviews and listings, running surveys, and accessing reputation metrics and insights across locations.
   version: v3
   contact:
@@ -119,7 +119,7 @@ paths:
 
         xhr.open(''GET'', ''https://api.reputation.com/v3/rich-content/faqs/60261049d043f800069d13e7_GOOGLE_PLACES_737489'', true);
 
-        xhr.setRequestHeader(''x-api-key'', '
+        xhr.setRequestHeader(''x-api-key'','
       parameters:
       - name: faqId
         in: path
@@ -170,7 +170,22 @@ paths:
           description: Too many requests - rate limit exceeded
         '500':
           description: Internal server error
-      description: "Retrieves the list of food menus associated with one or several business locations. The response can range from an empty array to an array with multiple menus, depending on the available menus for the specified locations.\nSample\nJavaScript XHR Request\nvar xhr = new XMLHttpRequest();\nxhr.open(\"GET\", \"https://api.reputation.com/v3/rich-content/menus?locationIDs=REST_5678,REST_8901\", true);\nxhr.setRequestHeader(\"x-api-key\", \"Your API key\");\n\nxhr.onreadystatechange = function() {\n  if (xhr.readyStat"
+      description: 'Retrieves the list of food menus associated with one or several business locations. The response can range from an empty array to an array with multiple menus, depending on the available menus for the specified locations.
+
+        Sample
+
+        JavaScript XHR Request
+
+        var xhr = new XMLHttpRequest();
+
+        xhr.open("GET", "https://api.reputation.com/v3/rich-content/menus?locationIDs=REST_5678,REST_8901", true);
+
+        xhr.setRequestHeader("x-api-key", "Your API key");
+
+
+        xhr.onreadystatechange = function() {
+
+        if (xhr.readyStat'
   /v3/rich-content/products:
     get:
       summary: Get Products

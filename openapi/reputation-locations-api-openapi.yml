@@ -1,6 +1,6 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
-  title: Reputation Asset Library Locations API
+  title: Reputation Locations API
   description: REST API for aggregating customer feedback, managing reviews and listings, running surveys, and accessing reputation metrics and insights across locations.
   version: v3
   contact:
@@ -229,7 +229,7 @@ paths:
 
         var xhr = new XMLHttpRequest();
 
-        xhr.open(''GET'', ''https://api.reputation.com/v3/locations-search?type=Person&amp;primaryProfile=true&amp;sort=ASC&amp;offset=0&amp;limit=20'', true);
+        xhr.open(''GET'', ''https://api.reputation.com/v3/locations-search?type=Person&primaryProfile=true&sort=ASC&offset=0&limit=20'', true);
 
         xhr.setRequestHeader(''x-api-key'
       parameters:
@@ -456,7 +456,7 @@ paths:
 
         The response returns detailed attributes of the location profile, including its internal and external names, industry type, state, associated places like office addresses, contact information, and more.
 
-        Note: The Get Locations and Get Location endpoints are designed to retrieve only cleansed profiles. If you attempt to fetch an unmanaged profile using either endpoint, '
+        Note: The Get Locations and Get Location endpoints are designed to retrieve only cleansed profiles. If you attempt to fetch an unmanaged profile using either endpoint,'
       parameters:
       - name: locationID
         in: path
@@ -506,7 +506,21 @@ paths:
           description: Too many requests - rate limit exceeded
         '500':
           description: Internal server error
-      description: "This endpoint lets you delete a specific location profile from the system, identified by its locationID. If you wish to only mark the location as inactive rather than fully deleting it, you can utilize the optional preserveLocation query parameter.\nSample\nJavaScript XHR Request\nvar xhr = new XMLHttpRequest();\nxhr.open('DELETE', 'https://api.reputation.com/v3/locations/BP?preserveLocation=true', true);\nxhr.setRequestHeader('x-api-key', 'Your API key');\nxhr.onreadystatechange = function() {\n    if"
+      description: 'This endpoint lets you delete a specific location profile from the system, identified by its locationID. If you wish to only mark the location as inactive rather than fully deleting it, you can utilize the optional preserveLocation query parameter.
+
+        Sample
+
+        JavaScript XHR Request
+
+        var xhr = new XMLHttpRequest();
+
+        xhr.open(''DELETE'', ''https://api.reputation.com/v3/locations/BP?preserveLocation=true'', true);
+
+        xhr.setRequestHeader(''x-api-key'', ''Your API key'');
+
+        xhr.onreadystatechange = function() {
+
+        if'
       parameters:
       - name: locationID
         in: path
@@ -557,7 +571,23 @@ paths:
           description: Too many requests - rate limit exceeded
         '500':
           description: Internal server error
-      description: "Opt-out specific sources from location profiles. If no specific sourceIDs are provided, the profile will be opted out from all eligible sources.\nSample\nJavaScript XHR Request\nvar xhr = new XMLHttpRequest();\nxhr.open(\"PUT\", \"https://api.reputation.com/v3/locations/SA/opt-out?sourceIDs=FACEBOOK\", true);\nxhr.setRequestHeader(\"x-api-key\", \"Your API key\");\nxhr.onreadystatechange = function() {\n  if (xhr.readyState == 4 &amp;&amp; xhr.status == 200) {\n    var response = JSON.parse(xhr.responseText);\n "
+      description: 'Opt-out specific sources from location profiles. If no specific sourceIDs are provided, the profile will be opted out from all eligible sources.
+
+        Sample
+
+        JavaScript XHR Request
+
+        var xhr = new XMLHttpRequest();
+
+        xhr.open("PUT", "https://api.reputation.com/v3/locations/SA/opt-out?sourceIDs=FACEBOOK", true);
+
+        xhr.setRequestHeader("x-api-key", "Your API key");
+
+        xhr.onreadystatechange = function() {
+
+        if (xhr.readyState == 4 && xhr.status == 200) {
+
+        var response = JSON.parse(xhr.responseText);'
       parameters:
       - name: locationID
         in: path
@@ -608,7 +638,25 @@ paths:
           description: Too many requests - rate limit exceeded
         '500':
           description: Internal server error
-      description: "Opt-in specific sources from location profiles. If no specific sourceIDs are provided, the profile will be opted in to all eligible sources.\nSample\nJavaScript XHR Request\nvar xhr = new XMLHttpRequest();\nxhr.open(\"PUT\", \"https://api.reputation.com/v3/locations/SA/opt-in?sourceIDs=FACEBOOK\", true);\nxhr.setRequestHeader(\"x-api-key\", \"Your API key\");\nxhr.onreadystatechange = function() {\n  if (xhr.readyState == 4 &amp;&amp; xhr.status == 200) {\n    var response = JSON.parse(xhr.responseText);\n    co"
+      description: 'Opt-in specific sources from location profiles. If no specific sourceIDs are provided, the profile will be opted in to all eligible sources.
+
+        Sample
+
+        JavaScript XHR Request
+
+        var xhr = new XMLHttpRequest();
+
+        xhr.open("PUT", "https://api.reputation.com/v3/locations/SA/opt-in?sourceIDs=FACEBOOK", true);
+
+        xhr.setRequestHeader("x-api-key", "Your API key");
+
+        xhr.onreadystatechange = function() {
+
+        if (xhr.readyState == 4 && xhr.status == 200) {
+
+        var response = JSON.parse(xhr.responseText);
+
+        co'
       parameters:
       - name: locationID
         in: path
@@ -730,7 +778,21 @@ paths:
           description: Too many requests - rate limit exceeded
         '500':
           description: Internal server error
-      description: "An array of category IDs for which the attribute definitions are fetched. The provided IDs help in narrowing down the list of attribute definitions specific to the given profile categories.\nSample\nJavaScript XHR Request\nvar xhr = new XMLHttpRequest();\nxhr.open('GET', 'https://api.reputation.com/v3/location-attribute-definitions?categoryIds=RESTAURANTS_,ARTS_&amp;_ENTERTAINMENT_ARTIST', true);\nxhr.setRequestHeader('x-api-key', 'Your API Key');\nxhr.onreadystatechange = function() {\n    if (xhr.rea"
+      description: 'An array of category IDs for which the attribute definitions are fetched. The provided IDs help in narrowing down the list of attribute definitions specific to the given profile categories.
+
+        Sample
+
+        JavaScript XHR Request
+
+        var xhr = new XMLHttpRequest();
+
+        xhr.open(''GET'', ''https://api.reputation.com/v3/location-attribute-definitions?categoryIds=RESTAURANTS_,ARTS_&_ENTERTAINMENT_ARTIST'', true);
+
+        xhr.setRequestHeader(''x-api-key'', ''Your API Key'');
+
+        xhr.onreadystatechange = function() {
+
+        if (xhr.rea'
   /v3/locations-duplicate:
     get:
       summary: Get Duplicate Locations

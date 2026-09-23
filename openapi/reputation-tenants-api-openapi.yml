@@ -1,6 +1,6 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
-  title: Reputation Asset Library Tenants API
+  title: Reputation Tenants API
   description: REST API for aggregating customer feedback, managing reviews and listings, running surveys, and accessing reputation metrics and insights across locations.
   version: v3
   contact:
@@ -119,7 +119,25 @@ paths:
           description: Too many requests - rate limit exceeded
         '500':
           description: Internal server error
-      description: "Create or save tenant information within the system. This endpoint is crucial for managing tenant data, which includes details about names, contacts, and the specific services or modules each tenant utilizes.\nNOTE: This API is intended for only for Agency customers who manage multiple tenant accounts on Reputation platform.\nSample\nJavaScript XHR Request\nvar data = JSON.stringify({\n  \"tenant\": [\n    {\n      \"id\": \"5a7b73ee12345\",\n      \"agencyID\": \"Dental\",\n      \"name\": \"Downtown Dental Care\",\n "
+      description: 'Create or save tenant information within the system. This endpoint is crucial for managing tenant data, which includes details about names, contacts, and the specific services or modules each tenant utilizes.
+
+        NOTE: This API is intended for only for Agency customers who manage multiple tenant accounts on Reputation platform.
+
+        Sample
+
+        JavaScript XHR Request
+
+        var data = JSON.stringify({
+
+        "tenant": [
+
+        {
+
+        "id": "5a7b73ee12345",
+
+        "agencyID": "Dental",
+
+        "name": "Downtown Dental Care",'
       requestBody:
         required: true
         content:
@@ -308,7 +326,7 @@ paths:
           description: Internal server error
       description: 'Used to reactivate a tenant within the system. By specifying the tenant''s unique identifier in the URL, this endpoint enables you to change the status of a previously inactivated or paused tenant back to active. This action effectively resumes all operations and functionalities associated with that specific tenant, reinstating access to services and features within the Reputation platform.
 
-        NOTE: This API is intended for only for Agency customers who manage multiple tenant accounts on Reputation '
+        NOTE: This API is intended for only for Agency customers who manage multiple tenant accounts on Reputation'
       parameters:
       - name: tenantID
         in: path

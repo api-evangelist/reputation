@@ -1,6 +1,6 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
-  title: Reputation Asset Library Authorize API
+  title: Reputation Authorize API
   description: REST API for aggregating customer feedback, managing reviews and listings, running surveys, and accessing reputation metrics and insights across locations.
   version: v3
   contact:
@@ -60,7 +60,37 @@ paths:
           description: Too many requests - rate limit exceeded
         '500':
           description: Internal server error
-      description: "Authorize a user on your platform, either granting them access or updating their permissions based on provided personal and role-specific details.\nSample Requests\nPython\nimport requests\nimport json\nurl = 'https://api.reputation.com/v3/authorize'\nheaders = {\n    'x-api-key': 'Your API key',\n    'Content-Type': 'application/json;charset=UTF-8'\n}\ndata = {\n    \"userId\": \"346345\",\n    \"locationCodes\": \"145, 742, 520\",\n    \"firstName\": \"Jeff\",\n    \"lastName\": \"Goodman\",\n    \"email\": \"john@goodman.com\""
+      description: 'Authorize a user on your platform, either granting them access or updating their permissions based on provided personal and role-specific details.
+
+        Sample Requests
+
+        Python
+
+        import requests
+
+        import json
+
+        url = ''https://api.reputation.com/v3/authorize''
+
+        headers = {
+
+        ''x-api-key'': ''Your API key'',
+
+        ''Content-Type'': ''application/json;charset=UTF-8''
+
+        }
+
+        data = {
+
+        "userId": "346345",
+
+        "locationCodes": "145, 742, 520",
+
+        "firstName": "Jeff",
+
+        "lastName": "Goodman",
+
+        "email": "john@goodman.com"'
       requestBody:
         required: true
         content:

@@ -1,6 +1,6 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
-  title: Reputation Asset Library Metrics API
+  title: Reputation Metrics API
   description: REST API for aggregating customer feedback, managing reviews and listings, running surveys, and accessing reputation metrics and insights across locations.
   version: v3
   contact:
@@ -131,7 +131,21 @@ paths:
           description: Too many requests - rate limit exceeded
         '500':
           description: Internal server error
-      description: "This endpoint allows for the retrieval of page-specific metrics from the Reputation API. By specifying various query parameters, you can filter and customize the data being fetched, enabling a more detailed and targeted insights analysis.\nSample\nJavaScript XHR Request\nvar xhr = new XMLHttpRequest();\nxhr.open('GET', 'https://api.reputation.com/v3/page-metrics?limit=2', true);\nxhr.setRequestHeader('x-api-key', 'Your API key');\nxhr.onreadystatechange = function() {\n    if (xhr.readyState == 4 &amp;"
+      description: 'This endpoint allows for the retrieval of page-specific metrics from the Reputation API. By specifying various query parameters, you can filter and customize the data being fetched, enabling a more detailed and targeted insights analysis.
+
+        Sample
+
+        JavaScript XHR Request
+
+        var xhr = new XMLHttpRequest();
+
+        xhr.open(''GET'', ''https://api.reputation.com/v3/page-metrics?limit=2'', true);
+
+        xhr.setRequestHeader(''x-api-key'', ''Your API key'');
+
+        xhr.onreadystatechange = function() {
+
+        if (xhr.readyState == 4 &'
       parameters:
       - name: offset
         in: query
@@ -189,7 +203,21 @@ paths:
           description: Too many requests - rate limit exceeded
         '500':
           description: Internal server error
-      description: "This endpoint retrieves post metrics from the Reputation platform. It provides detailed insights based on various filtering criteria such as date range, source, location, type, and interval.\nSample\nJavaScript XHR\nvar xhr = new XMLHttpRequest();\nxhr.open('GET', 'https://api.reputation.com/v3/post-metrics?limit=2&amp;sourceIDs=FACEBOOK', true);\nxhr.onreadystatechange = function() {\n    if (xhr.readyState == 4 &amp;&amp; xhr.status == 200) {\n        var response = JSON.parse(xhr.responseText);\n    "
+      description: 'This endpoint retrieves post metrics from the Reputation platform. It provides detailed insights based on various filtering criteria such as date range, source, location, type, and interval.
+
+        Sample
+
+        JavaScript XHR
+
+        var xhr = new XMLHttpRequest();
+
+        xhr.open(''GET'', ''https://api.reputation.com/v3/post-metrics?limit=2&sourceIDs=FACEBOOK'', true);
+
+        xhr.onreadystatechange = function() {
+
+        if (xhr.readyState == 4 && xhr.status == 200) {
+
+        var response = JSON.parse(xhr.responseText);'
       parameters:
       - name: offset
         in: query
@@ -312,7 +340,19 @@ paths:
           description: Too many requests - rate limit exceeded
         '500':
           description: Internal server error
-      description: "This endpoint retrieves aggregate metrics pertaining to posts from various sources. These metrics provide insights on aspects like post impressions, organic reach, and other related dimensions for a given period and set of filtering criteria.\nSample\nJavaScript XHR Sample\nvar xhr = new XMLHttpRequest();\nxhr.open('GET', 'https://api.reputation.com/v3/aggregate-post-metrics?locationIDs=SA&amp;sourceIDs=FACEBOOK', true);\nxhr.onreadystatechange = function() {\n    if (xhr.readyState == 4 &amp;&amp; xh"
+      description: 'This endpoint retrieves aggregate metrics pertaining to posts from various sources. These metrics provide insights on aspects like post impressions, organic reach, and other related dimensions for a given period and set of filtering criteria.
+
+        Sample
+
+        JavaScript XHR Sample
+
+        var xhr = new XMLHttpRequest();
+
+        xhr.open(''GET'', ''https://api.reputation.com/v3/aggregate-post-metrics?locationIDs=SA&sourceIDs=FACEBOOK'', true);
+
+        xhr.onreadystatechange = function() {
+
+        if (xhr.readyState == 4 && xh'
       parameters:
       - name: offset
         in: query

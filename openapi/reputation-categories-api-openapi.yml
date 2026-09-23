@@ -1,6 +1,6 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
-  title: Reputation Asset Library Categories API
+  title: Reputation Categories API
   description: REST API for aggregating customer feedback, managing reviews and listings, running surveys, and accessing reputation metrics and insights across locations.
   version: v3
   contact:
@@ -60,7 +60,33 @@ paths:
           description: Too many requests - rate limit exceeded
         '500':
           description: Internal server error
-      description: "Provides the Business Listings categories for each profile, detailing each category's associated industries and identifiers.\nSample Requests\nPython\nimport requests\nurl = 'https://api.reputation.com/v3/categories?offset=0&amp;limit=3'\nheaders = {\n    'x-api-key': 'Your API Key',\n    'Content-Type': 'application/json;charset=UTF-8'\n}\nresponse = requests.get(url, headers=headers)\nif response.status_code &gt;= 200 and response.status_code &lt; 400:\n    print(response.text)\nelse:\n    print(\"Error: \","
+      description: 'Provides the Business Listings categories for each profile, detailing each category''s associated industries and identifiers.
+
+        Sample Requests
+
+        Python
+
+        import requests
+
+        url = ''https://api.reputation.com/v3/categories?offset=0&limit=3''
+
+        headers = {
+
+        ''x-api-key'': ''Your API Key'',
+
+        ''Content-Type'': ''application/json;charset=UTF-8''
+
+        }
+
+        response = requests.get(url, headers=headers)
+
+        if response.status_code >= 200 and response.status_code < 400:
+
+        print(response.text)
+
+        else:
+
+        print("Error: ",'
       requestBody:
         required: true
         content:

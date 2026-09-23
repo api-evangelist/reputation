@@ -1,22 +1,7 @@
 {
   "provider": "reputation",
   "sources": [
-    "reputation-asset-library-api-openapi.yml",
-    "reputation-authorize-api-openapi.yml",
-    "reputation-categories-api-openapi.yml",
-    "reputation-credentials-api-openapi.yml",
-    "reputation-listing-audits-api-openapi.yml",
-    "reputation-locations-api-openapi.yml",
-    "reputation-metrics-api-openapi.yml",
-    "reputation-reports-api-openapi.yml",
-    "reputation-requests-api-openapi.yml",
-    "reputation-reviews-api-openapi.yml",
-    "reputation-rich-content-api-openapi.yml",
-    "reputation-summary-api-openapi.yml",
-    "reputation-surveys-api-openapi.yml",
-    "reputation-tenants-api-openapi.yml",
-    "reputation-tickets-api-openapi.yml",
-    "reputation-users-api-openapi.yml"
+    "_original/reputation-api-openapi.yml"
   ],
   "outputs": [
     "reputation-asset-library-api-openapi.yml",
@@ -39,6 +24,27 @@
   "archived": [],
   "errors": [],
   "warnings": [],
-  "notes": [],
-  "skipped": []
+  "notes": [
+    "sourced from openapi/_original/ (1 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "reputation-api-openapi.yml: upgraded openapi 3.0.0 -> OpenAPI 3.2.0",
+    "apis.yml register: already-registered"
+  ],
+  "skipped": [
+    "reputation-asset-library-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "reputation-authorize-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "reputation-categories-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "reputation-credentials-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "reputation-listing-audits-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "reputation-locations-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "reputation-metrics-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "reputation-reports-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "reputation-requests-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "reputation-reviews-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "reputation-rich-content-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "reputation-summary-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "reputation-surveys-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "reputation-tenants-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "reputation-tickets-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "reputation-users-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
 }

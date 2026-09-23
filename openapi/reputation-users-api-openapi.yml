@@ -1,6 +1,6 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
-  title: Reputation Asset Library Users API
+  title: Reputation Users API
   description: REST API for aggregating customer feedback, managing reviews and listings, running surveys, and accessing reputation metrics and insights across locations.
   version: v3
   contact:
@@ -60,7 +60,29 @@ paths:
           description: Too many requests - rate limit exceeded
         '500':
           description: Internal server error
-      description: "Retrieve a list of users within your system, providing crucial details about each user. It's an essential tool for administrators to oversee user accounts, roles, and access levels.\nSample\nJavaScript XHR Request\nvar data = null;\nvar xhr = new XMLHttpRequest();\nxhr.withCredentials = true;\nxhr.addEventListener(\"readystatechange\", function () {\n    if (this.readyState === this.DONE) {\n        console.log(this.responseText);\n    }\n});\nxhr.open(\"GET\", \"https://api.reputation.com/v3/users?offset=0&amp"
+      description: 'Retrieve a list of users within your system, providing crucial details about each user. It''s an essential tool for administrators to oversee user accounts, roles, and access levels.
+
+        Sample
+
+        JavaScript XHR Request
+
+        var data = null;
+
+        var xhr = new XMLHttpRequest();
+
+        xhr.withCredentials = true;
+
+        xhr.addEventListener("readystatechange", function () {
+
+        if (this.readyState === this.DONE) {
+
+        console.log(this.responseText);
+
+        }
+
+        });
+
+        xhr.open("GET", "https://api.reputation.com/v3/users?offset=0&'
       parameters:
       - name: offset
         in: query
@@ -188,7 +210,24 @@ paths:
           description: Too many requests - rate limit exceeded
         '500':
           description: Internal server error
-      description: "Retrieve detailed information about a specific user within your organization. By specifying the unique userID, you can obtain comprehensive data about that individual user, including their role, contact details, and associated scopes.\nSample\nJavaScript XHR Request\nvar xhr = new XMLHttpRequest();\nxhr.open(\"GET\", \"https://api.reputation.com/v3/users/41807627\", true);\nxhr.setRequestHeader(\"x-api-key\", \"Your API key\");\n\nxhr.onreadystatechange = function () {\n    if (xhr.readyState === 4) {\n        c"
+      description: 'Retrieve detailed information about a specific user within your organization. By specifying the unique userID, you can obtain comprehensive data about that individual user, including their role, contact details, and associated scopes.
+
+        Sample
+
+        JavaScript XHR Request
+
+        var xhr = new XMLHttpRequest();
+
+        xhr.open("GET", "https://api.reputation.com/v3/users/41807627", true);
+
+        xhr.setRequestHeader("x-api-key", "Your API key");
+
+
+        xhr.onreadystatechange = function () {
+
+        if (xhr.readyState === 4) {
+
+        c'
       parameters:
       - name: userID
         in: path

@@ -1,6 +1,6 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
-  title: Reputation Asset Library Surveys API
+  title: Reputation Surveys API
   description: REST API for aggregating customer feedback, managing reviews and listings, running surveys, and accessing reputation metrics and insights across locations.
   version: v3
   contact:
@@ -60,7 +60,17 @@ paths:
           description: Too many requests - rate limit exceeded
         '500':
           description: Internal server error
-      description: "The Get Survey Results endpoint allows you to fetch the results of surveys submitted by customers or respondents, providing a comprehensive insight into their feedback and perceptions regarding your services or products. This endpoint is instrumental for businesses aiming to evaluate and enhance customer satisfaction, and make data-driven decisions to improve overall customer experience.\nSample\nJavaScript XHR Request\nvar xhr = new XMLHttpRequest();\nxhr.onreadystatechange = function () {\n    if ("
+      description: 'The Get Survey Results endpoint allows you to fetch the results of surveys submitted by customers or respondents, providing a comprehensive insight into their feedback and perceptions regarding your services or products. This endpoint is instrumental for businesses aiming to evaluate and enhance customer satisfaction, and make data-driven decisions to improve overall customer experience.
+
+        Sample
+
+        JavaScript XHR Request
+
+        var xhr = new XMLHttpRequest();
+
+        xhr.onreadystatechange = function () {
+
+        if ('
     post:
       summary: Save Survey Result
       operationId: post_survey_results
@@ -169,7 +179,22 @@ paths:
           description: Too many requests - rate limit exceeded
         '500':
           description: Internal server error
-      description: "This endpoint retrieves detailed information about a specific survey result. The result is identified by a unique surveyID and belongs to a particular survey template, identified by the surveyTemplateID.\nSample\nJavaScript XHR Result\nvar xhr = new XMLHttpRequest();\nxhr.open(\"GET\", \"https://api.reputation.com/v3/survey-results?surveyTemplateID=5e8d12a42a401b62ff1234a\", true);\nxhr.setRequestHeader(\"x-api-key\", \"Your API key\");\n\nxhr.onreadystatechange = function () {\n  if (xhr.readyState == 4 &amp;&"
+      description: 'This endpoint retrieves detailed information about a specific survey result. The result is identified by a unique surveyID and belongs to a particular survey template, identified by the surveyTemplateID.
+
+        Sample
+
+        JavaScript XHR Result
+
+        var xhr = new XMLHttpRequest();
+
+        xhr.open("GET", "https://api.reputation.com/v3/survey-results?surveyTemplateID=5e8d12a42a401b62ff1234a", true);
+
+        xhr.setRequestHeader("x-api-key", "Your API key");
+
+
+        xhr.onreadystatechange = function () {
+
+        if (xhr.readyState == 4 &&'
       parameters:
       - name: surveyID
         in: path
@@ -220,7 +245,21 @@ paths:
           description: Too many requests - rate limit exceeded
         '500':
           description: Internal server error
-      description: "This endpoint retrieves a list of survey templates based on specified criteria. You can filter the survey templates you need to retrieve by providing the status and type of the templates as query parameters.\nSample\nJavaScript XHR Request\nvar xhr = new XMLHttpRequest();\nxhr.open(\"GET\", \"https://api.reputation.com/v3/surveys3-templates?templateType=Conversational\", true);\nxhr.setRequestHeader(\"x-api-key\", \"Your API key\");\nxhr.onreadystatechange = function () {\n    if (xhr.readyState === 4) {\n     "
+      description: 'This endpoint retrieves a list of survey templates based on specified criteria. You can filter the survey templates you need to retrieve by providing the status and type of the templates as query parameters.
+
+        Sample
+
+        JavaScript XHR Request
+
+        var xhr = new XMLHttpRequest();
+
+        xhr.open("GET", "https://api.reputation.com/v3/surveys3-templates?templateType=Conversational", true);
+
+        xhr.setRequestHeader("x-api-key", "Your API key");
+
+        xhr.onreadystatechange = function () {
+
+        if (xhr.readyState === 4) {'
       parameters:
       - name: offset
         in: query
@@ -278,7 +317,27 @@ paths:
           description: Too many requests - rate limit exceeded
         '500':
           description: Internal server error
-      description: "This POST request generates a unique survey link. This is particularly useful when you want to send a personalized survey to a specific customer, ensuring that the survey content is relevant to their experience and the information you have about them.\nSample\nJavaScript XHR Request\nvar xhr = new XMLHttpRequest();\nxhr.onreadystatechange = function() {\n    if (this.readyState == 4 &amp;&amp; this.status == 200) {\n       // Handle the response here\n       console.log(this.responseText);\n    }\n};\nxhr"
+      description: 'This POST request generates a unique survey link. This is particularly useful when you want to send a personalized survey to a specific customer, ensuring that the survey content is relevant to their experience and the information you have about them.
+
+        Sample
+
+        JavaScript XHR Request
+
+        var xhr = new XMLHttpRequest();
+
+        xhr.onreadystatechange = function() {
+
+        if (this.readyState == 4 && this.status == 200) {
+
+        // Handle the response here
+
+        console.log(this.responseText);
+
+        }
+
+        };
+
+        xhr'
       requestBody:
         required: true
         content:
