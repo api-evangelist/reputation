@@ -416,6 +416,8 @@ apis:
   humanURL: https://apidocs.reputation.com/
   baseURL: https://api.reputation.com
   tags:
+  - Ticketing
+  tags_raw:
   - Tickets
   properties:
   - type: OpenAPI
