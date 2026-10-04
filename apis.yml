@@ -467,6 +467,9 @@ apis:
   - type: JSONSchema
     url: json-schema/reputation-metric.json
 common:
+  - type: CapabilityMap
+    url: capabilities/reputation-capability-edges.yml
+    name: Reputation Business Capability Map
   - type: AgenticAccess
     url: agentic-access/reputation-agentic-access.yml
   - type: DomainSecurity
