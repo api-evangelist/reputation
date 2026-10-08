@@ -94,3 +94,39 @@ notes:
 - API access requires contacting your customer success manager for an API key.
 - Enterprise tier added 2026-08-13 from https://reputation.com/pricing; it is custom-quoted with no published price.
 - The pricing page offers no free trial and no self-serve signup — every tier routes to a demo or sales contact.
+x-canonical:
+  generated: '2026-10-08'
+  vocabulary: all/0-working/economics/plans-canonical.yml
+  models:
+  - subscription
+  units:
+  - negotiated
+  plans:
+  - name: Rep Core
+    access: other
+    model: subscription
+    model_how: derived
+    units:
+    - other
+    periods: []
+  - name: Rep Core + Pulse
+    access: other
+    model: subscription
+    model_how: derived
+    units:
+    - other
+    periods: []
+  - name: Rep Core + Surveys
+    access: other
+    model: subscription
+    model_how: derived
+    units:
+    - other
+    periods: []
+  - name: Enterprise
+    access: other
+    model: unstated
+    model_how: derived
+    units:
+    - negotiated
+    periods: []
