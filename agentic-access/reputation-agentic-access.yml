@@ -1,17 +1,23 @@
-generated: '2026-07-15'
+generated: '2026-09-23'
 method: generated
-source: openapi/reputation-api-openapi.yml
+source: openapi/reputation-asset-library-api-openapi.yml, openapi/reputation-authorize-api-openapi.yml,
+  openapi/reputation-categories-api-openapi.yml, openapi/reputation-credentials-api-openapi.yml,
+  openapi/reputation-listing-audits-api-openapi.yml, openapi/reputation-locations-api-openapi.yml,
+  openapi/reputation-metrics-api-openapi.yml, openapi/reputation-reports-api-openapi.yml, openapi/reputation-requests-api-openapi.yml,
+  openapi/reputation-reviews-api-openapi.yml, openapi/reputation-rich-content-api-openapi.yml,
+  openapi/reputation-summary-api-openapi.yml, openapi/reputation-surveys-api-openapi.yml, openapi/reputation-tenants-api-openapi.yml,
+  openapi/reputation-tickets-api-openapi.yml, openapi/reputation-users-api-openapi.yml
 description: Recommended x-agentic-access execution contracts, classified heuristically from
   the OpenAPI. A governance starting point for exposing this API to AI agents — review and bind
   audience per deployment. See research/curity/agentic-governance/.
 summary:
   operations: 67
   by_action_class:
-    acting: 26
-    connected: 41
+    acting: 24
+    connected: 43
   by_consequence:
-    write: 24
-    read: 41
+    write: 22
+    read: 43
     physical: 2
   human_in_the_loop_required: 0
 operations:
@@ -133,18 +139,12 @@ operations:
   method: post
   operationId: post_locations_search
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /v3/locations-faceted-search
   method: get
   operationId: get_locations_faceted_search
@@ -605,18 +605,12 @@ operations:
   method: post
   operationId: post_surveys_link
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /v3/surveys2-results
   method: get
   operationId: get_surveys2_results
